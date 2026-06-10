@@ -1,0 +1,22 @@
+{
+  "name": "Central de Ocorrências",
+  "short_name": "Ocorrências",
+  "description": "Plataforma para registrar, acompanhar e consultar ocorrências no condomínio.",
+  "start_url": "/registrar",
+  "display": "standalone",
+  "background_color": "#f9f9f8",
+  "theme_color": "#45696c",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
