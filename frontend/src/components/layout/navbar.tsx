@@ -66,7 +66,7 @@ export function Navbar() {
                   }}
                 >
                   <span className="w-fit border-b border-[var(--color-on-surface-variant)] text-sm uppercase">
-                    Aisha Garden
+                    Concept Garden
                   </span>
                   <span className="mt-1 text-[10px] uppercase">
                     Central de Ocorrências
