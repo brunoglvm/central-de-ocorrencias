@@ -8,6 +8,7 @@ import {
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifyCors } from "@fastify/cors";
 import ScalarApiReference from "@scalar/fastify-api-reference";
+import { routes } from "@/routes/index.js";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -15,7 +16,7 @@ app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
 app.register(fastifyCors, {
-  origin: true,
+  origin: process.env.CORS_ORIGIN ?? "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 });
 
@@ -35,7 +36,9 @@ app.register(ScalarApiReference, {
   routePrefix: "/docs",
 });
 
-const port = Number(process.env.PORT ?? 3000);
+app.register(routes);
+
+const port = Number(process.env.PORT ?? 3333);
 const host = process.env.HOST ?? "0.0.0.0";
 
 app.listen({ port, host }).then(() => {

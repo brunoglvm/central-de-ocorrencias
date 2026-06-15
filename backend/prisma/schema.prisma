@@ -25,6 +25,7 @@ model Occurrence {
   description String
   image       String?
   location    String
+  archived    Boolean @default(false)
 
   status OccurrenceStatus @default(OPEN)
   source OccurrenceSource
