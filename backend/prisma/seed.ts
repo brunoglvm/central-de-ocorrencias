@@ -1,20 +1,10 @@
 import { prisma } from "../src/lib/prisma.js";
+import { seedAdmin } from "./seeds/admin.seed.js";
+import { seedOccurrences } from "./seeds/occurrences.seed.js";
 
 async function main() {
-  const occurrence = await prisma.occurrence.create({
-    data: {
-      title: "Teste Prisma",
-      description: "Registro criado para validar a conexão com o Prisma.",
-      location: "Portaria",
-      source: "EMPLOYEE",
-    },
-  });
-
-  const occurrences = await prisma.occurrence.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  await seedAdmin();
+  await seedOccurrences();
 }
 
 main().finally(() => prisma.$disconnect());
