@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { prisma } from "@/lib/prisma.js";
-import { validateLogin } from "@/services/auth.service.js";
+import { validateLogin } from "@/lib/bcrypt.js";
 
 type LoginBody = {
   email: string;
@@ -29,5 +29,5 @@ export const login = async (
 
   if (!isValid) return reply.code(401).send({ error: "Credenciais inválidas" });
 
-  return admin;
+  return reply.send(admin);
 };

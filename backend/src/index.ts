@@ -9,6 +9,7 @@ import { fastifySwagger } from "@fastify/swagger";
 import { fastifyCors } from "@fastify/cors";
 import ScalarApiReference from "@scalar/fastify-api-reference";
 import { routes } from "@/routes/index.js";
+import jwtPlugin from "@/plugins/jwt.js";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -19,6 +20,8 @@ app.register(fastifyCors, {
   origin: process.env.CORS_ORIGIN ?? "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 });
+
+app.register(jwtPlugin);
 
 app.register(fastifySwagger, {
   openapi: {
