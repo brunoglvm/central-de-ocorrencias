@@ -29,5 +29,19 @@ export const login = async (
 
   if (!isValid) return reply.code(401).send({ error: "Credenciais inválidas" });
 
-  return reply.send(admin);
+  const token = await reply.jwtSign(
+    { id: admin.id },
+    {
+      expiresIn: "7d",
+    },
+  );
+
+  return reply.send({
+    token,
+    user: {
+      id: admin.id,
+      email: admin.email,
+      image: admin.image,
+    },
+  });
 };

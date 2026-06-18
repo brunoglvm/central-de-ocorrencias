@@ -4,6 +4,7 @@ import { prisma } from "../../src/lib/prisma.js";
 export const seedAdmin = async () => {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
+  const image = process.env.ADMIN_IMAGE;
 
   if (!email || !password) {
     throw new Error(
@@ -24,6 +25,7 @@ export const seedAdmin = async () => {
     data: {
       email,
       password: hashedPassword,
+      image,
     },
   });
 
@@ -33,6 +35,7 @@ export const seedAdmin = async () => {
 export const updateAdminCredentials = async () => {
   const email = process.env.ADMIN_EMAIL;
   const password = process.env.ADMIN_PASSWORD;
+  const image = process.env.ADMIN_IMAGE;
 
   if (!email || !password) {
     throw new Error(
@@ -50,10 +53,10 @@ export const updateAdminCredentials = async () => {
   }
 
   const emailChanged = admin.email !== email;
-
+  const imageChanged = admin.image !== image;
   const passwordChanged = !(await bcrypt.compare(password, admin.password));
 
-  if (!emailChanged && !passwordChanged) {
+  if (!emailChanged && !passwordChanged && !imageChanged) {
     console.log("Credenciais do admin já estão sincronizadas");
     return;
   }
@@ -65,6 +68,7 @@ export const updateAdminCredentials = async () => {
     data: {
       email,
       password: hashedPassword,
+      image,
     },
   });
 
