@@ -12,7 +12,7 @@ export default function RegisterPublicPage() {
       <div className="flex flex-col items-center text-center">
         <Image
           src="/logo.png"
-          alt="Aisha Garden"
+          alt="Concept Garden"
           width={34}
           height={36}
           className="h-8 w-auto"
@@ -24,7 +24,7 @@ export default function RegisterPublicPage() {
           style={{ fontFamily: "var(--font-brand), serif", fontWeight: 500 }}
         >
           <span className="w-fit border-b border-[var(--color-on-surface-variant)] text-base uppercase">
-            Aisha Garden
+            Concept Garden
           </span>
           <span className="mt-1 text-[10px] uppercase">
             Central de Ocorrências
