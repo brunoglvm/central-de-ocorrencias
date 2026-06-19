@@ -15,7 +15,7 @@ export const login = async (
 
   if (!email || !password) {
     return reply
-      .code(401)
+      .code(400)
       .send({ error: "Campos obrigatórios não preenchidos" });
   }
 
