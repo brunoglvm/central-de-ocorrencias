@@ -7,6 +7,7 @@ import {
 } from "fastify-type-provider-zod";
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifyCors } from "@fastify/cors";
+import { fastifyRateLimit } from "@fastify/rate-limit";
 import ScalarApiReference from "@scalar/fastify-api-reference";
 import { routes } from "@/routes/index.js";
 import jwtPlugin from "@/plugins/jwt.js";
@@ -40,6 +41,11 @@ app.register(ScalarApiReference, {
 });
 
 app.register(routes);
+
+app.register(fastifyRateLimit, {
+  max: 100,
+  timeWindow: "1 minute",
+});
 
 const port = Number(process.env.PORT ?? 3333);
 const host = process.env.HOST ?? "0.0.0.0";
