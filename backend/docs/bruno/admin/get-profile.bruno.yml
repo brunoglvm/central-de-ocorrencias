@@ -6,6 +6,9 @@ info:
 http:
   method: GET
   url: "{{baseUrl}}/me"
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzgxODg3NTk2LCJleHAiOjE3ODI0OTIzOTZ9.SHZB74R1mnliNovfTfROJh-TWrCOwNALBxCswZHEfxM
 
 settings:
   encodeUrl: true

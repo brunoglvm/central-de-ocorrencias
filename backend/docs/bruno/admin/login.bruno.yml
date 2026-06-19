@@ -5,7 +5,14 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/login"
+  url: "{{baseUrl}}/auth/login"
+  body:
+    type: json
+    data: |-
+      {
+        "email": "admin@concept-garden.com",
+        "password": "admin"
+      }
   auth: inherit
 
 settings:

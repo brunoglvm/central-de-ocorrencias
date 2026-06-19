@@ -40,12 +40,12 @@ app.register(ScalarApiReference, {
   routePrefix: "/docs",
 });
 
-app.register(routes);
-
 app.register(fastifyRateLimit, {
   max: 100,
   timeWindow: "1 minute",
 });
+
+app.register(routes);
 
 const port = Number(process.env.PORT ?? 3333);
 const host = process.env.HOST ?? "0.0.0.0";
