@@ -11,26 +11,28 @@ export const login = async (
   request: FastifyRequest<{ Body: LoginBody }>,
   reply: FastifyReply,
 ) => {
-  const { email, password } = request.body;
+  const { email: loginEmail, password } = request.body;
 
-  if (!email || !password) {
+  if (!loginEmail || !password) {
     return reply
       .code(400)
       .send({ error: "Campos obrigatórios não preenchidos" });
   }
 
   const admin = await prisma.admin.findUnique({
-    where: { email },
+    where: { email: loginEmail },
   });
 
   if (!admin) return reply.code(401).send({ error: "Credenciais inválidas" });
+
+  const { id, email, image } = admin;
 
   const isValid = await validateLogin(admin, password);
 
   if (!isValid) return reply.code(401).send({ error: "Credenciais inválidas" });
 
   const token = await reply.jwtSign(
-    { id: admin.id },
+    { id },
     {
       expiresIn: "7d",
     },
@@ -39,9 +41,9 @@ export const login = async (
   return reply.send({
     token,
     user: {
-      id: admin.id,
-      email: admin.email,
-      image: admin.image,
+      id,
+      email,
+      image,
     },
   });
 };

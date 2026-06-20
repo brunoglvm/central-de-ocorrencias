@@ -7,6 +7,7 @@
     "start": "node dist/index.js",
     "db:seed": "prisma db seed",
     "admin:sync": "tsx prisma/update-admin.ts",
+    "studio": "prisma studio",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
@@ -40,6 +41,7 @@
   "dependencies": {
     "@fastify/cors": "^11.2.0",
     "@fastify/jwt": "^10.1.0",
+    "@fastify/multipart": "^10.0.0",
     "@fastify/rate-limit": "^11.0.0",
     "@fastify/swagger": "^9.7.0",
     "@prisma/adapter-better-sqlite3": "^7.8.0",
@@ -50,6 +52,7 @@
     "fastify": "^5.8.5",
     "fastify-plugin": "^6.0.0",
     "fastify-type-provider-zod": "^6.1.0",
+    "minio": "^8.0.7",
     "zod": "^4.4.3"
   }
 }
