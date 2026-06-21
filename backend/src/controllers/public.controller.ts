@@ -1,10 +1,7 @@
 import { prisma } from "@/lib/prisma.js";
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply } from "fastify";
 
-export const getCondominiumImage = async (
-  request: FastifyRequest,
-  reply: FastifyReply,
-) => {
+export const getCondominiumImage = async (reply: FastifyReply) => {
   const admin = await prisma.admin.findUnique({
     where: { id: 1 },
     select: {

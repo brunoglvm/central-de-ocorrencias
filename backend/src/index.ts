@@ -8,6 +8,7 @@ import {
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifyCors } from "@fastify/cors";
 import { fastifyRateLimit } from "@fastify/rate-limit";
+import { fastifyMultipart } from "@fastify/multipart";
 import ScalarApiReference from "@scalar/fastify-api-reference";
 import { routes } from "@/routes/index.js";
 import jwtPlugin from "@/plugins/jwt.js";
@@ -36,13 +37,19 @@ app.register(fastifySwagger, {
   transform: jsonSchemaTransform,
 });
 
-app.register(ScalarApiReference, {
-  routePrefix: "/docs",
-});
-
 app.register(fastifyRateLimit, {
   max: 100,
   timeWindow: "1 minute",
+});
+
+app.register(fastifyMultipart, {
+  limits: {
+    files: 1,
+  },
+});
+
+app.register(ScalarApiReference, {
+  routePrefix: "/docs",
 });
 
 app.register(routes);
