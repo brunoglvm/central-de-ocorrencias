@@ -10,11 +10,12 @@ http:
     - name: Authorization
       value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzgxODg3NTk2LCJleHAiOjE3ODI0OTIzOTZ9.SHZB74R1mnliNovfTfROJh-TWrCOwNALBxCswZHEfxM
   body:
-    type: json
-    data: |-
-      {
-        "image": "http://127.0.0.1:9000/admin/admin-avatar2.webp"
-      }
+    type: multipart-form
+    data:
+      - name: avatar
+        type: file
+        value:
+          - images/avatar-valid-1_5mb.jpg
   auth: inherit
 
 settings:

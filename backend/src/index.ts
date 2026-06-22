@@ -45,6 +45,7 @@ app.register(fastifyRateLimit, {
 app.register(fastifyMultipart, {
   limits: {
     files: 1,
+    fileSize: 2 * 1024 * 1024,
   },
 });
 

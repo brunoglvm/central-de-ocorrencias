@@ -4,18 +4,5 @@ import { authenticate } from "@/middlewares/authenticate.js";
 
 export const profileRoutes = async (app: FastifyInstance) => {
   app.get("/me", { preHandler: authenticate }, getMe);
-  app.patch(
-    "/me/avatar",
-    {
-      preHandler: authenticate,
-      config: {
-        multipartOptions: {
-          limits: {
-            fileSize: 2 * 1024 * 1024,
-          },
-        },
-      },
-    },
-    changeAvatar,
-  );
+  app.patch("/me/avatar", { preHandler: authenticate }, changeAvatar);
 };

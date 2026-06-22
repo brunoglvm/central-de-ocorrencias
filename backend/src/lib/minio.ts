@@ -4,7 +4,10 @@ import { z } from "zod";
 const minioEnvSchema = z.object({
   MINIO_ENDPOINT: z.string().min(1).default("127.0.0.1"),
   MINIO_PORT: z.coerce.number().int().positive().default(9000),
-  MINIO_USE_SSL: z.coerce.boolean().default(false),
+  MINIO_USE_SSL: z
+    .string()
+    .optional()
+    .transform((v) => v === "true"),
   MINIO_ACCESS_KEY: z.string().min(1).default("admin"),
   MINIO_SECRET_KEY: z.string().min(1).default("minioadmin"),
 });
