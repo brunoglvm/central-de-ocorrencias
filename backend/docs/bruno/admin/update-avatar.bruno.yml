@@ -15,7 +15,7 @@ http:
       - name: avatar
         type: file
         value:
-          - images/avatar-valid-1_5mb.jpg
+          - images/avatar-valid-1_25mb.jpg
   auth: inherit
 
 settings:
