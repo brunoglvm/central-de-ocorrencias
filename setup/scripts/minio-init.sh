@@ -5,8 +5,8 @@ sleep 5
 
 mc alias set local http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
 
-mc anonymous set download local/admin
-
 mc mb local/admin || true
 
-mc stat local/admin/pfp.png || mc cp /setup/storage/admin-avatar.webp local/admin/
+mc anonymous set public local/admin
+
+mc stat local/admin/admin-avatar.webp || mc cp /setup/storage/admin-avatar.webp local/admin/
