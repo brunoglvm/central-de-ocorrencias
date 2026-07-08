@@ -1,4 +1,7 @@
-import { OccurrenceSource, OccurrenceStatus } from "@prisma/client";
+import {
+  OccurrenceSource,
+  OccurrenceStatus,
+} from "../src/generated/prisma/client.js";
 
 export const occurrencesData = [
   {
@@ -44,23 +47,28 @@ export const occurrencesData = [
     status: OccurrenceStatus.OPEN,
   },
   {
-    title: "Ar-condicionado do hall quebrado",
-    description: "Não está resfriando o ambiente.",
-    location: "Hall social",
+    title: "Infiltração no teto da sala",
+    description: "Gotejamento constante vindo do teto, formando poças no piso.",
+    image: "http://127.0.0.1:9000/occurrences/mock-occurrence-1.webp",
+    location: "Bloco C - 305",
     source: OccurrenceSource.RESIDENT,
     status: OccurrenceStatus.IN_PROGRESS,
   },
   {
-    title: "Piscina suja",
-    description: "Água com aparência inadequada para uso.",
-    location: "Área de lazer",
+    title: "Gotejamento no corredor do prédio",
+    description:
+      "Vazamento de água no teto da área comum, próximo aos elevadores.",
+    image: "http://127.0.0.1:9000/occurrences/mock-occurrence-2.webp",
+    location: "Bloco A - Hall dos elevadores",
     source: OccurrenceSource.RESIDENT,
     status: OccurrenceStatus.OPEN,
   },
   {
-    title: "Problema na interfonia",
-    description: "Interfone não funciona no apartamento 302.",
-    location: "Bloco B - 302",
+    title: "Portão da garagem danificado",
+    description:
+      "Portão apresenta danos na estrutura, comprometendo o funcionamento e a segurança do acesso.",
+    image: "http://127.0.0.1:9000/occurrences/mock-occurrence-3.webp",
+    location: "Entrada da garagem",
     source: OccurrenceSource.RESIDENT,
     status: OccurrenceStatus.RESOLVED,
   },
