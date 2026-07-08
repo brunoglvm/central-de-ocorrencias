@@ -5,7 +5,7 @@ import { fileTypeFromBuffer } from "file-type";
 import { minioClient } from "@/lib/minio.js";
 
 export const getMe = async (request: FastifyRequest, reply: FastifyReply) => {
-  const id = request.user.id;
+  const { id } = request.user;
 
   const me = await prisma.admin.findUnique({
     where: { id },

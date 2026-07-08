@@ -15,5 +15,3 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
-
-docs: This request retrieves a list of users from the JSONPlaceholder API.
