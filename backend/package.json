@@ -6,6 +6,7 @@
     "dev": "tsx watch --env-file=.env src/index.ts",
     "start": "node dist/index.js",
     "db:seed": "prisma db seed",
+    "db:reset": "prisma migrate reset --force",
     "admin:sync": "tsx prisma/update-admin.ts",
     "studio": "prisma studio",
     "lint": "eslint .",

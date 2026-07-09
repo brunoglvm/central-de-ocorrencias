@@ -1,0 +1,18 @@
+info:
+  name: get-occurrences
+  type: http
+  seq: 4
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/occurrences/10"
+  headers:
+    - name: Authorization
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzgzNDU4NDI2LCJleHAiOjE3ODQwNjMyMjZ9.dJN-SJDzbaovG9anC5XCqUgNQa7_Ewii0ncxGtE1N3U
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
