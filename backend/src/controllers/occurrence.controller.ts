@@ -1,4 +1,6 @@
+import { randomUUID } from "node:crypto";
 import { FastifyReply, FastifyRequest } from "fastify";
+import { fileTypeFromBuffer } from "file-type";
 import { prisma } from "@/lib/prisma.js";
 import { OccurrenceStatus } from "../../prisma/src/generated/prisma/client.js";
 
@@ -7,6 +9,46 @@ export const createOccurrence = async (
   reply: FastifyReply,
 ) => {
   const { title, description, image, location, source } = request.body;
+
+  const bucket = process.env.MINIO_OCCURRENCES_BUCKET ?? "occurrences";
+  const destinationObject = `${randomUUID()}.webp`;
+
+  const imageUrl = `${process.env.MINIO_PUBLIC_URL}/${bucket}/${destinationObject}`;
+
+  const file = await request.file({
+    limits: {
+      fileSize: 5 * 1024 * 1024,
+    },
+  });
+
+  if (!file) return reply.code(400).send({ error: "Imagem é obrigatória" });
+
+  const buffer = await file.toBuffer();
+
+  const type = await fileTypeFromBuffer(buffer);
+
+  const allowed = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/heic",
+    "image/heif",
+  ];
+
+  if (!type || !allowed.includes(type.mime))
+    return reply.code(400).send({ error: "Formato não permitido" });
+
+  const occurrence = await prisma.occurrence.create({
+    data: {
+      title,
+      description,
+      image: imageUrl,
+      location,
+      source,
+    },
+  });
+
+  reply.send(occurrence);
 };
 
 export const getOccurrences = async (
