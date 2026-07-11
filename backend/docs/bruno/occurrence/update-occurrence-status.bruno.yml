@@ -1,14 +1,20 @@
 info:
-  name: delete-occurrence
+  name: update-occurrence-status
   type: http
   seq: 4
 
 http:
-  method: DELETE
-  url: "{{baseUrl}}/occurrences/10"
+  method: PATCH
+  url: "{{baseUrl}}/occurrences/10/status"
   headers:
     - name: Authorization
       value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzgzNDU4NDI2LCJleHAiOjE3ODQwNjMyMjZ9.dJN-SJDzbaovG9anC5XCqUgNQa7_Ewii0ncxGtE1N3U
+  body:
+    type: json
+    data: |-
+      {
+        "status": "OPEN"
+      }
   auth: inherit
 
 settings:

@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
+import fp from "fastify-plugin";
 import { Prisma } from "../../prisma/src/generated/prisma/client.js";
 
 const errorHandlerPlugin: FastifyPluginAsync = async (app) => {
@@ -16,4 +17,4 @@ const errorHandlerPlugin: FastifyPluginAsync = async (app) => {
   });
 };
 
-export default errorHandlerPlugin;
+export default fp(errorHandlerPlugin);

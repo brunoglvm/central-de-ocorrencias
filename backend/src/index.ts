@@ -12,6 +12,7 @@ import { fastifyMultipart } from "@fastify/multipart";
 import ScalarApiReference from "@scalar/fastify-api-reference";
 import { routes } from "@/routes/index.js";
 import jwtPlugin from "@/plugins/jwt.js";
+import errorHandlerPlugin from "./plugins/error-handler.js";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -51,6 +52,8 @@ app.register(fastifyMultipart, {
 app.register(ScalarApiReference, {
   routePrefix: "/docs",
 });
+
+app.register(errorHandlerPlugin);
 
 app.register(routes);
 

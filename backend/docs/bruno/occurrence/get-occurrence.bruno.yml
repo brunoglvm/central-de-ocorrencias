@@ -1,5 +1,5 @@
 info:
-  name: get-occurrences
+  name: get-occurrence
   type: http
   seq: 4
 

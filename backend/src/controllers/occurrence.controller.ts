@@ -57,6 +57,10 @@ export const updateOccurrenceStatus = async (
     data: {
       status,
     },
+    select: {
+      id: true,
+      status: true,
+    },
   });
 
   return reply.send(occurrence);
@@ -80,6 +84,10 @@ export const updateOccurrenceArchive = async (
     where: { id },
     data: {
       archived,
+    },
+    select: {
+      id: true,
+      archived: true,
     },
   });
 
