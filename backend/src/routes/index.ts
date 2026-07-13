@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { authRoutes } from "./auth.routes.js";
 import { profileRoutes } from "./profile.routes.js";
-import { condominiumRoutes } from "./public.routes.js";
+import { condominiumRoutes } from "./condominium.routes.js";
 import { occurrenceRoutes } from "./occurrence.routes.js";
 
 export const routes = async (app: FastifyInstance) => {

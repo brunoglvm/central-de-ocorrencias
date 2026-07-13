@@ -49,7 +49,7 @@ export const occurrencesData = [
   {
     title: "Infiltração no teto da sala",
     description: "Gotejamento constante vindo do teto, formando poças no piso.",
-    image: "http://127.0.0.1:9000/occurrences/mock-occurrence-1.webp",
+    image: "http://127.0.0.1:9000/occurrences/mock-1.webp",
     location: "Bloco C - 305",
     source: OccurrenceSource.RESIDENT,
     status: OccurrenceStatus.IN_PROGRESS,
@@ -58,7 +58,7 @@ export const occurrencesData = [
     title: "Gotejamento no corredor do prédio",
     description:
       "Vazamento de água no teto da área comum, próximo aos elevadores.",
-    image: "http://127.0.0.1:9000/occurrences/mock-occurrence-2.webp",
+    image: "http://127.0.0.1:9000/occurrences/mock-2.webp",
     location: "Bloco A - Hall dos elevadores",
     source: OccurrenceSource.RESIDENT,
     status: OccurrenceStatus.OPEN,
@@ -67,7 +67,7 @@ export const occurrencesData = [
     title: "Portão da garagem danificado",
     description:
       "Portão apresenta danos na estrutura, comprometendo o funcionamento e a segurança do acesso.",
-    image: "http://127.0.0.1:9000/occurrences/mock-occurrence-3.webp",
+    image: "http://127.0.0.1:9000/occurrences/mock-3.webp",
     location: "Entrada da garagem",
     source: OccurrenceSource.RESIDENT,
     status: OccurrenceStatus.RESOLVED,

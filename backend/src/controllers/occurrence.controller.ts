@@ -1,54 +1,128 @@
 import { randomUUID } from "node:crypto";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { fileTypeFromBuffer } from "file-type";
+import sharp from "sharp";
 import { prisma } from "@/lib/prisma.js";
-import { OccurrenceStatus } from "../../prisma/src/generated/prisma/client.js";
+import { minioClient } from "@/lib/minio.js";
+import { IMAGE_MIME_TYPES } from "@/constants/image-mime-types.js";
+import {
+  OccurrenceSource,
+  OccurrenceStatus,
+} from "../../prisma/src/generated/prisma/client.js";
 
 export const createOccurrence = async (
   request: FastifyRequest,
   reply: FastifyReply,
 ) => {
-  const { title, description, image, location, source } = request.body;
+  let title: string | undefined;
+  let description: string | undefined;
+  let location: string | undefined;
+  let source: OccurrenceSource | undefined;
 
-  const bucket = process.env.MINIO_OCCURRENCES_BUCKET ?? "occurrences";
-  const destinationObject = `${randomUUID()}.webp`;
+  let imageUrl: string | null = null;
+  let buffer: Buffer | null = null;
 
-  const imageUrl = `${process.env.MINIO_PUBLIC_URL}/${bucket}/${destinationObject}`;
-
-  const file = await request.file({
+  const parts = request.parts({
     limits: {
       fileSize: 5 * 1024 * 1024,
+      fields: 10,
     },
   });
 
-  if (!file) return reply.code(400).send({ error: "Imagem é obrigatória" });
+  for await (const part of parts) {
+    if (part.type === "field") {
+      switch (part.fieldname) {
+        case "title":
+          title = part.value as string;
+          break;
 
-  const buffer = await file.toBuffer();
+        case "description":
+          description = part.value as string;
+          break;
 
-  const type = await fileTypeFromBuffer(buffer);
+        case "location":
+          location = part.value as string;
+          break;
 
-  const allowed = [
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "image/heic",
-    "image/heif",
-  ];
+        case "source":
+          source = part.value as OccurrenceSource;
+          break;
+      }
 
-  if (!type || !allowed.includes(type.mime))
-    return reply.code(400).send({ error: "Formato não permitido" });
+      continue;
+    }
+
+    if (part.fieldname !== "occurrence") {
+      return reply
+        .code(400)
+        .send({ error: "Campo inválido, esperado: occurrence" });
+    }
+
+    buffer = await part.toBuffer();
+  }
+
+  if (!title || !description || !location || !source) {
+    return reply
+      .code(400)
+      .send({ error: "Campos obrigatórios não preenchidos" });
+  }
+
+  if (buffer) {
+    const type = await fileTypeFromBuffer(buffer);
+
+    if (!type || !IMAGE_MIME_TYPES.includes(type.mime)) {
+      return reply.code(400).send({ error: "Formato não permitido" });
+    }
+
+    const bucket = process.env.MINIO_OCCURRENCES_BUCKET ?? "occurrences";
+    const destinationObject = `${randomUUID()}.webp`;
+
+    try {
+      const output = await sharp(buffer)
+        .rotate()
+        .resize({
+          width: 1920,
+          height: 1920,
+          fit: "inside",
+          withoutEnlargement: true,
+        })
+        .webp({
+          quality: 75,
+          effort: 4,
+        })
+        .toBuffer();
+
+      await minioClient.putObject(
+        bucket,
+        destinationObject,
+        output,
+        output.length,
+        {
+          "Content-Type": "image/webp",
+        },
+      );
+
+      imageUrl = `${process.env.MINIO_PUBLIC_URL}/${bucket}/${destinationObject}`;
+    } catch (err) {
+      console.error(err);
+
+      return reply
+        .code(400)
+        .send({ error: "Arquivo inválido ou imagem corrompida" });
+    }
+  }
 
   const occurrence = await prisma.occurrence.create({
     data: {
       title,
       description,
-      image: imageUrl,
       location,
       source,
+      image: imageUrl,
     },
   });
 
-  reply.send(occurrence);
+  return reply.send(occurrence);
 };
 
 export const getOccurrences = async (

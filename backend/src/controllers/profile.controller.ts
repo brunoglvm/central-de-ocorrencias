@@ -1,8 +1,9 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { prisma } from "@/lib/prisma.js";
 import sharp from "sharp";
 import { fileTypeFromBuffer } from "file-type";
+import { prisma } from "@/lib/prisma.js";
 import { minioClient } from "@/lib/minio.js";
+import { IMAGE_MIME_TYPES } from "@/constants/image-mime-types.js";
 
 export const getMe = async (request: FastifyRequest, reply: FastifyReply) => {
   const { id } = request.user;
@@ -42,19 +43,11 @@ export const changeAvatar = async (
 
   const type = await fileTypeFromBuffer(buffer);
 
-  const allowed = [
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "image/heic",
-    "image/heif",
-  ];
-
-  if (!type || !allowed.includes(type.mime))
+  if (!type || !IMAGE_MIME_TYPES.includes(type.mime))
     return reply.code(400).send({ error: "Formato não permitido" });
 
   const bucket = process.env.MINIO_ADMIN_BUCKET ?? "admin";
-  const destinationObject = "admin-avatar";
+  const destinationObject = "avatar";
   const metaData = {
     "Content-Type": "image/webp",
   };

@@ -12,9 +12,9 @@ mc mb local/occurrences || true
 mc anonymous set public local/occurrences
 
 # Imagens de exemplo (apenas para ambiente de desenvolvimento)
-mc stat local/admin/admin-avatar.webp || mc cp /setup/storage/admin-avatar.webp local/admin/
+mc stat local/admin/avatar.webp || mc cp /setup/storage/avatar.webp local/admin/
 
-for image in /setup/storage/occurrences/mock-occurrence-*.webp; do
+for image in /setup/storage/occurrences/mock-*.webp; do
   filename=$(basename "$image")
 
   mc stat "local/occurrences/$filename" || mc cp "$image" "local/occurrences/"
