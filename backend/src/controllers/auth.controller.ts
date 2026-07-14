@@ -13,12 +13,6 @@ export const login = async (
 ) => {
   const { email: loginEmail, password } = request.body;
 
-  if (!loginEmail || !password) {
-    return reply
-      .code(400)
-      .send({ error: "Campos obrigatórios não preenchidos" });
-  }
-
   const admin = await prisma.admin.findUnique({
     where: { email: loginEmail },
   });
