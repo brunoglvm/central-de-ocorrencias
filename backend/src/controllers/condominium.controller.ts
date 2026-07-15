@@ -13,7 +13,9 @@ export const getCondominiumImage = async (
   });
 
   if (!admin)
-    return reply.code(404).send({ error: "Administrador não encontrado" });
+    return reply
+      .code(404)
+      .send({ error: "Dados do condomínio não encontrados" });
 
   return reply.send(admin);
 };

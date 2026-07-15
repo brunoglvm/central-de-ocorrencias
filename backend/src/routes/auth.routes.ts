@@ -16,20 +16,29 @@ export const authRoutes = async (app: FastifyInstance) => {
           password: z.string().min(1).describe("Senha do administrador"),
         }),
         response: {
-          200: z.object({
-            token: z.string().describe("Token JWT para autenticação"),
-            user: z.object({
-              id: z.number().describe("Identificador do administrador"),
-              email: z.string().describe("Email do administrador"),
-              image: z.string().nullable().describe("URL da imagem de perfil"),
-            }),
-          }),
+          200: z
+            .object({
+              token: z.string().describe("Token JWT para autenticação"),
+              user: z.object({
+                id: z.number().describe("Identificador do administrador"),
+                email: z.string().describe("Email do administrador"),
+                image: z
+                  .string()
+                  .nullable()
+                  .describe("URL da imagem de perfil"),
+              }),
+            })
+            .describe("Login realizado com sucesso"),
 
-          401: z.object({
-            error: z
-              .string()
-              .describe("Mensagem indicando que as credenciais são inválidas"),
-          }),
+          401: z
+            .object({
+              error: z
+                .string()
+                .describe(
+                  "Mensagem indicando que as credenciais são inválidas",
+                ),
+            })
+            .describe("Credenciais inválidas"),
         },
       },
       config: {

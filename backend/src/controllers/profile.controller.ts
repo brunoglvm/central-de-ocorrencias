@@ -17,7 +17,8 @@ export const getMe = async (request: FastifyRequest, reply: FastifyReply) => {
     },
   });
 
-  if (!me) return reply.code(404).send({ error: "Usuário não encontrado" });
+  if (!me)
+    return reply.code(404).send({ error: "Administrador não encontrado" });
 
   return reply.send(me);
 };
