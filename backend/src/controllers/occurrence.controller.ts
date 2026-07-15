@@ -122,7 +122,7 @@ export const createOccurrence = async (
     },
   });
 
-  return reply.send(occurrence);
+  return reply.code(201).send(occurrence);
 };
 
 export const getOccurrences = async (
@@ -223,5 +223,6 @@ export const deleteOccurrence = async (
   await prisma.occurrence.delete({
     where: { id },
   });
+
   return reply.code(204).send();
 };
