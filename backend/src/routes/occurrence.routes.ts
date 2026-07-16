@@ -9,6 +9,7 @@ import {
   updateOccurrenceArchive,
   deleteOccurrence,
 } from "@/controllers/occurrence.controller.js";
+import { occurrenceResponseSchema } from "@/schemas/occurrence.schema.js";
 import {
   OccurrenceSource,
   OccurrenceStatus,
@@ -41,27 +42,9 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
             ),
         }),
         response: {
-          201: z
-            .object({
-              id: z.number().int().describe("Identificador da ocorrência"),
-              title: z.string().describe("Título da ocorrência"),
-              description: z.string().describe("Descrição da ocorrência"),
-              location: z.string().describe("Local da ocorrência"),
-              image: z
-                .string()
-                .nullable()
-                .describe("URL da imagem da ocorrência"),
-              archived: z
-                .boolean()
-                .describe("Indica se a ocorrência está arquivada"),
-              status: z
-                .enum(OccurrenceStatus)
-                .describe("Status atual da ocorrência"),
-              source: z.enum(OccurrenceSource).describe("Origem da ocorrência"),
-              createdAt: z.date().describe("Data de criação da ocorrência"),
-            })
-            .describe("Ocorrência criada com sucesso"),
-
+          201: occurrenceResponseSchema.describe(
+            "Ocorrência criada com sucesso",
+          ),
           400: z
             .object({
               error: z
@@ -77,16 +60,50 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
     createOccurrence,
   );
 
-  app.get("/occurrences", { preHandler: authenticate }, getOccurrences);
+  app.get(
+    "/occurrences",
+    {
+      schema: {
+        tags: ["Occurrences"],
+        summary: "Lista todas as ocorrências",
+        description:
+          "Retorna uma lista de ocorrências cadastradas no sistema, incluindo informações como título, descrição, localização, origem, status e data de criação.",
+        response: {
+          200: z
+            .array(occurrenceResponseSchema)
+            .describe("Ocorrências encontradas com sucesso"),
+        },
+      },
+      preHandler: authenticate,
+    },
+    getOccurrences,
+  );
 
   app.get(
     "/occurrences/:id",
     {
-      preHandler: authenticate,
       schema: {
+        tags: ["Occurrences"],
+        summary: "Busca uma ocorrência pelo ID",
+        description:
+          "Retorna uma ocorrência específica cadastrada no sistema pelo seu identificador.",
         params: z.object({
           id: z.coerce.number().int().positive(),
         }),
+        response: {
+          200: occurrenceResponseSchema.describe(
+            "Ocorrência encontrada com sucesso",
+          ),
+          404: z
+            .object({
+              error: z
+                .string()
+                .describe(
+                  "Mensagem informando que a ocorrência solicitada não foi encontrada",
+                ),
+            })
+            .describe("Recurso não encontrado"),
+        },
       },
     },
     getOccurrence,

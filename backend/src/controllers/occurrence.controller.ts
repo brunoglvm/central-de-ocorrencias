@@ -142,9 +142,6 @@ export const getOccurrence = async (
 
   const occurrence = await prisma.occurrence.findUnique({
     where: { id },
-    omit: {
-      createdAt: true,
-    },
   });
 
   if (!occurrence)
