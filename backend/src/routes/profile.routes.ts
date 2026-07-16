@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import z from "zod";
 import { getMe, changeAvatar } from "@/controllers/profile.controller.js";
 import { authenticate } from "@/middlewares/authenticate.js";
+import { bearerAuthHeaderSchema } from "@/schemas/auth.schema.js";
 
 export const profileRoutes = async (app: FastifyInstance) => {
   app.get(
@@ -11,6 +12,7 @@ export const profileRoutes = async (app: FastifyInstance) => {
         tags: ["Profile"],
         summary: "Obtém o perfil do administrador",
         description: "Retorna os dados do administrador autenticado.",
+        headers: bearerAuthHeaderSchema,
         response: {
           200: z
             .object({
@@ -42,6 +44,7 @@ export const profileRoutes = async (app: FastifyInstance) => {
         tags: ["Profile"],
         summary: "Atualiza o avatar do administrador",
         description: "Envia uma nova imagem de perfil.",
+        headers: bearerAuthHeaderSchema,
         consumes: ["multipart/form-data"],
         body: z.object({
           avatar: z

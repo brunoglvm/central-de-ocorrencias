@@ -9,6 +9,7 @@ import {
   updateOccurrenceArchive,
   deleteOccurrence,
 } from "@/controllers/occurrence.controller.js";
+import { bearerAuthHeaderSchema } from "@/schemas/auth.schema.js";
 import {
   occurrenceParamsSchema,
   occurrenceResponseSchema,
@@ -71,6 +72,7 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
         summary: "Lista todas as ocorrências",
         description:
           "Retorna uma lista de ocorrências cadastradas no sistema, incluindo informações como título, descrição, localização, origem, status e data de criação.",
+        headers: bearerAuthHeaderSchema,
         response: {
           200: z
             .array(occurrenceResponseSchema)
@@ -91,6 +93,7 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
         description:
           "Retorna uma ocorrência específica cadastrada no sistema pelo seu identificador.",
         params: occurrenceParamsSchema,
+        headers: bearerAuthHeaderSchema,
         response: {
           200: occurrenceResponseSchema.describe(
             "Ocorrência encontrada com sucesso",
@@ -120,6 +123,7 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
         description:
           "Atualiza o status de uma ocorrência cadastrada no sistema por meio do seu identificador.",
         params: occurrenceParamsSchema,
+        headers: bearerAuthHeaderSchema,
         body: z.object({
           status: z
             .enum(OccurrenceStatus)
@@ -150,6 +154,7 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
         description:
           "Atualiza o estado de arquivamento de uma ocorrência cadastrada no sistema por meio do seu identificador.",
         params: occurrenceParamsSchema,
+        headers: bearerAuthHeaderSchema,
         body: z.object({
           archived: z
             .boolean()
@@ -180,6 +185,7 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
         description:
           "Remove uma ocorrência cadastrada no sistema por meio do seu identificador.",
         params: occurrenceParamsSchema,
+        headers: bearerAuthHeaderSchema,
         response: {
           204: z.null().describe("Ocorrência removida com sucesso"),
         },
