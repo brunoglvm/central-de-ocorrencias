@@ -9,7 +9,10 @@ import {
   updateOccurrenceArchive,
   deleteOccurrence,
 } from "@/controllers/occurrence.controller.js";
-import { occurrenceResponseSchema } from "@/schemas/occurrence.schema.js";
+import {
+  occurrenceParamsSchema,
+  occurrenceResponseSchema,
+} from "@/schemas/occurrence.schema.js";
 import {
   OccurrenceSource,
   OccurrenceStatus,
@@ -87,9 +90,7 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
         summary: "Busca uma ocorrência pelo ID",
         description:
           "Retorna uma ocorrência específica cadastrada no sistema pelo seu identificador.",
-        params: z.object({
-          id: z.coerce.number().int().positive(),
-        }),
+        params: occurrenceParamsSchema,
         response: {
           200: occurrenceResponseSchema.describe(
             "Ocorrência encontrada com sucesso",
@@ -114,12 +115,26 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
     {
       preHandler: authenticate,
       schema: {
-        params: z.object({
-          id: z.coerce.number().int().positive(),
-        }),
+        tags: ["Occurrences"],
+        summary: "Atualiza o status de uma ocorrência",
+        description:
+          "Atualiza o status de uma ocorrência cadastrada no sistema por meio do seu identificador.",
+        params: occurrenceParamsSchema,
         body: z.object({
-          status: z.enum(OccurrenceStatus),
+          status: z
+            .enum(OccurrenceStatus)
+            .describe("Novo status da ocorrência"),
         }),
+        response: {
+          200: z
+            .object({
+              id: z.number().int().describe("Identificador da ocorrência"),
+              status: z
+                .enum(OccurrenceStatus)
+                .describe("Status atualizado da ocorrência"),
+            })
+            .describe("Status da ocorrência atualizado com sucesso"),
+        },
       },
     },
     updateOccurrenceStatus,
@@ -130,12 +145,26 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
     {
       preHandler: authenticate,
       schema: {
-        params: z.object({
-          id: z.coerce.number().int().positive(),
-        }),
+        tags: ["Occurrences"],
+        summary: "Atualiza o arquivamento de uma ocorrência",
+        description:
+          "Atualiza o estado de arquivamento de uma ocorrência cadastrada no sistema por meio do seu identificador.",
+        params: occurrenceParamsSchema,
         body: z.object({
-          archived: z.boolean(),
+          archived: z
+            .boolean()
+            .describe("Indica se a ocorrência deve ser arquivada"),
         }),
+        response: {
+          200: z
+            .object({
+              id: z.number().int().describe("Identificador da ocorrência"),
+              archived: z
+                .boolean()
+                .describe("Indica se a ocorrência está arquivada"),
+            })
+            .describe("Arquivamento da ocorrência atualizado com sucesso"),
+        },
       },
     },
     updateOccurrenceArchive,
@@ -146,9 +175,14 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
     {
       preHandler: authenticate,
       schema: {
-        params: z.object({
-          id: z.coerce.number().int().positive(),
-        }),
+        tags: ["Occurrences"],
+        summary: "Remove uma ocorrência",
+        description:
+          "Remove uma ocorrência cadastrada no sistema por meio do seu identificador.",
+        params: occurrenceParamsSchema,
+        response: {
+          204: z.null().describe("Ocorrência removida com sucesso"),
+        },
       },
     },
     deleteOccurrence,

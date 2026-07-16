@@ -15,3 +15,11 @@ export const occurrenceResponseSchema = z.object({
   source: z.enum(OccurrenceSource).describe("Origem da ocorrência"),
   createdAt: z.date().describe("Data de criação da ocorrência"),
 });
+
+export const occurrenceParamsSchema = z.object({
+  id: z.coerce
+    .number()
+    .int()
+    .positive()
+    .describe("Identificador da ocorrência"),
+});
