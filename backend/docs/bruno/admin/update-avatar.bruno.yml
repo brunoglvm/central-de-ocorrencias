@@ -8,7 +8,7 @@ http:
   url: "{{baseUrl}}/me/avatar"
   headers:
     - name: Authorization
-      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzgzNDU4NDI2LCJleHAiOjE3ODQwNjMyMjZ9.dJN-SJDzbaovG9anC5XCqUgNQa7_Ewii0ncxGtE1N3U
+      value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzg0MjkyOTQ4LCJleHAiOjE3ODQ4OTc3NDh9.UoklIF9QpfNr6vB9Qmu9IMQp-PY106q2eQ5ZDhYXVbo
   body:
     type: multipart-form
     data:

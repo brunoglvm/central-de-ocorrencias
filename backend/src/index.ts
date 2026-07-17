@@ -2,7 +2,6 @@ import { fastify } from "fastify";
 import {
   serializerCompiler,
   validatorCompiler,
-  jsonSchemaTransform,
   type ZodTypeProvider,
 } from "fastify-type-provider-zod";
 import { fastifySwagger } from "@fastify/swagger";
@@ -12,6 +11,7 @@ import { fastifyMultipart } from "@fastify/multipart";
 import ScalarApiReference from "@scalar/fastify-api-reference";
 import { routes } from "@/routes/index.js";
 import jwtPlugin from "@/plugins/jwt.js";
+import swaggerConfig from "./plugins/swagger.js";
 import errorHandlerPlugin from "./plugins/error-handler.js";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -26,17 +26,7 @@ app.register(fastifyCors, {
 
 app.register(jwtPlugin);
 
-app.register(fastifySwagger, {
-  openapi: {
-    info: {
-      title: "Central de Ocorrências",
-      description:
-        "API para registro e acompanhamento de ocorrências do condomínio.",
-      version: "1.0.0",
-    },
-  },
-  transform: jsonSchemaTransform,
-});
+app.register(fastifySwagger, swaggerConfig);
 
 app.register(fastifyRateLimit, {
   max: 100,

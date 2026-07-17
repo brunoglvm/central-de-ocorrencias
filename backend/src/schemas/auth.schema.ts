@@ -5,7 +5,7 @@ export const bearerAuthHeaderSchema = z.object({
     .string({ error: "O cabeçalho Authorization é obrigatório" })
     .regex(
       /^Bearer \S+$/,
-      "O cabeçalho Authorization deve estar no formato 'Bearer <token>",
+      "O cabeçalho Authorization deve estar no formato Bearer <token>",
     )
     .describe("Token de autenticação no formato: `Bearer <token>`"),
 });

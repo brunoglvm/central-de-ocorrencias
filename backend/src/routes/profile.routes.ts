@@ -46,13 +46,6 @@ export const profileRoutes = async (app: FastifyInstance) => {
         description: "Envia uma nova imagem de perfil.",
         headers: bearerAuthHeaderSchema,
         consumes: ["multipart/form-data"],
-        body: z.object({
-          avatar: z
-            .unknown()
-            .describe(
-              "Arquivo de imagem. Formatos aceitos: JPEG, PNG, WebP, HEIC e HEIF",
-            ),
-        }),
         response: {
           200: z
             .object({
