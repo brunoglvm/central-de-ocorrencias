@@ -13,6 +13,7 @@ import { routes } from "@/routes/index.js";
 import jwtPlugin from "@/plugins/jwt.js";
 import swaggerConfig from "./plugins/swagger.js";
 import errorHandlerPlugin from "./plugins/error-handler.js";
+import { disableRateLimit } from "./tests/performance/config.js";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -33,11 +34,16 @@ app.register(fastifyRateLimit, {
   timeWindow: "1 minute",
 });
 
-app.register(fastifyMultipart, {
-  limits: {
-    files: 1,
-  },
-});
+app.register(
+  fastifyMultipart,
+  disableRateLimit
+    ? {}
+    : {
+        limits: {
+          files: 1,
+        },
+      },
+);
 
 app.register(ScalarApiReference, {
   routePrefix: "/docs",

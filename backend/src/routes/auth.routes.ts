@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import z from "zod";
 import { login } from "@/controllers/auth.controller.js";
+import { disableRateLimit } from "@/tests/performance/config.js";
 
 export const authRoutes = async (app: FastifyInstance) => {
   app.post(
@@ -41,12 +42,14 @@ export const authRoutes = async (app: FastifyInstance) => {
             .describe("Credenciais inválidas"),
         },
       },
-      config: {
-        rateLimit: {
-          max: 5,
-          timeWindow: "1 minute",
-        },
-      },
+      config: disableRateLimit
+        ? {}
+        : {
+            rateLimit: {
+              max: 5,
+              timeWindow: "1 minute",
+            },
+          },
     },
     login,
   );
