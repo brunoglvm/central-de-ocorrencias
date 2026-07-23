@@ -1,10 +1,10 @@
-import { loginPerf } from "./auth/login.perf.js";
 import { baseURL } from "./config.js";
-import { createOccurrencePerf } from "./occurrences/create-occurrence.perf.js";
+import { loginPerf } from "./auth/login.perf.js";
+import { getOccurrencesPerf } from "./occurrences/get-occurrences.perf.js";
 
 const performanceTest = async () => {
-  // await loginPerf(baseURL);
-  await createOccurrencePerf(baseURL);
+  await loginPerf(baseURL);
+  await getOccurrencesPerf(baseURL);
 };
 
 performanceTest();
