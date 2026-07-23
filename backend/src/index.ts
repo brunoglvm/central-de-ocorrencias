@@ -29,21 +29,18 @@ app.register(jwtPlugin);
 
 app.register(fastifySwagger, swaggerConfig);
 
-app.register(fastifyRateLimit, {
-  max: 100,
-  timeWindow: "1 minute",
-});
+if (!disableRateLimit) {
+  app.register(fastifyRateLimit, {
+    max: 100,
+    timeWindow: "1 minute",
+  });
+}
 
-app.register(
-  fastifyMultipart,
-  disableRateLimit
-    ? {}
-    : {
-        limits: {
-          files: 1,
-        },
-      },
-);
+app.register(fastifyMultipart, {
+  limits: {
+    files: 1,
+  },
+});
 
 app.register(ScalarApiReference, {
   routePrefix: "/docs",
