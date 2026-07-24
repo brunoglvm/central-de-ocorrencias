@@ -14,10 +14,7 @@ import {
   occurrenceParamsSchema,
   occurrenceResponseSchema,
 } from "@/schemas/occurrence.schema.js";
-import {
-  OccurrenceSource,
-  OccurrenceStatus,
-} from "../../prisma/src/generated/prisma/enums.js";
+import { OccurrenceStatus } from "../../prisma/src/generated/prisma/enums.js";
 
 export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
   app.post(
@@ -29,22 +26,6 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
         description:
           "Registra uma nova ocorrência informando título, descrição, localização, origem e uma imagem opcional.",
         consumes: ["multipart/form-data"],
-        body: z.object({
-          title: z.string().describe("Título da ocorrência"),
-          description: z.string().describe("Descrição detalhada da ocorrência"),
-          location: z.string().describe("Local onde a ocorrência aconteceu"),
-          source: z
-            .enum(OccurrenceSource)
-            .describe(
-              "Origem da ocorrência: RESIDENT para moradores e EMPLOYEE para funcionários",
-            ),
-          occurrence: z
-            .unknown()
-            .optional()
-            .describe(
-              "Arquivo de imagem opcional da ocorrência. Formatos aceitos: JPEG, PNG, WebP, HEIC e HEIF",
-            ),
-        }),
         response: {
           201: occurrenceResponseSchema.describe(
             "Ocorrência criada com sucesso",
