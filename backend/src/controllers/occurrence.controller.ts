@@ -4,20 +4,15 @@ import { fileTypeFromBuffer } from "file-type";
 import sharp from "sharp";
 import { prisma } from "@/lib/prisma.js";
 import { minioClient } from "@/lib/minio.js";
+import { occurrenceBodySchema } from "@/schemas/occurrence.schema.js";
 import { IMAGE_MIME_TYPES } from "@/constants/image-mime-types.js";
-import {
-  OccurrenceSource,
-  OccurrenceStatus,
-} from "../../prisma/src/generated/prisma/client.js";
+import { OccurrenceStatus } from "../../prisma/src/generated/prisma/client.js";
 
 export const createOccurrence = async (
   request: FastifyRequest,
   reply: FastifyReply,
 ) => {
-  let title: string | undefined;
-  let description: string | undefined;
-  let location: string | undefined;
-  let source: OccurrenceSource | undefined;
+  const fields: Record<string, unknown> = {};
 
   let imageUrl: string | null = null;
   let buffer: Buffer | null = null;
@@ -31,21 +26,27 @@ export const createOccurrence = async (
 
   for await (const part of parts) {
     if (part.type === "field") {
+      if (part.fieldname === "occurrence" && part.value !== "") {
+        return reply.code(400).send({
+          error: "O campo occurrence deve ser um arquivo",
+        });
+      }
+
       switch (part.fieldname) {
         case "title":
-          title = part.value as string;
+          fields.title = part.value;
           break;
 
         case "description":
-          description = part.value as string;
+          fields.description = part.value;
           break;
 
         case "location":
-          location = part.value as string;
+          fields.location = part.value;
           break;
 
         case "source":
-          source = part.value as OccurrenceSource;
+          fields.source = part.value;
           break;
       }
 
@@ -61,11 +62,15 @@ export const createOccurrence = async (
     buffer = await part.toBuffer();
   }
 
-  if (!title || !description || !location || !source) {
-    return reply
-      .code(400)
-      .send({ error: "Campos obrigatórios não preenchidos" });
+  const result = occurrenceBodySchema.safeParse(fields);
+
+  if (!result.success) {
+    return reply.code(400).send({
+      error: result.error.issues[0].message,
+    });
   }
+
+  const { title, description, location, source } = result.data;
 
   if (buffer) {
     const type = await fileTypeFromBuffer(buffer);
