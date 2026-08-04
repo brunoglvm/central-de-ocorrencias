@@ -6,7 +6,7 @@ export function Card({ className, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        "bg-[var(--color-surface-container-low)] shadow-[var(--shadow-ambient)]",
+        "bg-(--color-surface-container-low) shadow-(--shadow-ambient)",
         className,
       )}
       {...props}

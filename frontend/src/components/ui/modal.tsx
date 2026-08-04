@@ -49,7 +49,7 @@ export function Modal({
   }
 
   return (
-    <div className="fixed inset-0 z-[300] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-300 flex items-center justify-center p-4">
       <button
         type="button"
         aria-label="Fechar modal"
@@ -57,12 +57,12 @@ export function Modal({
         onClick={onClose}
       />
 
-      <Card className="relative z-10 w-full max-w-md rounded-[32px] p-6 sm:p-7">
+      <Card className="relative z-10 w-full max-w-md rounded-4xl p-6 sm:p-7">
         <div className="space-y-3">
-          <h2 className="font-display text-3xl tracking-[-0.03em] text-[var(--color-on-surface)]">
+          <h2 className="font-display text-3xl tracking-[-0.03em] text-(--color-on-surface)">
             {title}
           </h2>
-          <p className="text-sm leading-7 text-[var(--color-on-surface-variant)]">
+          <p className="text-sm leading-7 text-(--color-on-surface-variant)">
             {description}
           </p>
         </div>
@@ -70,7 +70,7 @@ export function Modal({
         <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <button
             type="button"
-            className="inline-flex cursor-pointer items-center justify-center rounded-[24px] border border-[rgba(25,28,28,0.12)] bg-transparent px-5 py-3 text-base font-medium text-[var(--color-on-surface-variant)] transition-colors hover:bg-[var(--color-surface-container-highest)] hover:text-[var(--color-on-surface)]"
+            className="inline-flex cursor-pointer items-center justify-center rounded-3xl border border-[rgba(25,28,28,0.12)] bg-transparent px-5 py-3 text-base font-medium text-(--color-on-surface-variant) transition-colors hover:bg-(--color-surface-container-highest) hover:text-(--color-on-surface)"
             style={{ fontSize: "16px", fontWeight: 500 }}
             onClick={onClose}
           >

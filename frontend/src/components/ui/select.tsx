@@ -33,7 +33,8 @@ export function Select({
   value,
 }: SelectProps) {
   const reactId = useId();
-  const selectId = id ?? `${label.toLowerCase().replace(/\s+/g, "-")}-${reactId}`;
+  const selectId =
+    id ?? `${label.toLowerCase().replace(/\s+/g, "-")}-${reactId}`;
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -69,9 +70,7 @@ export function Select({
 
   return (
     <label className="block space-y-2" htmlFor={selectId}>
-      <span className="text-sm text-[var(--color-on-surface-variant)]">
-        {label}
-      </span>
+      <span className="text-sm text-(--color-on-surface-variant)">{label}</span>
 
       <div className="relative" ref={containerRef}>
         <button
@@ -81,7 +80,7 @@ export function Select({
           aria-expanded={isOpen}
           aria-haspopup="listbox"
           className={cn(
-            "flex min-h-12 w-full cursor-pointer items-center justify-between rounded-[16px] bg-[var(--color-surface-container-lowest)] px-4 py-3 text-left text-sm text-[var(--color-on-surface)] outline-none transition-colors focus:ring-2 focus:ring-[rgba(62,98,103,0.2)]",
+            "flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-(--color-surface-container-lowest) px-4 py-3 text-left text-sm text-(--color-on-surface) outline-none transition-colors focus:ring-2 focus:ring-[rgba(62,98,103,0.2)]",
             error && "ring-2 ring-[rgba(185,28,28,0.18)]",
             className,
           )}
@@ -90,12 +89,16 @@ export function Select({
           }}
           onClick={() => setIsOpen((current) => !current)}
         >
-          <span className={cn(!selectedOption && "text-[var(--color-on-surface-variant)]")}>
+          <span
+            className={cn(
+              !selectedOption && "text-(--color-on-surface-variant)",
+            )}
+          >
             {selectedOption?.label ?? placeholder}
           </span>
           <IconChevronDown
             className={cn(
-              "h-4 w-4 text-[var(--color-on-surface-variant)] transition-transform",
+              "h-4 w-4 text-(--color-on-surface-variant) transition-transform",
               isOpen && "rotate-180",
             )}
             stroke={1.8}
@@ -106,7 +109,7 @@ export function Select({
           <div
             id={`${selectId}-listbox`}
             role="listbox"
-            className="absolute z-30 mt-2 max-h-64 w-full overflow-auto rounded-[16px] bg-[var(--color-surface-container-lowest)] p-2 shadow-[var(--shadow-ambient)]"
+            className="absolute z-30 mt-2 max-h-64 w-full overflow-auto rounded-2xl bg-(--color-surface-container-lowest) p-2 shadow-(--shadow-ambient)"
           >
             {options.map((option) => {
               const isSelected = option.value === value;
@@ -118,10 +121,10 @@ export function Select({
                   role="option"
                   aria-selected={isSelected}
                   className={cn(
-                    "flex w-full cursor-pointer items-center rounded-[16px] px-3 py-3 text-left text-sm text-[var(--color-on-surface)] transition-colors",
+                    "flex w-full cursor-pointer items-center rounded-2xl px-3 py-3 text-left text-sm text-(--color-on-surface) transition-colors",
                     isSelected
-                      ? "bg-[var(--color-surface-container-highest)]"
-                      : "hover:bg-[var(--color-surface-container-lowest)]",
+                      ? "bg-(--color-surface-container-highest)"
+                      : "hover:bg-(--color-surface-container-lowest)",
                   )}
                   onClick={() => handleSelect(option.value)}
                 >
@@ -134,7 +137,7 @@ export function Select({
       </div>
 
       {error ? (
-        <p className="text-sm text-[var(--color-danger-strong)]">{error}</p>
+        <p className="text-sm text-(--color-danger-strong)">{error}</p>
       ) : null}
     </label>
   );

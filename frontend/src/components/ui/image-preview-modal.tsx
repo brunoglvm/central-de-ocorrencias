@@ -45,7 +45,7 @@ export function ImagePreviewModal({
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-6">
+    <div className="fixed inset-0 z-300 flex items-center justify-center p-4 sm:p-6">
       <button
         type="button"
         aria-label="Fechar visualizacao da imagem"
@@ -58,14 +58,14 @@ export function ImagePreviewModal({
           <button
             type="button"
             aria-label="Fechar visualizacao"
-            className="flex h-8 w-8 cursor-pointer items-center justify-center text-white transition-colors hover:text-[var(--color-surface-container-highest)]"
+            className="flex h-8 w-8 cursor-pointer items-center justify-center text-white transition-colors hover:text-(--color-surface-container-highest)"
             onClick={onClose}
           >
             <IconX className="h-5 w-5" stroke={1.8} />
           </button>
         </div>
 
-        <div className="flex w-fit max-w-full flex-1 items-center justify-center overflow-hidden rounded-[28px] bg-[var(--color-surface)] shadow-[var(--shadow-ambient)]">
+        <div className="flex w-fit max-w-full flex-1 items-center justify-center overflow-hidden rounded-[28px] bg-(--color-surface) shadow-(--shadow-ambient)">
           <Image
             src={imageUrl}
             alt={fileName || "Imagem anexada"}

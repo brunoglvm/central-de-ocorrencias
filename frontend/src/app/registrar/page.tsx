@@ -20,10 +20,10 @@ export default function RegisterPublicPage() {
         />
 
         <span
-          className="mt-3 flex flex-col leading-none text-[var(--color-on-surface-variant)]"
+          className="mt-3 flex flex-col leading-none text-(--color-on-surface-variant)"
           style={{ fontFamily: "var(--font-brand), serif", fontWeight: 500 }}
         >
-          <span className="w-fit border-b border-[var(--color-on-surface-variant)] text-base uppercase">
+          <span className="w-fit border-b border-(--color-on-surface-variant) text-base uppercase">
             Concept Garden
           </span>
           <span className="mt-1 text-[10px] uppercase">

@@ -168,7 +168,7 @@ export function RegisterForm() {
         </div>
 
         {feedback ? (
-          <div className="rounded-[24px] bg-[var(--color-surface-container-highest)] px-4 py-3 text-sm leading-7 text-[var(--color-on-surface)]">
+          <div className="rounded-3xl bg-(--color-surface-container-highest) px-4 py-3 text-sm leading-7 text-(--color-on-surface)">
             {feedback}
           </div>
         ) : null}

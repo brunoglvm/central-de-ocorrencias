@@ -42,9 +42,9 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-[100] hidden w-full lg:block">
-        <div className="w-full border-b border-[rgba(25,28,28,0.08)] bg-[rgba(243,244,243,0.82)] px-4 py-3 shadow-[var(--shadow-ambient)] backdrop-blur-xl sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-[1600px] grid-cols-[1fr_auto_1fr] items-center">
+      <header className="sticky top-0 z-100 hidden w-full lg:block">
+        <div className="w-full border-b border-[rgba(25,28,28,0.08)] bg-[rgba(243,244,243,0.82)] px-4 py-3 shadow-(--shadow-ambient) backdrop-blur-xl sm:px-6 lg:px-8">
+          <div className="mx-auto grid max-w-400 grid-cols-[1fr_auto_1fr] items-center">
             <div>
               <Link
                 href="/admin/quadro"
@@ -59,13 +59,13 @@ export function Navbar() {
                   priority
                 />
                 <span
-                  className="flex flex-col leading-none text-[var(--color-on-surface-variant)]"
+                  className="flex flex-col leading-none text-(--color-on-surface-variant)"
                   style={{
                     fontFamily: "var(--font-brand), serif",
                     fontWeight: 500,
                   }}
                 >
-                  <span className="w-fit border-b border-[var(--color-on-surface-variant)] text-sm uppercase">
+                  <span className="w-fit border-b border-(--color-on-surface-variant) text-sm uppercase">
                     Concept Garden
                   </span>
                   <span className="mt-1 text-[10px] uppercase">
@@ -88,8 +88,8 @@ export function Navbar() {
                     className={cn(
                       "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-colors",
                       isActive
-                        ? "bg-[var(--color-primary-container)]"
-                        : "text-[var(--color-on-surface-variant)] hover:bg-[var(--color-surface-container-highest)] hover:text-[var(--color-primary-strong)]",
+                        ? "bg-(--color-primary-container)"
+                        : "text-(--color-on-surface-variant) hover:bg-(--color-surface-container-highest) hover:text-(--color-primary-strong)",
                     )}
                     style={isActive ? { color: "#fff" } : undefined}
                   >
@@ -109,7 +109,7 @@ export function Navbar() {
                 <button
                   type="button"
                   aria-label="Sair"
-                  className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-[var(--color-on-surface-variant)] transition-colors hover:text-[var(--color-danger-strong)]"
+                  className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-(--color-on-surface-variant) transition-colors hover:text-(--color-danger-strong)"
                   onClick={() => setIsLogoutModalOpen(true)}
                 >
                   <IconLogout2
@@ -123,7 +123,7 @@ export function Navbar() {
         </div>
       </header>
 
-      <nav className="fixed inset-x-4 bottom-4 z-[100] rounded-[28px] bg-[rgba(249,249,248,0.85)] p-2 shadow-[var(--shadow-ambient)] backdrop-blur-xl lg:hidden">
+      <nav className="fixed inset-x-4 bottom-4 z-100 rounded-[28px] bg-[rgba(249,249,248,0.85)] p-2 shadow-(--shadow-ambient) backdrop-blur-xl lg:hidden">
         <div className="grid grid-cols-3 gap-1">
           {navigationItems.map((item) => {
             const Icon = item.icon;
@@ -138,8 +138,8 @@ export function Navbar() {
                 className={cn(
                   "flex flex-col items-center gap-1 rounded-[22px] px-3 py-3 text-xs transition-colors",
                   isActive
-                    ? "bg-[var(--color-primary-container)]"
-                    : "text-[var(--color-on-surface-variant)]",
+                    ? "bg-(--color-primary-container)"
+                    : "text-(--color-on-surface-variant)",
                 )}
                 style={isActive ? { color: "#fff" } : undefined}
               >

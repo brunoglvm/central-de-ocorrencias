@@ -1,17 +1,10 @@
 "use client";
 
-import {
-  cloneElement,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-  type ReactElement,
-} from "react";
+import { cloneElement, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 type TooltipProps = {
-  children: ReactElement;
+  children: React.ReactElement<React.HTMLAttributes<HTMLElement>>;
   content: string;
   offset?: number;
 };
@@ -22,11 +15,7 @@ type TooltipPosition = {
   translateY: string;
 };
 
-export function Tooltip({
-  children,
-  content,
-  offset = 8,
-}: TooltipProps) {
+export function Tooltip({ children, content, offset = 8 }: TooltipProps) {
   const tooltipId = useId();
   const triggerRef = useRef<HTMLSpanElement>(null);
   const tooltipRef = useRef<HTMLSpanElement>(null);
@@ -90,7 +79,7 @@ export function Tooltip({
               id={tooltipId}
               ref={tooltipRef}
               role="tooltip"
-              className="pointer-events-none fixed z-[200] rounded-full bg-[rgba(25,28,28,0.72)] px-3 py-1 text-xs whitespace-nowrap text-[var(--color-surface)] shadow-[var(--shadow-ambient)]"
+              className="pointer-events-none fixed z-200 rounded-full bg-[rgba(25,28,28,0.72)] px-3 py-1 text-xs whitespace-nowrap text-(--color-surface) shadow-(--shadow-ambient)"
               style={{
                 left: position?.left ?? -9999,
                 opacity: position ? 1 : 0,

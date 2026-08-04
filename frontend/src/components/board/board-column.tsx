@@ -29,7 +29,7 @@ export function BoardColumn({
         <section
           ref={provided.innerRef}
           {...provided.droppableProps}
-          className="flex h-[calc(100vh-10rem)] w-[24rem] shrink-0 flex-col rounded-[20px] bg-[var(--color-surface-container-low)] p-3"
+          className="flex h-[calc(100vh-10rem)] w-[24rem] shrink-0 flex-col rounded-[20px] bg-(--color-surface-container-low) p-3"
         >
           <div className="flex items-center justify-between px-2 pb-3 pt-1">
             <div
@@ -38,7 +38,7 @@ export function BoardColumn({
               <span className="h-4 w-4 rounded-full border-2 border-current bg-current/15" />
               <p>{title}</p>
             </div>
-            <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface-container-highest)] px-1.5 text-xs text-[var(--color-on-surface-variant)]">
+            <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-(--color-surface-container-highest) px-1.5 text-xs text-(--color-on-surface-variant)">
               {incidents.length}
             </span>
           </div>
@@ -46,8 +46,8 @@ export function BoardColumn({
           <div
             className={
               snapshot.isDraggingOver
-                ? "min-h-24 flex-1 space-y-3 overflow-y-auto rounded-[16px] bg-[rgba(225,227,226,0.72)] p-1 pr-2 transition-colors"
-                : "min-h-24 flex-1 space-y-3 overflow-y-auto rounded-[16px] p-1 pr-2 transition-colors"
+                ? "min-h-24 flex-1 space-y-3 overflow-y-auto rounded-2xl bg-[rgba(225,227,226,0.72)] p-1 pr-2 transition-colors"
+                : "min-h-24 flex-1 space-y-3 overflow-y-auto rounded-2xl p-1 pr-2 transition-colors"
             }
           >
             {incidents.map((incident, index) => (

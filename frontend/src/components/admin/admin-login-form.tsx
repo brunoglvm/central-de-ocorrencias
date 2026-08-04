@@ -14,7 +14,7 @@ export function AdminLoginForm() {
     <Card className="w-full max-w-md rounded-[36px] p-6 shadow-none sm:p-8">
       <form className="space-y-6">
         <div className="flex justify-center">
-          <div className="relative h-24 w-24 overflow-hidden rounded-full bg-[var(--color-surface-container-highest)]">
+          <div className="relative h-24 w-24 overflow-hidden rounded-full bg-(--color-surface-container-highest)">
             <Image
               src="/pfp.webp"
               alt="Condomínio"
@@ -45,11 +45,9 @@ export function AdminLoginForm() {
           endAdornment={
             <button
               type="button"
-              aria-label={
-                isPasswordVisible ? "Ocultar senha" : "Mostrar senha"
-              }
+              aria-label={isPasswordVisible ? "Ocultar senha" : "Mostrar senha"}
               aria-pressed={isPasswordVisible}
-              className="flex h-5 w-5 cursor-pointer items-center justify-center text-[var(--color-on-surface-variant)] transition-colors hover:text-[var(--color-on-surface)]"
+              className="flex h-5 w-5 cursor-pointer items-center justify-center text-(--color-on-surface-variant) transition-colors hover:text-(--color-on-surface)"
               onClick={() => setIsPasswordVisible((current) => !current)}
             >
               {isPasswordVisible ? (

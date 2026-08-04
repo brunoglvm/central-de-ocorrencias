@@ -49,7 +49,7 @@ export function EditableAvatar({
         <button
           type="button"
           aria-label="Alterar foto"
-          className={`relative cursor-pointer overflow-hidden rounded-full bg-[var(--color-surface-container-highest)] ${className ?? ""}`}
+          className={`relative cursor-pointer overflow-hidden rounded-full bg-(--color-surface-container-highest) ${className ?? ""}`}
           onClick={() => inputRef.current?.click()}
           style={{ height: size, width: size }}
         >
@@ -60,7 +60,7 @@ export function EditableAvatar({
             className="object-cover"
             sizes={`${size}px`}
           />
-          <span className="absolute inset-0 flex items-center justify-center bg-[rgba(25,28,28,0)] text-[var(--color-surface)] opacity-0 transition-all duration-200 group-hover:bg-[rgba(25,28,28,0.3)] group-hover:opacity-100">
+          <span className="absolute inset-0 flex items-center justify-center bg-[rgba(25,28,28,0)] text-(--color-surface) opacity-0 transition-all duration-200 group-hover:bg-[rgba(25,28,28,0.3)] group-hover:opacity-100">
             <IconPhoto className="h-4 w-4" stroke={2} />
           </span>
         </button>
