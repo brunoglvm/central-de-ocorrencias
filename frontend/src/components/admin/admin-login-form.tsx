@@ -16,7 +16,7 @@ export function AdminLoginForm() {
         <div className="flex justify-center">
           <div className="relative h-24 w-24 overflow-hidden rounded-full bg-(--color-surface-container-highest)">
             <Image
-              src="/pfp.webp"
+              src="/images/pfp.webp"
               alt="Condomínio"
               fill
               className="object-cover"

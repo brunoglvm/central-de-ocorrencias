@@ -51,7 +51,7 @@ export function Navbar() {
                 className="inline-flex items-center gap-3"
               >
                 <Image
-                  src="/logo.png"
+                  src="/images/logo.png"
                   alt="Central de Ocorrências"
                   width={34}
                   height={36}
@@ -103,7 +103,11 @@ export function Navbar() {
             </nav>
 
             <div className="flex items-center justify-end gap-3">
-              <EditableAvatar alt="Perfil" initialSrc="/pfp.webp" size={36} />
+              <EditableAvatar
+                alt="Perfil"
+                initialSrc="/images/pfp.webp"
+                size={36}
+              />
 
               <Tooltip content="Sair">
                 <button

@@ -7,7 +7,7 @@ export const mockIncidents: Incident[] = [
     description:
       "Moradores relataram acúmulo de água no hall do bloco B desde a manhã, com risco de escorregamento.",
     attachmentName: "fachada-condominio.jpg",
-    attachmentUrl: "/mock.jpg",
+    attachmentUrl: "/images/mock.jpg",
     category: "Manutenção",
     createdAt: "02 abr 2026",
     status: "open",
@@ -33,7 +33,7 @@ export const mockIncidents: Incident[] = [
     description:
       "Equipe identificou falha intermitente no fechamento automático. Chamado técnico já foi aberto.",
     attachmentName: "fachada-condominio.jpg",
-    attachmentUrl: "/mock.jpg",
+    attachmentUrl: "/images/mock.jpg",
     category: "Segurança",
     createdAt: "31 mar 2026",
     status: "in_progress",
@@ -71,7 +71,7 @@ export const mockIncidents: Incident[] = [
     description:
       "Foi registrado que o interfone da portaria apresentava falhas de áudio e interrupções frequentes nas chamadas.",
     attachmentName: "fachada-condominio.jpg",
-    attachmentUrl: "/mock.jpg",
+    attachmentUrl: "/images/mock.jpg",
     category: "Infraestrutura",
     createdAt: "26 mar 2026",
     status: "resolved",
@@ -97,7 +97,7 @@ export const mockIncidents: Incident[] = [
     description:
       "Área de circulação ficou escorregadia após lavagem, sem sinalização adequada no momento do registro.",
     attachmentName: "fachada-condominio.jpg",
-    attachmentUrl: "/mock.jpg",
+    attachmentUrl: "/images/mock.jpg",
     category: "Segurança",
     createdAt: "03 abr 2026",
     status: "open",
@@ -135,7 +135,7 @@ export const mockIncidents: Incident[] = [
     description:
       "Moradores observaram manchas úmidas e gotejamento leve no teto da garagem, com receio de agravamento da infiltração.",
     attachmentName: "fachada-condominio.jpg",
-    attachmentUrl: "/mock.jpg",
+    attachmentUrl: "/images/mock.jpg",
     category: "Manutenção",
     createdAt: "31 mar 2026",
     status: "in_progress",
@@ -161,7 +161,7 @@ export const mockIncidents: Incident[] = [
     description:
       "Foi observado um trincado visível no espelho interno do elevador, causando preocupação entre os moradores.",
     attachmentName: "fachada-condominio.jpg",
-    attachmentUrl: "/mock.jpg",
+    attachmentUrl: "/images/mock.jpg",
     category: "Manutenção",
     createdAt: "29 mar 2026",
     status: "in_progress",
@@ -187,7 +187,7 @@ export const mockIncidents: Incident[] = [
     description:
       "Moradores relataram instabilidade no corrimão da escada do bloco B, com risco para quem utiliza o acesso diariamente.",
     attachmentName: "fachada-condominio.jpg",
-    attachmentUrl: "/mock.jpg",
+    attachmentUrl: "/images/mock.jpg",
     category: "Manutenção",
     createdAt: "25 mar 2026",
     status: "resolved",

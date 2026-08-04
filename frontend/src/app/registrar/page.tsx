@@ -11,7 +11,7 @@ export default function RegisterPublicPage() {
     <div className="mx-auto flex w-full max-w-3xl flex-col items-center gap-10">
       <div className="flex flex-col items-center text-center">
         <Image
-          src="/logo.png"
+          src="/images/logo.png"
           alt="Concept Garden"
           width={34}
           height={36}
