@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/occurrences"
+  url: '{{baseUrl}}/occurrences'
   headers:
     - name: Authorization
       value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzg0MDY1MzA4LCJleHAiOjE3ODQ2NzAxMDh9.DEQ_r5vfjV3vw1Laf5DwOPSqdzyABBR2D2iwgjETwSU

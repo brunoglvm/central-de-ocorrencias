@@ -1,20 +1,20 @@
-import autocannon from "autocannon";
-import { defaultOptions, adminEmail, adminPassword } from "../config.js";
+import autocannon from 'autocannon'
+import { defaultOptions, adminEmail, adminPassword } from '../config.js'
 
 export const loginPerf = async (baseURL: string) => {
   const result = await autocannon({
     ...defaultOptions,
-    title: "POST /auth/login",
+    title: 'POST /auth/login',
     url: `${baseURL}/auth/login`,
-    method: "POST",
+    method: 'POST',
     headers: {
-      "content-type": "application/json",
+      'content-type': 'application/json',
     },
     body: JSON.stringify({
       email: adminEmail,
       password: adminPassword,
     }),
-  });
+  })
 
-  console.log(result);
-};
+  console.log(result)
+}

@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/public/occurrences"
+  url: '{{baseUrl}}/public/occurrences'
   body:
     type: multipart-form
     data:

@@ -5,7 +5,7 @@ info:
 
 http:
   method: PATCH
-  url: "{{baseUrl}}/occurrences/10/status"
+  url: '{{baseUrl}}/occurrences/10/status'
   headers:
     - name: Authorization
       value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzgzNDU4NDI2LCJleHAiOjE3ODQwNjMyMjZ9.dJN-SJDzbaovG9anC5XCqUgNQa7_Ewii0ncxGtE1N3U

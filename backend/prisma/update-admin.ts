@@ -1,8 +1,8 @@
-import { prisma } from "../src/lib/prisma.js";
-import { updateAdminCredentials } from "./seeds/admin.seed.js";
+import { prisma } from '../src/lib/prisma.js'
+import { updateAdminCredentials } from './seeds/admin.seed.js'
 
 async function main() {
-  await updateAdminCredentials();
+  await updateAdminCredentials()
 }
 
-main().finally(() => prisma.$disconnect());
+main().finally(() => prisma.$disconnect())

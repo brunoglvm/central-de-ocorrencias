@@ -1,20 +1,17 @@
-import { FastifyPluginAsync } from "fastify";
-import fp from "fastify-plugin";
-import { Prisma } from "../../prisma/src/generated/prisma/client.js";
+import { FastifyPluginAsync } from 'fastify'
+import fp from 'fastify-plugin'
+import { Prisma } from '../../prisma/src/generated/prisma/client.js'
 
 const errorHandlerPlugin: FastifyPluginAsync = async (app) => {
   app.setErrorHandler((error, _request, reply) => {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2025"
-    ) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
       return reply.status(404).send({
-        error: "Conteúdo não encontrado",
-      });
+        error: 'Conteúdo não encontrado',
+      })
     }
 
-    throw error;
-  });
-};
+    throw error
+  })
+}
 
-export default fp(errorHandlerPlugin);
+export default fp(errorHandlerPlugin)

@@ -1,12 +1,9 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest } from 'fastify'
 
-export const authenticate = async (
-  request: FastifyRequest,
-  reply: FastifyReply,
-) => {
+export const authenticate = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
-    await request.jwtVerify();
+    await request.jwtVerify()
   } catch {
-    return reply.code(401).send({ error: "Não autorizado" });
+    return reply.code(401).send({ error: 'Não autorizado' })
   }
-};
+}
