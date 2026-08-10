@@ -1,238 +1,192 @@
-"use client";
+'use client'
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import { DragDropContext, type DropResult } from "@hello-pangea/dnd";
-import Image from "next/image";
-import {
-  IconClock,
-  IconHistory,
-  IconMapPin,
-  IconTrash,
-  IconUser,
-  IconUserCog,
-  IconX,
-} from "@tabler/icons-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { BoardColumn } from "@/components/board/board-column";
-import { Button } from "@/components/ui/button";
-import { Modal } from "@/components/ui/modal";
-import { incidentColumns, statusMeta } from "@/constants/incidents";
-import { groupIncidentsByStatus } from "@/lib/incidents";
-import {
-  readStoredIncidents,
-  writeStoredIncidents,
-} from "@/lib/incident-storage";
-import type { Incident, IncidentStatus } from "@/types/incident";
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react'
+import { DragDropContext, type DropResult } from '@hello-pangea/dnd'
+import Image from 'next/image'
+import { IconClock, IconHistory, IconMapPin, IconTrash, IconUser, IconUserCog, IconX } from '@tabler/icons-react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { BoardColumn } from '@/components/board/board-column'
+import { Button } from '@/components/ui/button'
+import { Modal } from '@/components/ui/modal'
+import { incidentColumns, statusMeta } from '@/constants/incidents'
+import { groupIncidentsByStatus } from '@/lib/incidents'
+import { readStoredIncidents, writeStoredIncidents } from '@/lib/incident-storage'
+import type { Incident, IncidentStatus } from '@/types/incident'
 
 type BoardClientProps = {
-  initialIncidents: Incident[];
-};
+  initialIncidents: Incident[]
+}
 
 const statusIndicatorVariants: Record<IncidentStatus, string> = {
-  open: "text-[var(--badge-open-text)]",
-  in_progress: "text-[var(--badge-progress-text)]",
-  resolved: "text-[var(--badge-resolved-text)]",
-};
+  open: 'text-[var(--badge-open-text)]',
+  in_progress: 'text-[var(--badge-progress-text)]',
+  resolved: 'text-[var(--badge-resolved-text)]',
+}
 
 const statusBadgeVariants: Record<IncidentStatus, string> = {
-  open: "bg-[var(--badge-open-text)] text-[var(--color-surface)]",
-  in_progress: "bg-[var(--badge-progress-text)] text-[var(--color-surface)]",
-  resolved: "bg-[var(--badge-resolved-text)] text-[var(--color-surface)]",
-};
+  open: 'bg-[var(--badge-open-text)] text-[var(--color-surface)]',
+  in_progress: 'bg-[var(--badge-progress-text)] text-[var(--color-surface)]',
+  resolved: 'bg-[var(--badge-resolved-text)] text-[var(--color-surface)]',
+}
 
 const statusLabels: Record<IncidentStatus, string> = {
-  open: "Abertas",
-  in_progress: "Em andamento",
-  resolved: "Resolvidas",
-};
+  open: 'Abertas',
+  in_progress: 'Em andamento',
+  resolved: 'Resolvidas',
+}
 
 export function BoardClient({ initialIncidents }: BoardClientProps) {
-  const [incidents, setIncidents] = useState(initialIncidents);
-  const [isReady, setIsReady] = useState(false);
-  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false);
+  const [incidents, setIncidents] = useState(initialIncidents)
+  const [isReady, setIsReady] = useState(false)
+  const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false)
   const isMounted = useSyncExternalStore(
     () => () => undefined,
     () => true,
     () => false,
-  );
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const selectedIncidentId = searchParams.get("incident");
-  const activeIncidents = useMemo(
-    () => incidents.filter((incident) => !incident.archivedAt),
-    [incidents],
-  );
+  )
+  const pathname = usePathname()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const selectedIncidentId = searchParams.get('incident')
+  const activeIncidents = useMemo(() => incidents.filter((incident) => !incident.archivedAt), [incidents])
 
-  const incidentsByStatus = useMemo(
-    () => groupIncidentsByStatus(activeIncidents),
-    [activeIncidents],
-  );
+  const incidentsByStatus = useMemo(() => groupIncidentsByStatus(activeIncidents), [activeIncidents])
   const selectedIncident = useMemo(
     () =>
-      selectedIncidentId
-        ? (activeIncidents.find(
-            (incident) => incident.id === selectedIncidentId,
-          ) ?? null)
-        : null,
+      selectedIncidentId ? (activeIncidents.find((incident) => incident.id === selectedIncidentId) ?? null) : null,
     [activeIncidents, selectedIncidentId],
-  );
+  )
 
   useEffect(() => {
     const frameId = window.requestAnimationFrame(() => {
-      setIncidents(readStoredIncidents(initialIncidents));
-      setIsReady(true);
-    });
+      setIncidents(readStoredIncidents(initialIncidents))
+      setIsReady(true)
+    })
 
-    return () => window.cancelAnimationFrame(frameId);
-  }, [initialIncidents]);
+    return () => window.cancelAnimationFrame(frameId)
+  }, [initialIncidents])
 
   useEffect(() => {
     if (!isReady) {
-      return;
+      return
     }
 
-    writeStoredIncidents(incidents);
-  }, [incidents, isReady]);
+    writeStoredIncidents(incidents)
+  }, [incidents, isReady])
 
   function handleSelectIncident(incidentId: string) {
-    const nextParams = new URLSearchParams(searchParams.toString());
-    nextParams.set("incident", incidentId);
-    router.push(`${pathname}?${nextParams.toString()}`);
+    const nextParams = new URLSearchParams(searchParams.toString())
+    nextParams.set('incident', incidentId)
+    router.push(`${pathname}?${nextParams.toString()}`)
   }
 
   function handleCloseDetails() {
-    const nextParams = new URLSearchParams(searchParams.toString());
-    nextParams.delete("incident");
-    router.push(
-      nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname,
-    );
+    const nextParams = new URLSearchParams(searchParams.toString())
+    nextParams.delete('incident')
+    router.push(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
   }
 
   useEffect(() => {
     if (!selectedIncidentId) {
-      return;
+      return
     }
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        const nextParams = new URLSearchParams(searchParams.toString());
-        nextParams.delete("incident");
-        router.push(
-          nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname,
-        );
+      if (event.key === 'Escape') {
+        const nextParams = new URLSearchParams(searchParams.toString())
+        nextParams.delete('incident')
+        router.push(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown)
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [selectedIncidentId, pathname, router, searchParams]);
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [selectedIncidentId, pathname, router, searchParams])
 
   useEffect(() => {
     if (!selectedIncidentId || selectedIncident) {
-      return;
+      return
     }
 
-    const nextParams = new URLSearchParams(searchParams.toString());
-    nextParams.delete("incident");
-    router.replace(
-      nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname,
-    );
-  }, [pathname, router, searchParams, selectedIncident, selectedIncidentId]);
+    const nextParams = new URLSearchParams(searchParams.toString())
+    nextParams.delete('incident')
+    router.replace(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
+  }, [pathname, router, searchParams, selectedIncident, selectedIncidentId])
 
   function handleDragEnd(result: DropResult) {
-    const { destination, source } = result;
+    const { destination, source } = result
 
     if (!destination) {
-      return;
+      return
     }
 
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return
     }
 
     setIncidents((currentIncidents) => {
-      const archivedIncidents = currentIncidents.filter(
-        (incident) => incident.archivedAt,
-      );
-      const activeCurrentIncidents = currentIncidents.filter(
-        (incident) => !incident.archivedAt,
-      );
-      const grouped = groupIncidentsByStatus(activeCurrentIncidents);
-      const sourceStatus = source.droppableId as IncidentStatus;
-      const destinationStatus = destination.droppableId as IncidentStatus;
-      const sourceItems = [...grouped[sourceStatus]];
-      const destinationItems =
-        sourceStatus === destinationStatus
-          ? sourceItems
-          : [...grouped[destinationStatus]];
+      const archivedIncidents = currentIncidents.filter((incident) => incident.archivedAt)
+      const activeCurrentIncidents = currentIncidents.filter((incident) => !incident.archivedAt)
+      const grouped = groupIncidentsByStatus(activeCurrentIncidents)
+      const sourceStatus = source.droppableId as IncidentStatus
+      const destinationStatus = destination.droppableId as IncidentStatus
+      const sourceItems = [...grouped[sourceStatus]]
+      const destinationItems = sourceStatus === destinationStatus ? sourceItems : [...grouped[destinationStatus]]
 
-      const [movedIncident] = sourceItems.splice(source.index, 1);
+      const [movedIncident] = sourceItems.splice(source.index, 1)
 
       if (!movedIncident) {
-        return currentIncidents;
+        return currentIncidents
       }
 
       destinationItems.splice(destination.index, 0, {
         ...movedIncident,
         status: destinationStatus,
-      });
+      })
 
       const nextGroups = {
         ...grouped,
         [sourceStatus]: sourceItems,
         [destinationStatus]: destinationItems,
-      };
+      }
 
-      return [
-        ...incidentColumns.flatMap((status) => nextGroups[status]),
-        ...archivedIncidents,
-      ];
-    });
+      return [...incidentColumns.flatMap((status) => nextGroups[status]), ...archivedIncidents]
+    })
   }
 
   function handleArchiveIncident() {
     if (!selectedIncident) {
-      return;
+      return
     }
 
     setIncidents((currentIncidents) =>
       currentIncidents.map((incident) =>
-        incident.id === selectedIncident.id
-          ? { ...incident, archivedAt: new Date().toISOString() }
-          : incident,
+        incident.id === selectedIncident.id ? { ...incident, archivedAt: new Date().toISOString() } : incident,
       ),
-    );
-    handleCloseDetails();
-    router.push("/admin/historico");
+    )
+    handleCloseDetails()
+    router.push('/admin/historico')
   }
 
   function handleRequestRemoveIncident() {
-    setIsRemoveModalOpen(true);
+    setIsRemoveModalOpen(true)
   }
 
   function handleRemoveIncident() {
     if (!selectedIncident) {
-      return;
+      return
     }
 
-    setIncidents((currentIncidents) =>
-      currentIncidents.filter(
-        (incident) => incident.id !== selectedIncident.id,
-      ),
-    );
-    setIsRemoveModalOpen(false);
-    handleCloseDetails();
+    setIncidents((currentIncidents) => currentIncidents.filter((incident) => incident.id !== selectedIncident.id))
+    setIsRemoveModalOpen(false)
+    handleCloseDetails()
   }
 
   return (
@@ -261,7 +215,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                 key={status}
                 className="flex h-[calc(100vh-10rem)] w-[24rem] shrink-0 flex-col rounded-[20px] bg-(--color-surface-container-low) p-3 shadow-(--shadow-ambient)"
               >
-                <div className="flex items-center justify-between px-2 pb-3 pt-1">
+                <div className="flex items-center justify-between px-2 pt-1 pb-3">
                   <div
                     className={`inline-flex items-center gap-2 text-base font-semibold ${statusIndicatorVariants[status]}`}
                   >
@@ -281,7 +235,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                     >
                       <button
                         type="button"
-                        className="line-clamp-2 cursor-pointer text-left text-sm font-medium leading-5 text-(--color-on-surface) decoration-(--color-primary-strong) underline-offset-4 transition-colors hover:text-(--color-primary-strong) hover:underline"
+                        className="line-clamp-2 cursor-pointer text-left text-sm leading-5 font-medium text-(--color-on-surface) decoration-(--color-primary-strong) underline-offset-4 transition-colors hover:text-(--color-primary-strong) hover:underline"
                         onClick={() => handleSelectIncident(incident.id)}
                       >
                         {incident.title}
@@ -296,7 +250,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
       )}
 
       {selectedIncident ? (
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 top-15.25 z-80 hidden lg:block">
+        <div className="pointer-events-none fixed inset-x-0 top-15.25 bottom-0 z-80 hidden lg:block">
           <button
             type="button"
             aria-label="Fechar detalhes da ocorrência"
@@ -304,7 +258,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             onClick={handleCloseDetails}
           />
 
-          <aside className="sheet-enter pointer-events-auto absolute bottom-0 right-0 top-0 flex w-full max-w-160 flex-col rounded-bl-[20px] rounded-tl-[20px] border border-r-0 border-[rgba(25,28,28,0.08)] bg-[#f8f9f9]">
+          <aside className="sheet-enter pointer-events-auto absolute top-0 right-0 bottom-0 flex w-full max-w-160 flex-col rounded-tl-[20px] rounded-bl-[20px] border border-r-0 border-[rgba(25,28,28,0.08)] bg-[#f8f9f9]">
             <div className="-mb-3 flex items-center justify-end rounded-tl-[20px] px-5 pt-3 sm:px-6 sm:pt-4">
               <button
                 type="button"
@@ -315,7 +269,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                 <IconX className="h-5 w-5" stroke={1.8} />
               </button>
             </div>
-            <div className="flex-1 space-y-4 overflow-y-auto px-5 pb-5 pt-0 sm:px-6 sm:pb-6 sm:pt-0">
+            <div className="flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6">
               <div className="space-y-4">
                 <h2 className="pr-8 font-display text-4xl tracking-[-0.04em] text-(--color-on-surface) sm:pr-10">
                   {selectedIncident.title}
@@ -331,7 +285,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                 <div className="border-t border-[rgba(25,28,28,0.08)] pt-5">
                   <div className="rounded-[20px] border border-[rgba(25,28,28,0.08)] px-4 py-4">
                     <div className="flex items-center gap-2 text-sm text-(--color-on-surface-variant)">
-                      {selectedIncident.userType === "staff" ? (
+                      {selectedIncident.userType === 'staff' ? (
                         <IconUserCog className="h-4 w-4" stroke={1.8} />
                       ) : (
                         <IconUser className="h-4 w-4" stroke={1.8} />
@@ -339,9 +293,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                       <p>
                         <span>Registrado por: </span>
                         <span className="font-medium text-(--color-primary-strong)">
-                          {selectedIncident.userType === "resident"
-                            ? "Morador"
-                            : "Funcionário"}
+                          {selectedIncident.userType === 'resident' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
@@ -350,14 +302,11 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                       {selectedIncident.description}
                     </p>
 
-                    {selectedIncident.hasAttachment &&
-                    selectedIncident.attachmentUrl ? (
+                    {selectedIncident.hasAttachment && selectedIncident.attachmentUrl ? (
                       <div className="mt-4 overflow-hidden rounded-[18px] border border-[rgba(25,28,28,0.08)]">
                         <Image
                           src={selectedIncident.attachmentUrl}
-                          alt={
-                            selectedIncident.attachmentName ?? "Imagem anexada"
-                          }
+                          alt={selectedIncident.attachmentName ?? 'Imagem anexada'}
                           width={1200}
                           height={800}
                           className="h-auto w-full object-contain"
@@ -390,7 +339,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                   Remover ocorrência
                 </button>
 
-                {selectedIncident.status === "resolved" ? (
+                {selectedIncident.status === 'resolved' ? (
                   <Button type="button" onClick={handleArchiveIncident}>
                     <span className="inline-flex items-center gap-2">
                       <IconHistory className="h-4.5 w-4.5" stroke={1.8} />
@@ -434,7 +383,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                 <IconX className="h-5 w-5" stroke={1.8} />
               </button>
             </div>
-            <div className="flex-1 space-y-4 overflow-y-auto px-5 pb-5 pt-0 sm:px-6 sm:pb-6 sm:pt-0">
+            <div className="flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6">
               <div className="space-y-4">
                 <h2 className="pr-8 font-display text-4xl tracking-[-0.04em] text-(--color-on-surface) sm:pr-10">
                   {selectedIncident.title}
@@ -450,7 +399,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                 <div className="border-t border-[rgba(25,28,28,0.08)] pt-5">
                   <div className="rounded-[20px] border border-[rgba(25,28,28,0.08)] px-4 py-4">
                     <div className="flex items-center gap-2 text-sm text-(--color-on-surface-variant)">
-                      {selectedIncident.userType === "staff" ? (
+                      {selectedIncident.userType === 'staff' ? (
                         <IconUserCog className="h-4 w-4" stroke={1.8} />
                       ) : (
                         <IconUser className="h-4 w-4" stroke={1.8} />
@@ -458,9 +407,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                       <p>
                         <span>Registrado por: </span>
                         <span className="font-medium text-(--color-primary-strong)">
-                          {selectedIncident.userType === "resident"
-                            ? "Morador"
-                            : "Funcionário"}
+                          {selectedIncident.userType === 'resident' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
@@ -469,14 +416,11 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                       {selectedIncident.description}
                     </p>
 
-                    {selectedIncident.hasAttachment &&
-                    selectedIncident.attachmentUrl ? (
+                    {selectedIncident.hasAttachment && selectedIncident.attachmentUrl ? (
                       <div className="mt-4 overflow-hidden rounded-[18px] border border-[rgba(25,28,28,0.08)]">
                         <Image
                           src={selectedIncident.attachmentUrl}
-                          alt={
-                            selectedIncident.attachmentName ?? "Imagem anexada"
-                          }
+                          alt={selectedIncident.attachmentName ?? 'Imagem anexada'}
                           width={1200}
                           height={800}
                           className="h-auto w-full object-contain"
@@ -509,7 +453,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                   Remover ocorrência
                 </button>
 
-                {selectedIncident.status === "resolved" ? (
+                {selectedIncident.status === 'resolved' ? (
                   <Button type="button" onClick={handleArchiveIncident}>
                     <span className="inline-flex items-center gap-2">
                       <IconHistory className="h-4.5 w-4.5" stroke={1.8} />
@@ -542,5 +486,5 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
         onConfirm={handleRemoveIncident}
       />
     </section>
-  );
+  )
 }

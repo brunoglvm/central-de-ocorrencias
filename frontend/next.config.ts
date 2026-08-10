@@ -1,10 +1,9 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: [
-    process.env.ALLOWED_DEV_HOST,
-    process.env.ALLOWED_DEV_IP,
-  ].filter((origin): origin is string => Boolean(origin)),
-};
+  allowedDevOrigins: [process.env.ALLOWED_DEV_HOST, process.env.ALLOWED_DEV_IP].filter((origin): origin is string =>
+    Boolean(origin),
+  ),
+}
 
-export default nextConfig;
+export default nextConfig

@@ -1,30 +1,30 @@
-"use client";
+'use client'
 
-import type { ReactNode } from "react";
-import { usePathname } from "next/navigation";
-import { Navbar } from "@/components/layout/navbar";
+import type { ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
+import { Navbar } from '@/components/layout/navbar'
 
 type AppShellProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 export function AppShell({ children }: AppShellProps) {
-  const pathname = usePathname();
-  const navbarRoutes = ["/admin/quadro", "/admin/historico"];
-  const shouldHideNavbar = !navbarRoutes.includes(pathname);
+  const pathname = usePathname()
+  const navbarRoutes = ['/admin/quadro', '/admin/historico']
+  const shouldHideNavbar = !navbarRoutes.includes(pathname)
 
   return (
     <div className="min-h-screen bg-(--color-surface) text-(--color-on-surface)">
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-105 bg-[radial-gradient(circle_at_top_left,rgba(109,145,151,0.18),transparent_58%)]" />
-        <div className="absolute -right-32 top-24 h-72 w-72 rounded-full bg-[rgba(87,122,128,0.12)] blur-3xl" />
+        <div className="absolute top-24 -right-32 h-72 w-72 rounded-full bg-[rgba(87,122,128,0.12)] blur-3xl" />
       </div>
 
       {shouldHideNavbar ? null : <Navbar />}
 
-      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-28 pt-8 sm:px-6 lg:px-8 lg:pb-14 lg:pt-12">
+      <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pt-8 pb-28 sm:px-6 lg:px-8 lg:pt-12 lg:pb-14">
         {children}
       </main>
     </div>
-  );
+  )
 }

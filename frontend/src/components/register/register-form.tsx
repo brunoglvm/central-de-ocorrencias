@@ -1,20 +1,20 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { Controller, useForm, useWatch } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { incidentLocations } from "@/constants/incidents";
-import { AttachmentDropzone } from "@/components/register/attachment-dropzone";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, type SelectOption } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { useState } from 'react'
+import { Controller, useForm, useWatch } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { incidentLocations } from '@/constants/incidents'
+import { AttachmentDropzone } from '@/components/register/attachment-dropzone'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Select, type SelectOption } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import {
   CUSTOM_LOCATION_VALUE,
   type RegisterIncidentFormValues,
   registerIncidentSchema,
-} from "@/lib/validations/register-incident";
+} from '@/lib/validations/register-incident'
 
 const locationOptions: SelectOption[] = [
   ...incidentLocations.map((location) => ({
@@ -22,27 +22,27 @@ const locationOptions: SelectOption[] = [
     value: location,
   })),
   {
-    label: "Outro local",
+    label: 'Outro local',
     value: CUSTOM_LOCATION_VALUE,
   },
-];
+]
 
 const userTypeOptions: SelectOption[] = [
-  { label: "Morador", value: "resident" },
-  { label: "Funcionário", value: "staff" },
-];
+  { label: 'Morador', value: 'resident' },
+  { label: 'Funcionário', value: 'staff' },
+]
 
 const initialForm: RegisterIncidentFormValues = {
-  attachmentName: "",
-  customLocation: "",
-  description: "",
-  location: "",
-  title: "",
-  userType: "",
-};
+  attachmentName: '',
+  customLocation: '',
+  description: '',
+  location: '',
+  title: '',
+  userType: '',
+}
 
 export function RegisterForm() {
-  const [feedback, setFeedback] = useState<string>("");
+  const [feedback, setFeedback] = useState<string>('')
   const {
     control,
     formState: { errors, isSubmitting },
@@ -53,20 +53,17 @@ export function RegisterForm() {
   } = useForm<RegisterIncidentFormValues>({
     defaultValues: initialForm,
     resolver: zodResolver(registerIncidentSchema),
-  });
-  const selectedLocation = useWatch({ control, name: "location" });
-  const shouldShowCustomLocation = selectedLocation === CUSTOM_LOCATION_VALUE;
+  })
+  const selectedLocation = useWatch({ control, name: 'location' })
+  const shouldShowCustomLocation = selectedLocation === CUSTOM_LOCATION_VALUE
 
   function onSubmit(values: RegisterIncidentFormValues) {
-    const resolvedLocation =
-      values.location === CUSTOM_LOCATION_VALUE
-        ? values.customLocation.trim()
-        : values.location;
+    const resolvedLocation = values.location === CUSTOM_LOCATION_VALUE ? values.customLocation.trim() : values.location
 
     setFeedback(
       `Ocorrência "${values.title}" enviada localmente com sucesso para ${resolvedLocation}. A integração persistente será conectada depois.`,
-    );
-    reset(initialForm);
+    )
+    reset(initialForm)
   }
 
   return (
@@ -79,7 +76,7 @@ export function RegisterForm() {
               error={errors.title?.message}
               label="Título"
               placeholder="Ex.: Vazamento no bloco B"
-              {...register("title")}
+              {...register('title')}
               required
             />
           </div>
@@ -95,9 +92,9 @@ export function RegisterForm() {
                   label="Local do problema"
                   onBlur={field.onBlur}
                   onValueChange={(value) => {
-                    field.onChange(value);
+                    field.onChange(value)
                     if (value !== CUSTOM_LOCATION_VALUE) {
-                      setValue("customLocation", "");
+                      setValue('customLocation', '')
                     }
                   }}
                   options={locationOptions}
@@ -114,7 +111,7 @@ export function RegisterForm() {
             error={errors.customLocation?.message}
             label="Qual é o local do problema?"
             placeholder="Ex.: Escadaria lateral do bloco C"
-            {...register("customLocation")}
+            {...register('customLocation')}
             required
           />
         ) : null}
@@ -124,7 +121,7 @@ export function RegisterForm() {
           error={errors.description?.message}
           label="Descrição"
           placeholder="Descreva o contexto, local exato e impacto percebido."
-          {...register("description")}
+          {...register('description')}
           required
         />
 
@@ -152,11 +149,7 @@ export function RegisterForm() {
             control={control}
             name="attachmentName"
             render={({ field }) => (
-              <AttachmentDropzone
-                className="lg:col-span-6"
-                fileName={field.value}
-                onFileSelect={field.onChange}
-              />
+              <AttachmentDropzone className="lg:col-span-6" fileName={field.value} onFileSelect={field.onChange} />
             )}
           />
         </div>
@@ -174,5 +167,5 @@ export function RegisterForm() {
         ) : null}
       </form>
     </Card>
-  );
+  )
 }

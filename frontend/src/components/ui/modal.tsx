@@ -1,51 +1,44 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 
 type ModalProps = {
-  confirmLabel?: string;
-  description: string;
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-  title: string;
-};
+  confirmLabel?: string
+  description: string
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
+  title: string
+}
 
-export function Modal({
-  confirmLabel = "Confirmar",
-  description,
-  isOpen,
-  onClose,
-  onConfirm,
-  title,
-}: ModalProps) {
+export function Modal({ confirmLabel = 'Confirmar', description, isOpen, onClose, onConfirm, title }: ModalProps) {
   useEffect(() => {
     if (!isOpen) {
-      return;
+      return
     }
 
-    const previousOverflow = document.body.style.overflow;
+    const previousOverflow = document.body.style.overflow
 
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden'
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        onClose();
+      if (event.key === 'Escape') {
+        onClose()
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown)
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen, onClose])
 
   if (!isOpen) {
-    return null;
+    return null
   }
 
   return (
@@ -59,19 +52,15 @@ export function Modal({
 
       <Card className="relative z-10 w-full max-w-md rounded-4xl p-6 sm:p-7">
         <div className="space-y-3">
-          <h2 className="font-display text-3xl tracking-[-0.03em] text-(--color-on-surface)">
-            {title}
-          </h2>
-          <p className="text-sm leading-7 text-(--color-on-surface-variant)">
-            {description}
-          </p>
+          <h2 className="font-display text-3xl tracking-[-0.03em] text-(--color-on-surface)">{title}</h2>
+          <p className="text-sm leading-7 text-(--color-on-surface-variant)">{description}</p>
         </div>
 
         <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <button
             type="button"
             className="inline-flex cursor-pointer items-center justify-center rounded-3xl border border-[rgba(25,28,28,0.12)] bg-transparent px-5 py-3 text-base font-medium text-(--color-on-surface-variant) transition-colors hover:bg-(--color-surface-container-highest) hover:text-(--color-on-surface)"
-            style={{ fontSize: "16px", fontWeight: 500 }}
+            style={{ fontSize: '16px', fontWeight: 500 }}
             onClick={onClose}
           >
             Cancelar
@@ -83,5 +72,5 @@ export function Modal({
         </div>
       </Card>
     </div>
-  );
+  )
 }

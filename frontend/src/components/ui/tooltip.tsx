@@ -1,62 +1,59 @@
-"use client";
+'use client'
 
-import { cloneElement, useEffect, useId, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { cloneElement, useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 
 type TooltipProps = {
-  children: React.ReactElement<React.HTMLAttributes<HTMLElement>>;
-  content: string;
-  offset?: number;
-};
+  children: React.ReactElement<React.HTMLAttributes<HTMLElement>>
+  content: string
+  offset?: number
+}
 
 type TooltipPosition = {
-  left: number;
-  top: number;
-  translateY: string;
-};
+  left: number
+  top: number
+  translateY: string
+}
 
 export function Tooltip({ children, content, offset = 8 }: TooltipProps) {
-  const tooltipId = useId();
-  const triggerRef = useRef<HTMLSpanElement>(null);
-  const tooltipRef = useRef<HTMLSpanElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [position, setPosition] = useState<TooltipPosition | null>(null);
-  const canPortal = typeof document !== "undefined";
+  const tooltipId = useId()
+  const triggerRef = useRef<HTMLSpanElement>(null)
+  const tooltipRef = useRef<HTMLSpanElement>(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [position, setPosition] = useState<TooltipPosition | null>(null)
+  const canPortal = typeof document !== 'undefined'
 
   useEffect(() => {
     if (!isOpen) {
-      return;
+      return
     }
 
     function updatePosition() {
       if (!triggerRef.current || !tooltipRef.current) {
-        return;
+        return
       }
 
-      const triggerRect = triggerRef.current.getBoundingClientRect();
-      const tooltipRect = tooltipRef.current.getBoundingClientRect();
-      const shouldPlaceAbove =
-        triggerRect.bottom + offset + tooltipRect.height > window.innerHeight;
+      const triggerRect = triggerRef.current.getBoundingClientRect()
+      const tooltipRect = tooltipRef.current.getBoundingClientRect()
+      const shouldPlaceAbove = triggerRect.bottom + offset + tooltipRect.height > window.innerHeight
 
       setPosition({
         left: triggerRect.left + triggerRect.width / 2,
-        top: shouldPlaceAbove
-          ? triggerRect.top - offset
-          : triggerRect.bottom + offset,
-        translateY: shouldPlaceAbove ? "-100%" : "0%",
-      });
+        top: shouldPlaceAbove ? triggerRect.top - offset : triggerRect.bottom + offset,
+        translateY: shouldPlaceAbove ? '-100%' : '0%',
+      })
     }
 
-    const frameId = window.requestAnimationFrame(updatePosition);
-    window.addEventListener("resize", updatePosition);
-    window.addEventListener("scroll", updatePosition, true);
+    const frameId = window.requestAnimationFrame(updatePosition)
+    window.addEventListener('resize', updatePosition)
+    window.addEventListener('scroll', updatePosition, true)
 
     return () => {
-      window.cancelAnimationFrame(frameId);
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition, true);
-    };
-  }, [isOpen, offset]);
+      window.cancelAnimationFrame(frameId)
+      window.removeEventListener('resize', updatePosition)
+      window.removeEventListener('scroll', updatePosition, true)
+    }
+  }, [isOpen, offset])
 
   return (
     <>
@@ -69,7 +66,7 @@ export function Tooltip({ children, content, offset = 8 }: TooltipProps) {
         onMouseLeave={() => setIsOpen(false)}
       >
         {cloneElement(children, {
-          "aria-describedby": isOpen ? tooltipId : undefined,
+          'aria-describedby': isOpen ? tooltipId : undefined,
         })}
       </span>
 
@@ -84,7 +81,7 @@ export function Tooltip({ children, content, offset = 8 }: TooltipProps) {
                 left: position?.left ?? -9999,
                 opacity: position ? 1 : 0,
                 top: position?.top ?? -9999,
-                transform: `translate(-50%, ${position?.translateY ?? "0%"})`,
+                transform: `translate(-50%, ${position?.translateY ?? '0%'})`,
               }}
             >
               {content}
@@ -93,5 +90,5 @@ export function Tooltip({ children, content, offset = 8 }: TooltipProps) {
           )
         : null}
     </>
-  );
+  )
 }

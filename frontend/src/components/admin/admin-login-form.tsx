@@ -1,28 +1,21 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import Image from "next/image";
-import { IconEye, IconEyeOff } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { useState } from 'react'
+import Image from 'next/image'
+import { IconEye, IconEyeOff } from '@tabler/icons-react'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
 
 export function AdminLoginForm() {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   return (
     <Card className="w-full max-w-md rounded-[36px] p-6 shadow-none sm:p-8">
       <form className="space-y-6">
         <div className="flex justify-center">
           <div className="relative h-24 w-24 overflow-hidden rounded-full bg-(--color-surface-container-highest)">
-            <Image
-              src="/images/pfp.webp"
-              alt="Condomínio"
-              fill
-              className="object-cover"
-              sizes="96px"
-              priority
-            />
+            <Image src="/images/pfp.webp" alt="Condomínio" fill className="object-cover" sizes="96px" priority />
           </div>
         </div>
 
@@ -39,13 +32,13 @@ export function AdminLoginForm() {
           id="admin-password"
           label="Senha"
           name="password"
-          type={isPasswordVisible ? "text" : "password"}
+          type={isPasswordVisible ? 'text' : 'password'}
           placeholder="Digite sua senha"
           required
           endAdornment={
             <button
               type="button"
-              aria-label={isPasswordVisible ? "Ocultar senha" : "Mostrar senha"}
+              aria-label={isPasswordVisible ? 'Ocultar senha' : 'Mostrar senha'}
               aria-pressed={isPasswordVisible}
               className="flex h-5 w-5 cursor-pointer items-center justify-center text-(--color-on-surface-variant) transition-colors hover:text-(--color-on-surface)"
               onClick={() => setIsPasswordVisible((current) => !current)}
@@ -66,5 +59,5 @@ export function AdminLoginForm() {
         </div>
       </form>
     </Card>
-  );
+  )
 }

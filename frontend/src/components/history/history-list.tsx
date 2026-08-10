@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { useState } from "react";
+import Link from 'next/link'
+import { useState } from 'react'
 import {
   IconArrowUpLeft,
   IconChevronLeft,
@@ -11,27 +11,21 @@ import {
   IconPhoto,
   IconUser,
   IconUserCog,
-} from "@tabler/icons-react";
-import { ImagePreviewModal } from "@/components/ui/image-preview-modal";
-import type { Incident } from "@/types/incident";
+} from '@tabler/icons-react'
+import { ImagePreviewModal } from '@/components/ui/image-preview-modal'
+import type { Incident } from '@/types/incident'
 
 type HistoryListProps = {
-  currentPage: number;
-  incidents: Incident[];
-  onRestoreIncident: (incidentId: string) => void;
-  totalItems: number;
-  totalPages: number;
-};
+  currentPage: number
+  incidents: Incident[]
+  onRestoreIncident: (incidentId: string) => void
+  totalItems: number
+  totalPages: number
+}
 
-export function HistoryList({
-  currentPage,
-  incidents,
-  onRestoreIncident,
-  totalItems,
-  totalPages,
-}: HistoryListProps) {
-  const [previewIncident, setPreviewIncident] = useState<Incident | null>(null);
-  const visiblePages = getVisiblePages(currentPage, totalPages);
+export function HistoryList({ currentPage, incidents, onRestoreIncident, totalItems, totalPages }: HistoryListProps) {
+  const [previewIncident, setPreviewIncident] = useState<Incident | null>(null)
+  const visiblePages = getVisiblePages(currentPage, totalPages)
 
   return (
     <section className="rounded-[36px] bg-(--color-surface-container-low) p-5 sm:p-6">
@@ -58,15 +52,13 @@ export function HistoryList({
                       {incident.title}
                     </h2>
 
-                    <p className="text-sm leading-7 text-(--color-on-surface-variant)">
-                      {incident.description}
-                    </p>
+                    <p className="text-sm leading-7 text-(--color-on-surface-variant)">{incident.description}</p>
                   </div>
 
                   <button
                     type="button"
                     className="inline-flex cursor-pointer items-center justify-center gap-1.5 self-start rounded-3xl border border-[rgba(62,98,103,0.22)] bg-transparent px-3 py-1.5 text-xs font-medium text-(--color-primary-strong) transition-colors hover:bg-[rgba(62,98,103,0.08)]"
-                    style={{ fontSize: "12px" }}
+                    style={{ fontSize: '12px' }}
                     onClick={() => onRestoreIncident(incident.id)}
                   >
                     <IconArrowUpLeft className="h-3.5 w-3.5" stroke={1.8} />
@@ -84,16 +76,12 @@ export function HistoryList({
                     {incident.createdAt}
                   </span>
                   <span className="inline-flex items-center gap-1 border-l border-[rgba(25,28,28,0.12)] pl-3">
-                    {incident.userType === "staff" ? (
+                    {incident.userType === 'staff' ? (
                       <IconUserCog className="h-4 w-4" stroke={1.8} />
                     ) : (
                       <IconUser className="h-4 w-4" stroke={1.8} />
                     )}
-                    <span>
-                      {incident.userType === "staff"
-                        ? "Funcionário"
-                        : "Morador"}
-                    </span>
+                    <span>{incident.userType === 'staff' ? 'Funcionário' : 'Morador'}</span>
                   </span>
                   {incident.hasAttachment && incident.attachmentUrl ? (
                     <button
@@ -123,9 +111,7 @@ export function HistoryList({
             <p className="text-sm font-medium text-(--color-on-surface)">
               Página {currentPage} de {totalPages}
             </p>
-            <p className="text-sm text-(--color-on-surface-variant)">
-              {totalItems} ocorrências no histórico.
-            </p>
+            <p className="text-sm text-(--color-on-surface-variant)">{totalItems} ocorrências no histórico.</p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
@@ -146,7 +132,7 @@ export function HistoryList({
 
             <div className="flex flex-wrap items-center gap-3">
               {visiblePages.map((page, index) =>
-                page === "ellipsis" ? (
+                page === 'ellipsis' ? (
                   <span
                     key={`${page}-${index}`}
                     className="inline-flex h-10 min-w-10 items-center justify-center rounded-2xl border border-[rgba(25,28,28,0.08)] bg-(--color-surface) px-3 text-sm font-medium text-(--color-on-surface-variant)"
@@ -194,51 +180,33 @@ export function HistoryList({
             <p className="text-sm font-medium text-(--color-on-surface)">
               Página {currentPage} de {totalPages}
             </p>
-            <p className="text-sm text-(--color-on-surface-variant)">
-              {totalItems} ocorrências no histórico.
-            </p>
+            <p className="text-sm text-(--color-on-surface-variant)">{totalItems} ocorrências no histórico.</p>
           </div>
         </div>
       )}
 
       <ImagePreviewModal
-        fileName={previewIncident?.attachmentName ?? "Imagem anexada"}
-        imageUrl={previewIncident?.attachmentUrl ?? ""}
+        fileName={previewIncident?.attachmentName ?? 'Imagem anexada'}
+        imageUrl={previewIncident?.attachmentUrl ?? ''}
         isOpen={Boolean(previewIncident?.attachmentUrl)}
         onClose={() => setPreviewIncident(null)}
       />
     </section>
-  );
+  )
 }
 
 function getVisiblePages(currentPage: number, totalPages: number) {
   if (totalPages <= 7) {
-    return Array.from({ length: totalPages }, (_, index) => index + 1);
+    return Array.from({ length: totalPages }, (_, index) => index + 1)
   }
 
   if (currentPage <= 4) {
-    return [1, 2, 3, 4, 5, "ellipsis", totalPages] as const;
+    return [1, 2, 3, 4, 5, 'ellipsis', totalPages] as const
   }
 
   if (currentPage >= totalPages - 3) {
-    return [
-      1,
-      "ellipsis",
-      totalPages - 4,
-      totalPages - 3,
-      totalPages - 2,
-      totalPages - 1,
-      totalPages,
-    ] as const;
+    return [1, 'ellipsis', totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages] as const
   }
 
-  return [
-    1,
-    "ellipsis",
-    currentPage - 1,
-    currentPage,
-    currentPage + 1,
-    "ellipsis",
-    totalPages,
-  ] as const;
+  return [1, 'ellipsis', currentPage - 1, currentPage, currentPage + 1, 'ellipsis', totalPages] as const
 }

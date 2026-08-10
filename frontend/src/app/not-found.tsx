@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
 
 export default function NotFound() {
   return (
@@ -15,5 +15,5 @@ export default function NotFound() {
 
       <Button href="/registrar">Ir para o formulário</Button>
     </section>
-  );
+  )
 }

@@ -1,47 +1,42 @@
-"use client";
+'use client'
 
-import { useEffect } from "react";
-import { createPortal } from "react-dom";
-import Image from "next/image";
-import { IconX } from "@tabler/icons-react";
+import { useEffect } from 'react'
+import { createPortal } from 'react-dom'
+import Image from 'next/image'
+import { IconX } from '@tabler/icons-react'
 
 type ImagePreviewModalProps = {
-  fileName: string;
-  imageUrl: string;
-  isOpen: boolean;
-  onClose: () => void;
-};
+  fileName: string
+  imageUrl: string
+  isOpen: boolean
+  onClose: () => void
+}
 
-export function ImagePreviewModal({
-  fileName,
-  imageUrl,
-  isOpen,
-  onClose,
-}: ImagePreviewModalProps) {
+export function ImagePreviewModal({ fileName, imageUrl, isOpen, onClose }: ImagePreviewModalProps) {
   useEffect(() => {
     if (!isOpen) {
-      return;
+      return
     }
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        onClose();
+      if (event.key === 'Escape') {
+        onClose()
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown)
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isOpen, onClose]);
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen, onClose])
 
   if (!isOpen) {
-    return null;
+    return null
   }
 
   return createPortal(
@@ -68,19 +63,19 @@ export function ImagePreviewModal({
         <div className="flex w-fit max-w-full flex-1 items-center justify-center overflow-hidden rounded-[28px] bg-(--color-surface) shadow-(--shadow-ambient)">
           <Image
             src={imageUrl}
-            alt={fileName || "Imagem anexada"}
+            alt={fileName || 'Imagem anexada'}
             width={1200}
             height={900}
-            className="h-auto w-auto max-h-[calc(90vh-5.5rem)] max-w-full object-contain"
+            className="h-auto max-h-[calc(90vh-5.5rem)] w-auto max-w-full object-contain"
             unoptimized
           />
         </div>
 
-        <div className="min-w-0 max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-sm text-white">
+        <div className="max-w-full min-w-0 overflow-hidden text-sm text-ellipsis whitespace-nowrap text-white">
           {fileName}
         </div>
       </div>
     </div>,
     document.body,
-  );
+  )
 }
