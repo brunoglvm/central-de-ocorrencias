@@ -42,11 +42,11 @@ export function IncidentCard({ incident, index, onSelect }: IncidentCardProps) {
 
           <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-(--color-on-surface-variant)">
             <span className="inline-flex items-center gap-1">
-              <IconMapPin className="h-4 w-4" stroke={1.8} />
+              <IconMapPin className="size-4" stroke={1.8} />
               {incident.location}
             </span>
             <span className="inline-flex items-center gap-1 border-l border-[rgba(25,28,28,0.12)] pl-3">
-              <IconClock className="h-4 w-4" stroke={1.8} />
+              <IconClock className="size-4" stroke={1.8} />
               {incident.createdAt}
             </span>
           </div>

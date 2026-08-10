@@ -38,7 +38,7 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
             >
               <div className="flex items-start gap-4 lg:flex-col lg:items-center">
                 <div className="flex flex-col items-center">
-                  <span className="h-3 w-3 rounded-full bg-(--color-surface-container-highest)" />
+                  <span className="rounded-full bg-(--color-surface-container-highest) size-3" />
                   {index < incidents.length - 1 ? (
                     <span className="mt-2 h-20 w-px bg-[linear-gradient(to_bottom,rgba(225,227,226,1),rgba(225,227,226,0))]" />
                   ) : null}
@@ -61,25 +61,25 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                     style={{ fontSize: '12px' }}
                     onClick={() => onRestoreIncident(incident.id)}
                   >
-                    <IconArrowUpLeft className="h-3.5 w-3.5" stroke={1.8} />
+                    <IconArrowUpLeft className="size-3.5" stroke={1.8} />
                     Retornar
                   </button>
                 </div>
 
                 <div className="flex items-center gap-3 text-xs text-(--color-on-surface-variant)">
                   <span className="inline-flex items-center gap-1">
-                    <IconMapPin className="h-4 w-4" stroke={1.8} />
+                    <IconMapPin className="size-4" stroke={1.8} />
                     {incident.location}
                   </span>
                   <span className="inline-flex items-center gap-1 border-l border-[rgba(25,28,28,0.12)] pl-3">
-                    <IconClock className="h-4 w-4" stroke={1.8} />
+                    <IconClock className="size-4" stroke={1.8} />
                     {incident.createdAt}
                   </span>
                   <span className="inline-flex items-center gap-1 border-l border-[rgba(25,28,28,0.12)] pl-3">
                     {incident.userType === 'staff' ? (
-                      <IconUserCog className="h-4 w-4" stroke={1.8} />
+                      <IconUserCog className="size-4" stroke={1.8} />
                     ) : (
-                      <IconUser className="h-4 w-4" stroke={1.8} />
+                      <IconUser className="size-4" stroke={1.8} />
                     )}
                     <span>{incident.userType === 'staff' ? 'Funcionário' : 'Morador'}</span>
                   </span>
@@ -90,7 +90,7 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                       className="inline-flex cursor-pointer items-center gap-1 border-l border-[rgba(25,28,28,0.12)] pl-3 transition-colors hover:text-(--color-on-surface)"
                       onClick={() => setPreviewIncident(incident)}
                     >
-                      <IconPhoto className="h-4 w-4" stroke={1.8} />
+                      <IconPhoto className="size-4" stroke={1.8} />
                       <span>Imagem anexada</span>
                     </button>
                   ) : null}
@@ -120,12 +120,12 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                 href={`/admin/historico?page=${currentPage - 1}`}
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-[rgba(25,28,28,0.08)] bg-(--color-surface) px-4 text-sm font-medium text-(--color-on-surface) transition-colors hover:bg-(--color-surface-container-highest)"
               >
-                <IconChevronLeft className="h-5 w-5" stroke={1.8} />
+                <IconChevronLeft className="size-5" stroke={1.8} />
                 Anterior
               </Link>
             ) : (
               <span className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-[rgba(25,28,28,0.08)] bg-(--color-surface) px-4 text-sm font-medium text-(--color-on-surface-variant) opacity-60">
-                <IconChevronLeft className="h-5 w-5" stroke={1.8} />
+                <IconChevronLeft className="size-5" stroke={1.8} />
                 Anterior
               </span>
             )}
@@ -164,12 +164,12 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                 className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-[rgba(25,28,28,0.08)] bg-(--color-surface) px-4 text-sm font-medium text-(--color-on-surface) transition-colors hover:bg-(--color-surface-container-highest)"
               >
                 Próxima
-                <IconChevronRight className="h-5 w-5" stroke={1.8} />
+                <IconChevronRight className="size-5" stroke={1.8} />
               </Link>
             ) : (
               <span className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-[rgba(25,28,28,0.08)] bg-(--color-surface) px-4 text-sm font-medium text-(--color-on-surface-variant) opacity-60">
                 Próxima
-                <IconChevronRight className="h-5 w-5" stroke={1.8} />
+                <IconChevronRight className="size-5" stroke={1.8} />
               </span>
             )}
           </div>

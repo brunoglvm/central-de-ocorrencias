@@ -92,7 +92,7 @@ export function Select({
             {selectedOption?.label ?? placeholder}
           </span>
           <IconChevronDown
-            className={cn('h-4 w-4 text-(--color-on-surface-variant) transition-transform', isOpen && 'rotate-180')}
+            className={cn('text-(--color-on-surface-variant) transition-transform size-4', isOpen && 'rotate-180')}
             stroke={1.8}
           />
         </button>
@@ -113,7 +113,7 @@ export function Select({
                   role="option"
                   aria-selected={isSelected}
                   className={cn(
-                    'flex w-full cursor-pointer items-center rounded-2xl px-3 py-3 text-left text-sm text-(--color-on-surface) transition-colors',
+                    'flex w-full cursor-pointer items-center rounded-2xl text-left text-sm text-(--color-on-surface) transition-colors p-3',
                     isSelected
                       ? 'bg-(--color-surface-container-highest)'
                       : 'hover:bg-(--color-surface-container-lowest)',

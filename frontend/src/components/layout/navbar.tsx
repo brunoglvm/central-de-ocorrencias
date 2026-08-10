@@ -83,7 +83,7 @@ export function Navbar() {
                     style={isActive ? { color: '#fff' } : undefined}
                   >
                     {item.label}
-                    {item.isPublic ? <IconArrowUpRight className="h-4 w-4" stroke={1.8} /> : null}
+                    {item.isPublic ? <IconArrowUpRight className="size-4" stroke={1.8} /> : null}
                   </Link>
                 )
               })}
@@ -96,10 +96,10 @@ export function Navbar() {
                 <button
                   type="button"
                   aria-label="Sair"
-                  className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-(--color-on-surface-variant) transition-colors hover:text-(--color-danger-strong)"
+                  className="inline-flex cursor-pointer items-center justify-center rounded-full text-(--color-on-surface-variant) transition-colors hover:text-(--color-danger-strong) size-10"
                   onClick={() => setIsLogoutModalOpen(true)}
                 >
-                  <IconLogout2 className="h-5 w-5 transition-colors" stroke={1.8} />
+                  <IconLogout2 className="transition-colors size-5" stroke={1.8} />
                 </button>
               </Tooltip>
             </div>
@@ -120,15 +120,15 @@ export function Navbar() {
                 target={item.isPublic ? '_blank' : undefined}
                 rel={item.isPublic ? 'noopener noreferrer' : undefined}
                 className={cn(
-                  'flex flex-col items-center gap-1 rounded-[22px] px-3 py-3 text-xs transition-colors',
+                  'flex flex-col items-center gap-1 rounded-[22px] text-xs transition-colors p-3',
                   isActive ? 'bg-(--color-primary-container)' : 'text-(--color-on-surface-variant)',
                 )}
                 style={isActive ? { color: '#fff' } : undefined}
               >
                 <div className="relative">
-                  <Icon className="h-5 w-5" stroke={1.8} />
+                  <Icon className="size-5" stroke={1.8} />
                   {item.isPublic ? (
-                    <IconArrowUpRight className="absolute -top-1 -right-2 h-3.5 w-3.5" stroke={2} />
+                    <IconArrowUpRight className="absolute -top-1 -right-2 size-3.5" stroke={2} />
                   ) : null}
                 </div>
                 <span>{item.label}</span>

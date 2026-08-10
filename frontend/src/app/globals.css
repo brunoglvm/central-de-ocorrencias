@@ -48,7 +48,7 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-.sheet-enter {
+@utility sheet-enter {
   animation: sheet-enter 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: transform, opacity;
 }

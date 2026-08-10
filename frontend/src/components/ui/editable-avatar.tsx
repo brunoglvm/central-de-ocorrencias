@@ -50,7 +50,7 @@ export function EditableAvatar({ alt, className, initialSrc, size = 40 }: Editab
         >
           <Image src={previewSrc} alt={alt} fill className="object-cover" sizes={`${size}px`} />
           <span className="absolute inset-0 flex items-center justify-center bg-[rgba(25,28,28,0)] text-(--color-surface) opacity-0 transition-all duration-200 group-hover:bg-[rgba(25,28,28,0.3)] group-hover:opacity-100">
-            <IconPhoto className="h-4 w-4" stroke={2} />
+            <IconPhoto className="size-4" stroke={2} />
           </span>
         </button>
       </Tooltip>

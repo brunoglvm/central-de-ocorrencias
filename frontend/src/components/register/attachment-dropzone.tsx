@@ -85,7 +85,7 @@ export function AttachmentDropzone({ className, error, fileName, onFileSelect }:
           <input {...getInputProps()} />
 
           <div className="grid w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 overflow-hidden">
-            <p className="min-w-0 overflow-hidden text-sm text-ellipsis whitespace-nowrap text-(--color-on-surface)">
+            <p className="min-w-0 text-sm text-(--color-on-surface) truncate">
               {fileName ? fileName : isDragActive ? 'Solte a imagem aqui' : 'Clique ou arraste uma imagem'}
             </p>
 
@@ -95,14 +95,14 @@ export function AttachmentDropzone({ className, error, fileName, onFileSelect }:
                   <button
                     type="button"
                     aria-label="Visualizar imagem anexada"
-                    className="group flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center"
+                    className="group flex shrink-0 cursor-pointer items-center justify-center size-5"
                     onClick={(event) => {
                       event.stopPropagation()
                       setIsPreviewOpen(true)
                     }}
                   >
                     <IconEye
-                      className="h-5 w-5 text-(--color-on-surface-variant) transition-colors group-hover:text-(--color-on-surface)"
+                      className="text-(--color-on-surface-variant) transition-colors group-hover:text-(--color-on-surface) size-5"
                       stroke={1.8}
                     />
                   </button>

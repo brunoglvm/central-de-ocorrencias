@@ -53,10 +53,10 @@ export function ImagePreviewModal({ fileName, imageUrl, isOpen, onClose }: Image
           <button
             type="button"
             aria-label="Fechar visualizacao"
-            className="flex h-8 w-8 cursor-pointer items-center justify-center text-white transition-colors hover:text-(--color-surface-container-highest)"
+            className="flex cursor-pointer items-center justify-center text-white transition-colors hover:text-(--color-surface-container-highest) size-8"
             onClick={onClose}
           >
-            <IconX className="h-5 w-5" stroke={1.8} />
+            <IconX className="size-5" stroke={1.8} />
           </button>
         </div>
 
@@ -66,12 +66,12 @@ export function ImagePreviewModal({ fileName, imageUrl, isOpen, onClose }: Image
             alt={fileName || 'Imagem anexada'}
             width={1200}
             height={900}
-            className="h-auto max-h-[calc(90vh-5.5rem)] w-auto max-w-full object-contain"
+            className="max-h-[calc(90vh-5.5rem)] max-w-full object-contain size-auto"
             unoptimized
           />
         </div>
 
-        <div className="max-w-full min-w-0 overflow-hidden text-sm text-ellipsis whitespace-nowrap text-white">
+        <div className="max-w-full min-w-0 text-sm text-white truncate">
           {fileName}
         </div>
       </div>
