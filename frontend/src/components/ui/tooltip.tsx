@@ -76,7 +76,7 @@ export function Tooltip({ children, content, offset = 8 }: TooltipProps) {
               id={tooltipId}
               ref={tooltipRef}
               role="tooltip"
-              className="pointer-events-none fixed z-200 rounded-full bg-[rgba(25,28,28,0.72)] px-3 py-1 text-xs whitespace-nowrap text-(--color-surface) shadow-ambient"
+              className="pointer-events-none fixed z-200 rounded-full bg-[rgba(25,28,28,0.72)] px-3 py-1 text-xs whitespace-nowrap text-foreground-inverse shadow-ambient"
               style={{
                 left: position?.left ?? -9999,
                 opacity: position ? 1 : 0,

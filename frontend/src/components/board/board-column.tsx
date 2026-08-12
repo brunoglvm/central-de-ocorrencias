@@ -24,7 +24,7 @@ export function BoardColumn({ status, title, incidents, onSelectIncident }: Boar
         <section
           ref={provided.innerRef}
           {...provided.droppableProps}
-          className="flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[20px] bg-(--color-surface-container-low) p-3"
+          className="flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[1.25rem] bg-surface-container-low p-3"
         >
           <div className="flex items-center justify-between px-2 pt-1 pb-3">
             <div
@@ -33,7 +33,7 @@ export function BoardColumn({ status, title, incidents, onSelectIncident }: Boar
               <span className="size-4 rounded-full border-2 border-current bg-current/15" />
               <p>{title}</p>
             </div>
-            <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-(--color-surface-container-highest) px-1.5 text-xs text-(--color-on-surface-variant)">
+            <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-surface-container-highest px-1.5 text-xs text-foreground-muted">
               {incidents.length}
             </span>
           </div>

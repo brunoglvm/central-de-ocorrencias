@@ -2,12 +2,11 @@ import type { Incident } from '@/types/incident'
 
 export const mockIncidents: Incident[] = [
   {
-    id: 'incident-1',
+    id: '1',
     title: 'Vazamento próximo ao elevador',
     description: 'Moradores relataram acúmulo de água no hall do bloco B desde a manhã, com risco de escorregamento.',
     attachmentName: 'fachada-condominio.jpg',
     attachmentUrl: '/images/mock.jpg',
-    category: 'Manutenção',
     createdAt: '02 abr 2026',
     status: 'open',
     location: 'Bloco B',
@@ -15,10 +14,9 @@ export const mockIncidents: Incident[] = [
     hasAttachment: true,
   },
   {
-    id: 'incident-2',
+    id: '2',
     title: 'Luminária apagada na garagem',
     description: 'Trecho entre a vaga 17 e a saída lateral está com baixa visibilidade durante a noite.',
-    category: 'Infraestrutura',
     createdAt: '01 abr 2026',
     status: 'open',
     location: 'Garagem',
@@ -26,12 +24,11 @@ export const mockIncidents: Incident[] = [
     hasAttachment: false,
   },
   {
-    id: 'incident-3',
+    id: '3',
     title: 'Portão social travando ao fechar',
     description: 'Equipe identificou falha intermitente no fechamento automático. Chamado técnico já foi aberto.',
     attachmentName: 'fachada-condominio.jpg',
     attachmentUrl: '/images/mock.jpg',
-    category: 'Segurança',
     createdAt: '31 mar 2026',
     status: 'in_progress',
     location: 'Entrada principal',
@@ -39,11 +36,10 @@ export const mockIncidents: Incident[] = [
     hasAttachment: true,
   },
   {
-    id: 'incident-4',
+    id: '4',
     title: 'Descarte irregular no corredor',
     description:
       'Houve registro de caixas e sacolas deixadas fora do local adequado, bloqueando parcialmente a circulação.',
-    category: 'Convivência',
     createdAt: '29 mar 2026',
     status: 'in_progress',
     location: '3º andar',
@@ -51,11 +47,10 @@ export const mockIncidents: Incident[] = [
     hasAttachment: false,
   },
   {
-    id: 'incident-5',
+    id: '5',
     title: 'Sujeira acumulada na área gourmet após evento',
     description:
       'Moradores relataram resíduos, copos descartáveis e superfícies sujas na área gourmet após o uso do espaço.',
-    category: 'Limpeza',
     createdAt: '28 mar 2026',
     status: 'resolved',
     location: 'Área gourmet',
@@ -63,13 +58,12 @@ export const mockIncidents: Incident[] = [
     hasAttachment: false,
   },
   {
-    id: 'incident-6',
+    id: '6',
     title: 'Interfone da portaria sem funcionar corretamente',
     description:
       'Foi registrado que o interfone da portaria apresentava falhas de áudio e interrupções frequentes nas chamadas.',
     attachmentName: 'fachada-condominio.jpg',
     attachmentUrl: '/images/mock.jpg',
-    category: 'Infraestrutura',
     createdAt: '26 mar 2026',
     status: 'resolved',
     location: 'Portaria',
@@ -77,11 +71,10 @@ export const mockIncidents: Incident[] = [
     hasAttachment: true,
   },
   {
-    id: 'incident-7',
+    id: '7',
     title: 'Barulho excessivo no bloco A durante a madrugada',
     description:
       'Moradores reportaram som alto vindo de uma unidade no bloco A após o horário de silêncio estabelecido.',
-    category: 'Convivência',
     createdAt: '03 abr 2026',
     status: 'open',
     location: 'Bloco A',
@@ -89,12 +82,11 @@ export const mockIncidents: Incident[] = [
     hasAttachment: false,
   },
   {
-    id: 'incident-8',
+    id: '8',
     title: 'Piso molhado próximo à portaria',
     description: 'Área de circulação ficou escorregadia após lavagem, sem sinalização adequada no momento do registro.',
     attachmentName: 'fachada-condominio.jpg',
     attachmentUrl: '/images/mock.jpg',
-    category: 'Segurança',
     createdAt: '03 abr 2026',
     status: 'open',
     location: 'Portaria',
@@ -102,10 +94,9 @@ export const mockIncidents: Incident[] = [
     hasAttachment: true,
   },
   {
-    id: 'incident-9',
+    id: '9',
     title: 'Lixeira danificada na entrada lateral',
     description: 'A tampa da lixeira coletiva está quebrada e deixando resíduos expostos ao lado do acesso de serviço.',
-    category: 'Limpeza',
     createdAt: '02 abr 2026',
     status: 'open',
     location: 'Entrada principal',
@@ -113,10 +104,9 @@ export const mockIncidents: Incident[] = [
     hasAttachment: false,
   },
   {
-    id: 'incident-10',
+    id: '10',
     title: 'Sensor de presença oscilando no corredor',
     description: 'A iluminação do corredor apaga antes do esperado, prejudicando a circulação no período noturno.',
-    category: 'Infraestrutura',
     createdAt: '01 abr 2026',
     status: 'in_progress',
     location: 'Corredor',
@@ -124,13 +114,12 @@ export const mockIncidents: Incident[] = [
     hasAttachment: false,
   },
   {
-    id: 'incident-11',
+    id: '11',
     title: 'Risco de infiltração no teto da garagem',
     description:
       'Moradores observaram manchas úmidas e gotejamento leve no teto da garagem, com receio de agravamento da infiltração.',
     attachmentName: 'fachada-condominio.jpg',
     attachmentUrl: '/images/mock.jpg',
-    category: 'Manutenção',
     createdAt: '31 mar 2026',
     status: 'in_progress',
     location: 'Garagem',
@@ -138,10 +127,9 @@ export const mockIncidents: Incident[] = [
     hasAttachment: true,
   },
   {
-    id: 'incident-12',
+    id: '12',
     title: 'Porta do salão gourmet difícil de trancar',
     description: 'Usuários relataram que a porta do salão gourmet exige muita força para fechar e travar corretamente.',
-    category: 'Infraestrutura',
     createdAt: '30 mar 2026',
     status: 'in_progress',
     location: 'Área gourmet',
@@ -149,13 +137,12 @@ export const mockIncidents: Incident[] = [
     hasAttachment: false,
   },
   {
-    id: 'incident-13',
+    id: '13',
     title: 'Espelho interno do elevador rachado',
     description:
       'Foi observado um trincado visível no espelho interno do elevador, causando preocupação entre os moradores.',
     attachmentName: 'fachada-condominio.jpg',
     attachmentUrl: '/images/mock.jpg',
-    category: 'Manutenção',
     createdAt: '29 mar 2026',
     status: 'in_progress',
     location: 'Elevador',
@@ -163,11 +150,10 @@ export const mockIncidents: Incident[] = [
     hasAttachment: true,
   },
   {
-    id: 'incident-14',
+    id: '14',
     title: 'Extintor vencido na garagem',
     description:
       'Foi identificado um extintor com validade expirada na garagem, exigindo substituição e conferência da sinalização.',
-    category: 'Segurança',
     createdAt: '27 mar 2026',
     status: 'resolved',
     location: 'Garagem',
@@ -175,13 +161,12 @@ export const mockIncidents: Incident[] = [
     hasAttachment: false,
   },
   {
-    id: 'incident-15',
+    id: '15',
     title: 'Corrimão solto na escada do bloco B',
     description:
       'Moradores relataram instabilidade no corrimão da escada do bloco B, com risco para quem utiliza o acesso diariamente.',
     attachmentName: 'fachada-condominio.jpg',
     attachmentUrl: '/images/mock.jpg',
-    category: 'Manutenção',
     createdAt: '25 mar 2026',
     status: 'resolved',
     location: 'Bloco B',

@@ -71,21 +71,21 @@ export function AttachmentDropzone({ className, error, fileName, onFileSelect }:
 
   return (
     <div className={cn('space-y-2', className)}>
-      <span className="text-sm text-(--color-on-surface-variant)">Anexo</span>
+      <span className="text-sm text-foreground-muted">Anexo</span>
 
       <div className="relative">
         <div
           {...getRootProps()}
           className={cn(
-            'flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-(--color-surface-container-lowest) px-4 py-3 text-left text-sm text-(--color-on-surface) transition-colors',
-            isDragActive && 'bg-(--color-surface-container-highest)',
+            'flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-surface-container-lowest px-4 py-3 text-left text-sm transition-colors',
+            isDragActive && 'bg-surface-container-highest',
             error && 'ring-2 ring-[rgba(185,28,28,0.18)]',
           )}
         >
           <input {...getInputProps()} />
 
           <div className="grid w-full min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-3 overflow-hidden">
-            <p className="min-w-0 text-sm text-(--color-on-surface) truncate">
+            <p className="min-w-0 truncate text-sm">
               {fileName ? fileName : isDragActive ? 'Solte a imagem aqui' : 'Clique ou arraste uma imagem'}
             </p>
 
@@ -95,14 +95,14 @@ export function AttachmentDropzone({ className, error, fileName, onFileSelect }:
                   <button
                     type="button"
                     aria-label="Visualizar imagem anexada"
-                    className="group flex shrink-0 cursor-pointer items-center justify-center size-5"
+                    className="group flex size-5 shrink-0 cursor-pointer items-center justify-center"
                     onClick={(event) => {
                       event.stopPropagation()
                       setIsPreviewOpen(true)
                     }}
                   >
                     <IconEye
-                      className="text-(--color-on-surface-variant) transition-colors group-hover:text-(--color-on-surface) size-5"
+                      className="size-5 text-foreground-muted transition-colors group-hover:text-foreground"
                       stroke={1.8}
                     />
                   </button>
@@ -113,7 +113,7 @@ export function AttachmentDropzone({ className, error, fileName, onFileSelect }:
         </div>
       </div>
 
-      {error ? <p className="text-sm text-(--color-danger-strong)">{error}</p> : null}
+      {error ? <p className="text-sm text-danger-strong">{error}</p> : null}
 
       <ImagePreviewModal
         fileName={fileName || 'Imagem anexada'}

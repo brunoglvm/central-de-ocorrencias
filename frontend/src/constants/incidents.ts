@@ -2,8 +2,6 @@ import type { IncidentStatus } from '@/types/incident'
 
 export const incidentColumns: IncidentStatus[] = ['open', 'in_progress', 'resolved']
 
-export const categories = ['Manutenção', 'Segurança', 'Limpeza', 'Infraestrutura', 'Convivência']
-
 export const incidentLocations = [
   'Entrada principal',
   'Portaria',

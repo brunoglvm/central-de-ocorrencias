@@ -67,7 +67,7 @@ export function RegisterForm() {
   }
 
   return (
-    <Card className="w-full rounded-[36px] p-6 shadow-none sm:p-8">
+    <Card className="w-full rounded-[2.25rem] p-6 shadow-none sm:p-8">
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-6 lg:grid-cols-12">
           <div className="lg:col-span-6">
@@ -161,9 +161,7 @@ export function RegisterForm() {
         </div>
 
         {feedback ? (
-          <div className="rounded-3xl bg-(--color-surface-container-highest) px-4 py-3 text-sm leading-7 text-(--color-on-surface)">
-            {feedback}
-          </div>
+          <div className="rounded-3xl bg-surface-container-highest px-4 py-3 text-sm leading-7">{feedback}</div>
         ) : null}
       </form>
     </Card>

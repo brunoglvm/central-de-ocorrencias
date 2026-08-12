@@ -69,7 +69,7 @@ export function Select({
 
   return (
     <label className="block space-y-2" htmlFor={selectId}>
-      <span className="text-sm text-(--color-on-surface-variant)">{label}</span>
+      <span className="text-sm text-foreground-muted">{label}</span>
 
       <div className="relative" ref={containerRef}>
         <button
@@ -79,7 +79,7 @@ export function Select({
           aria-expanded={isOpen}
           aria-haspopup="listbox"
           className={cn(
-            'flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-(--color-surface-container-lowest) px-4 py-3 text-left text-sm text-(--color-on-surface) transition-colors outline-none focus:ring-2 focus:ring-[rgba(62,98,103,0.2)]',
+            'flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-surface-container-lowest px-4 py-3 text-left text-sm transition-colors outline-none focus:ring-2 focus:ring-[rgba(62,98,103,0.2)]',
             error && 'ring-2 ring-[rgba(185,28,28,0.18)]',
             className,
           )}
@@ -88,11 +88,9 @@ export function Select({
           }}
           onClick={() => setIsOpen((current) => !current)}
         >
-          <span className={cn(!selectedOption && 'text-(--color-on-surface-variant)')}>
-            {selectedOption?.label ?? placeholder}
-          </span>
+          <span className={cn(!selectedOption && 'text-foreground-muted')}>{selectedOption?.label ?? placeholder}</span>
           <IconChevronDown
-            className={cn('size-4 text-(--color-on-surface-variant) transition-transform', isOpen && 'rotate-180')}
+            className={cn('size-4 text-foreground-muted transition-transform', isOpen && 'rotate-180')}
             stroke={1.8}
           />
         </button>
@@ -101,7 +99,7 @@ export function Select({
           <div
             id={`${selectId}-listbox`}
             role="listbox"
-            className="absolute z-30 mt-2 max-h-64 w-full overflow-auto rounded-2xl bg-(--color-surface-container-lowest) p-2 shadow-ambient"
+            className="absolute z-30 mt-2 max-h-64 w-full overflow-auto rounded-2xl bg-surface-container-lowest p-2 shadow-ambient"
           >
             {options.map((option) => {
               const isSelected = option.value === value
@@ -113,10 +111,8 @@ export function Select({
                   role="option"
                   aria-selected={isSelected}
                   className={cn(
-                    'flex w-full cursor-pointer items-center rounded-2xl p-3 text-left text-sm text-(--color-on-surface) transition-colors',
-                    isSelected
-                      ? 'bg-(--color-surface-container-highest)'
-                      : 'hover:bg-(--color-surface-container-lowest)',
+                    'flex w-full cursor-pointer items-center rounded-2xl p-3 text-left text-sm transition-colors',
+                    isSelected ? 'bg-surface-container-highest' : 'hover:bg-surface-container-lowest',
                   )}
                   onClick={() => handleSelect(option.value)}
                 >
@@ -128,7 +124,7 @@ export function Select({
         ) : null}
       </div>
 
-      {error ? <p className="text-sm text-(--color-danger-strong)">{error}</p> : null}
+      {error ? <p className="text-sm text-danger-strong">{error}</p> : null}
     </label>
   )
 }

@@ -207,14 +207,14 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             {incidentColumns.map((status) => (
               <section
                 key={status}
-                className="flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[20px] bg-(--color-surface-container-low) p-3 shadow-ambient"
+                className="flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[1.25rem] bg-surface-container-low p-3"
               >
                 <div className="flex items-center justify-between px-2 pt-1 pb-3">
                   <div className={`inline-flex items-center gap-2 text-base font-semibold`}>
                     <span className="size-4 rounded-full border-2 border-current bg-current/15" />
                     <p>{statusMeta[status].label}</p>
                   </div>
-                  <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-(--color-surface-container-highest) px-1.5 text-xs text-(--color-on-surface-variant)">
+                  <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-surface-container-highest px-1.5 text-xs text-foreground-muted">
                     {incidentsByStatus[status].length}
                   </span>
                 </div>
@@ -223,11 +223,11 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                   {incidentsByStatus[status].map((incident) => (
                     <div
                       key={incident.id}
-                      className="rounded-2xl bg-(--color-surface-container-lowest) p-4 shadow-[0_1px_0_rgba(25,28,28,0.03)]"
+                      className="rounded-2xl bg-surface-container-lowest p-4 shadow-[0_1px_0_rgba(25,28,28,0.03)]"
                     >
                       <button
                         type="button"
-                        className="line-clamp-2 cursor-pointer text-left text-sm leading-5 font-medium text-(--color-on-surface) decoration-(--color-primary-strong) underline-offset-4 transition-colors hover:text-(--color-primary-strong) hover:underline"
+                        className="line-clamp-2 cursor-pointer text-left text-sm leading-5 font-medium decoration-primary-hover underline-offset-4 transition-colors hover:text-primary-hover hover:underline"
                         onClick={() => handleSelectIncident(incident.id)}
                       >
                         {incident.title}
@@ -250,12 +250,12 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             onClick={handleCloseDetails}
           />
 
-          <aside className="pointer-events-auto absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col rounded-l-[20px] border border-r-0 border-[rgba(25,28,28,0.08)] bg-[#f8f9f9]">
-            <div className="-mb-3 flex items-center justify-end rounded-tl-[20px] px-5 pt-3 sm:px-6 sm:pt-4">
+          <aside className="pointer-events-auto absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col rounded-l-[1.25rem] border border-r-0 border-[rgba(25,28,28,0.08)] bg-surface-container-lowest">
+            <div className="-mb-3 flex items-center justify-end rounded-tl-[1.25rem] px-5 pt-3 sm:px-6 sm:pt-4">
               <button
                 type="button"
                 aria-label="Fechar painel lateral"
-                className="flex size-8 cursor-pointer items-center justify-center rounded-full text-(--color-on-surface-variant) transition-colors hover:text-(--color-on-surface)"
+                className="flex size-8 cursor-pointer items-center justify-center rounded-full text-foreground-muted transition-colors hover:text-foreground"
                 onClick={handleCloseDetails}
               >
                 <IconX className="size-5" stroke={1.8} />
@@ -263,20 +263,18 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             </div>
             <div className="flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6">
               <div className="space-y-4">
-                <h2 className="pr-8 text-4xl tracking-[-0.04em] text-(--color-on-surface) sm:pr-10">
-                  {selectedIncident.title}
-                </h2>
+                <h2 className="pr-8 text-4xl tracking-[-0.04em] sm:pr-10">{selectedIncident.title}</h2>
 
                 <div
-                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold ${statusBadgeVariants[selectedIncident.status]}`}
+                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-foreground-inverse ${statusBadgeVariants[selectedIncident.status]}`}
                 >
-                  <span className="size-4 rounded-full border-2 border-(--color-surface) bg-[rgba(249,249,248,0.22)]" />
+                  <span className="size-4 rounded-full border-2 border-foreground-inverse bg-[rgba(249,249,248,0.22)]" />
                   <span>{statusLabels[selectedIncident.status]}</span>
                 </div>
 
                 <div className="border-t border-[rgba(25,28,28,0.08)] pt-5">
-                  <div className="rounded-[20px] border border-[rgba(25,28,28,0.08)] p-4">
-                    <div className="flex items-center gap-2 text-sm text-(--color-on-surface-variant)">
+                  <div className="rounded-[1.25rem] border border-[rgba(25,28,28,0.08)] p-4">
+                    <div className="flex items-center gap-2 text-sm text-foreground-muted">
                       {selectedIncident.userType === 'staff' ? (
                         <IconUserCog className="size-4" stroke={1.8} />
                       ) : (
@@ -284,18 +282,16 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                       )}
                       <p>
                         <span>Registrado por: </span>
-                        <span className="font-medium text-(--color-primary-strong)">
+                        <span className="font-medium text-primary-hover">
                           {selectedIncident.userType === 'resident' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
 
-                    <p className="mt-4 text-sm leading-7 text-(--color-on-surface-variant)">
-                      {selectedIncident.description}
-                    </p>
+                    <p className="mt-4 text-sm leading-7 text-foreground-muted">{selectedIncident.description}</p>
 
                     {selectedIncident.hasAttachment && selectedIncident.attachmentUrl ? (
-                      <div className="mt-4 overflow-hidden rounded-[18px] border border-[rgba(25,28,28,0.08)]">
+                      <div className="mt-4 overflow-hidden rounded-[1.125rem] border border-[rgba(25,28,28,0.08)]">
                         <Image
                           src={selectedIncident.attachmentUrl}
                           alt={selectedIncident.attachmentName ?? 'Imagem anexada'}
@@ -308,11 +304,11 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                     ) : null}
 
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-(--color-on-surface-variant)">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-foreground-muted">
                         <IconMapPin className="size-4" stroke={1.8} />
                         <span>Localização: {selectedIncident.location}</span>
                       </span>
-                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-(--color-on-surface-variant)">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-foreground-muted">
                         <IconClock className="size-4" stroke={1.8} />
                         <span>Data: {selectedIncident.createdAt}</span>
                       </span>
@@ -324,7 +320,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
                 <button
                   type="button"
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl border border-(--color-danger-strong) bg-transparent px-5 py-3 text-base font-medium text-(--color-danger-strong) transition-colors hover:bg-[rgba(185,28,28,0.08)]"
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl border border-danger-strong bg-transparent px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-[rgba(185,28,28,0.08)]"
                   onClick={handleRequestRemoveIncident}
                 >
                   <IconTrash className="size-4.5" stroke={1.8} />
@@ -360,16 +356,16 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
           <button
             type="button"
             aria-label="Fechar detalhes da ocorrencia"
-            className="absolute inset-0 bg-[rgba(25,28,28,0.28)] backdrop-blur-[2px]"
+            className="absolute inset-0 bg-[rgba(25,28,28,0.28)] backdrop-blur-[.125rem]"
             onClick={handleCloseDetails}
           />
 
-          <aside className="absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col border-l border-[rgba(25,28,28,0.08)] bg-[#f8f9f9] sm:w-160">
+          <aside className="absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col border-l border-[rgba(25,28,28,0.08)] bg-surface-container-lowest sm:w-160">
             <div className="-mb-3 flex items-center justify-end px-5 pt-3 sm:px-6 sm:pt-4">
               <button
                 type="button"
                 aria-label="Fechar painel lateral"
-                className="flex size-8 cursor-pointer items-center justify-center rounded-full text-(--color-on-surface-variant) transition-colors hover:text-(--color-on-surface)"
+                className="flex size-8 cursor-pointer items-center justify-center rounded-full text-foreground-muted transition-colors hover:text-foreground"
                 onClick={handleCloseDetails}
               >
                 <IconX className="size-5" stroke={1.8} />
@@ -377,20 +373,18 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             </div>
             <div className="flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6">
               <div className="space-y-4">
-                <h2 className="pr-8 text-4xl tracking-[-0.04em] text-(--color-on-surface) sm:pr-10">
-                  {selectedIncident.title}
-                </h2>
+                <h2 className="pr-8 text-4xl tracking-[-0.04em] sm:pr-10">{selectedIncident.title}</h2>
 
                 <div
                   className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold ${statusBadgeVariants[selectedIncident.status]}`}
                 >
-                  <span className="size-4 rounded-full border-2 border-(--color-surface) bg-[rgba(249,249,248,0.22)]" />
+                  <span className="size-4 rounded-full border-2 border-foreground-inverse bg-[rgba(249,249,248,0.22)]" />
                   <span>{statusLabels[selectedIncident.status]}</span>
                 </div>
 
                 <div className="border-t border-[rgba(25,28,28,0.08)] pt-5">
-                  <div className="rounded-[20px] border border-[rgba(25,28,28,0.08)] p-4">
-                    <div className="flex items-center gap-2 text-sm text-(--color-on-surface-variant)">
+                  <div className="rounded-[1.25rem] border border-[rgba(25,28,28,0.08)] p-4">
+                    <div className="flex items-center gap-2 text-sm text-foreground-muted">
                       {selectedIncident.userType === 'staff' ? (
                         <IconUserCog className="size-4" stroke={1.8} />
                       ) : (
@@ -398,18 +392,16 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                       )}
                       <p>
                         <span>Registrado por: </span>
-                        <span className="font-medium text-(--color-primary-strong)">
+                        <span className="font-medium text-primary-hover">
                           {selectedIncident.userType === 'resident' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
 
-                    <p className="mt-4 text-sm leading-7 text-(--color-on-surface-variant)">
-                      {selectedIncident.description}
-                    </p>
+                    <p className="mt-4 text-sm leading-7 text-foreground-muted">{selectedIncident.description}</p>
 
                     {selectedIncident.hasAttachment && selectedIncident.attachmentUrl ? (
-                      <div className="mt-4 overflow-hidden rounded-[18px] border border-[rgba(25,28,28,0.08)]">
+                      <div className="mt-4 overflow-hidden rounded-[1.125rem] border border-[rgba(25,28,28,0.08)]">
                         <Image
                           src={selectedIncident.attachmentUrl}
                           alt={selectedIncident.attachmentName ?? 'Imagem anexada'}
@@ -422,11 +414,11 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                     ) : null}
 
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-(--color-on-surface-variant)">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-foreground-muted">
                         <IconMapPin className="size-4" stroke={1.8} />
                         <span>Localização: {selectedIncident.location}</span>
                       </span>
-                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-(--color-on-surface-variant)">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-foreground-muted">
                         <IconClock className="size-4" stroke={1.8} />
                         <span>Data: {selectedIncident.createdAt}</span>
                       </span>
@@ -438,7 +430,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
                 <button
                   type="button"
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl bg-(--color-danger-soft) px-5 py-3 text-base font-medium text-(--color-danger-strong) transition-colors hover:bg-[rgba(185,28,28,0.18)]"
+                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl bg-danger-soft px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-[rgba(185,28,28,0.18)]"
                   onClick={handleRequestRemoveIncident}
                 >
                   <IconTrash className="size-4.5" stroke={1.8} />

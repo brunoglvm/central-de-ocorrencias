@@ -8,7 +8,6 @@ export type Incident = {
   description: string
   attachmentName?: string | null
   attachmentUrl?: string | null
-  category: string
   createdAt: string
   status: IncidentStatus
   location: string

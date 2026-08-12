@@ -14,19 +14,19 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
 
   return (
     <label className="block space-y-2" htmlFor={textareaId}>
-      <span className="text-sm text-(--color-on-surface-variant)">{label}</span>
+      <span className="text-sm text-foreground-muted">{label}</span>
       <textarea
         id={textareaId}
         ref={ref}
         className={cn(
-          'min-h-40 w-full resize-none rounded-2xl bg-(--color-surface-container-lowest) px-4 py-3 text-sm leading-7 text-(--color-on-surface) outline-none placeholder:text-(--color-on-surface-variant) focus:ring-2 focus:ring-[rgba(62,98,103,0.2)]',
+          'min-h-40 w-full resize-none rounded-2xl bg-surface-container-lowest px-4 py-3 text-sm leading-7 outline-none placeholder:text-foreground-muted focus:ring-2 focus:ring-[rgba(62,98,103,0.2)]',
           error && 'ring-2 ring-[rgba(185,28,28,0.18)]',
           className,
         )}
         {...props}
       />
 
-      {error ? <p className="text-sm text-(--color-danger-strong)">{error}</p> : null}
+      {error ? <p className="text-sm text-danger-strong">{error}</p> : null}
     </label>
   )
 })
