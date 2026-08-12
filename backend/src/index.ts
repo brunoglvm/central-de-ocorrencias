@@ -9,7 +9,7 @@ import { routes } from '@/routes/index.js'
 import jwtPlugin from '@/plugins/jwt.js'
 import swaggerConfig from './plugins/swagger.js'
 import errorHandlerPlugin from './plugins/error-handler.js'
-import { disableRateLimit } from './tests/performance/config.js'
+import { disableRateLimit } from '../tests/performance/config.js'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 

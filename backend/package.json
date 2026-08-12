@@ -16,7 +16,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "check": "pnpm format:check && pnpm lint && pnpm typecheck",
-    "perf": "tsx src/tests/performance/index.ts"
+    "perf": "tsx tests/performance/index.ts"
   },
   "keywords": [],
   "author": "",
