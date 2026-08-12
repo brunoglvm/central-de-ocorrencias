@@ -17,16 +17,10 @@ type BoardClientProps = {
   initialIncidents: Incident[]
 }
 
-const statusIndicatorVariants: Record<IncidentStatus, string> = {
-  open: 'text-[var(--badge-open-text)]',
-  in_progress: 'text-[var(--badge-progress-text)]',
-  resolved: 'text-[var(--badge-resolved-text)]',
-}
-
 const statusBadgeVariants: Record<IncidentStatus, string> = {
-  open: 'bg-[var(--badge-open-text)] text-[var(--color-surface)]',
-  in_progress: 'bg-[var(--badge-progress-text)] text-[var(--color-surface)]',
-  resolved: 'bg-[var(--badge-resolved-text)] text-[var(--color-surface)]',
+  open: 'bg-status-open text-surface',
+  in_progress: 'bg-status-progress text-surface',
+  resolved: 'bg-status-resolved text-surface',
 }
 
 const statusLabels: Record<IncidentStatus, string> = {
@@ -194,7 +188,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
       {isMounted ? (
         <DragDropContext onDragEnd={handleDragEnd}>
           <div className="overflow-x-auto pb-6">
-            <div className="mx-auto flex min-h-[calc(100vh-10rem)] min-w-full justify-center gap-5">
+            <div className="mx-auto flex min-w-full justify-center gap-5">
               {incidentColumns.map((status) => (
                 <BoardColumn
                   key={status}
@@ -209,16 +203,14 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
         </DragDropContext>
       ) : (
         <div className="overflow-x-auto pb-6">
-          <div className="mx-auto flex min-h-[calc(100vh-10rem)] min-w-full justify-center gap-5">
+          <div className="mx-auto flex min-w-full justify-center gap-5">
             {incidentColumns.map((status) => (
               <section
                 key={status}
-                className="flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[20px] bg-(--color-surface-container-low) p-3 shadow-(--shadow-ambient)"
+                className="flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[20px] bg-(--color-surface-container-low) p-3 shadow-ambient"
               >
                 <div className="flex items-center justify-between px-2 pt-1 pb-3">
-                  <div
-                    className={`inline-flex items-center gap-2 text-base font-semibold ${statusIndicatorVariants[status]}`}
-                  >
+                  <div className={`inline-flex items-center gap-2 text-base font-semibold`}>
                     <span className="size-4 rounded-full border-2 border-current bg-current/15" />
                     <p>{statusMeta[status].label}</p>
                   </div>
@@ -271,7 +263,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             </div>
             <div className="flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6">
               <div className="space-y-4">
-                <h2 className="pr-8 font-display text-4xl tracking-[-0.04em] text-(--color-on-surface) sm:pr-10">
+                <h2 className="pr-8 text-4xl tracking-[-0.04em] text-(--color-on-surface) sm:pr-10">
                   {selectedIncident.title}
                 </h2>
 
@@ -385,7 +377,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             </div>
             <div className="flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6">
               <div className="space-y-4">
-                <h2 className="pr-8 font-display text-4xl tracking-[-0.04em] text-(--color-on-surface) sm:pr-10">
+                <h2 className="pr-8 text-4xl tracking-[-0.04em] text-(--color-on-surface) sm:pr-10">
                   {selectedIncident.title}
                 </h2>
 

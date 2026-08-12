@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { AppShell } from '@/components/layout/app-shell'
+import { MainLayout } from '@/components/layout/main-layout'
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -21,9 +21,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className="h-full antialiased">
+    <html lang="pt-BR" data-scroll-behavior="smooth" className="h-full antialiased">
       <body className="min-h-full">
-        <AppShell>{children}</AppShell>
+        <MainLayout>{children}</MainLayout>
       </body>
     </html>
   )

@@ -12,10 +12,7 @@ export default function RegisterPublicPage() {
       <div className="flex flex-col items-center text-center">
         <Image src="/images/logo.png" alt="Concept Garden" width={34} height={36} className="h-8 w-auto" priority />
 
-        <span
-          className="mt-3 flex flex-col leading-none text-(--color-on-surface-variant)"
-          style={{ fontFamily: 'var(--font-brand), serif', fontWeight: 500 }}
-        >
+        <span className="mt-3 flex flex-col font-brand leading-none font-medium text-(--color-on-surface-variant)">
           <span className="w-fit border-b border-(--color-on-surface-variant) text-base uppercase">Concept Garden</span>
           <span className="mt-1 text-[10px] uppercase">Central de Ocorrências</span>
         </span>

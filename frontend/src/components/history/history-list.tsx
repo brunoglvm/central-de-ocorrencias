@@ -38,7 +38,7 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
             >
               <div className="flex items-start gap-4 lg:flex-col lg:items-center">
                 <div className="flex flex-col items-center">
-                  <span className="rounded-full bg-(--color-surface-container-highest) size-3" />
+                  <span className="size-3 rounded-full bg-(--color-surface-container-highest)" />
                   {index < incidents.length - 1 ? (
                     <span className="mt-2 h-20 w-px bg-[linear-gradient(to_bottom,rgba(225,227,226,1),rgba(225,227,226,0))]" />
                   ) : null}
@@ -48,16 +48,14 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
               <div className="space-y-4">
                 <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
                   <div className="min-w-0 space-y-4">
-                    <h2 className="font-display text-3xl tracking-[-0.03em] text-(--color-on-surface)">
-                      {incident.title}
-                    </h2>
+                    <h2 className="text-3xl tracking-[-0.03em] text-(--color-on-surface)">{incident.title}</h2>
 
                     <p className="text-sm leading-7 text-(--color-on-surface-variant)">{incident.description}</p>
                   </div>
 
                   <button
                     type="button"
-                    className="inline-flex cursor-pointer items-center justify-center gap-1.5 self-start rounded-3xl border border-[rgba(62,98,103,0.22)] bg-transparent px-3 py-1.5 text-xs font-medium text-(--color-primary-strong) transition-colors hover:bg-[rgba(62,98,103,0.08)]"
+                    className="inline-flex cursor-pointer items-center justify-center gap-1.5 self-start rounded-3xl border border-[rgba(62,98,103,0.22)] bg-transparent px-3 py-1.5 text-xs font-medium text-(--color-primary-strong) transition-colors hover:bg-(--color-surface-container-highest)"
                     style={{ fontSize: '12px' }}
                     onClick={() => onRestoreIncident(incident.id)}
                   >

@@ -1,9 +1,8 @@
 @import '@fontsource/inter/latin.css';
-@import '@fontsource/manrope/latin.css';
-@import '@fontsource/source-serif-4/500.css';
+@import '@fontsource/source-serif-4/latin.css';
 @import 'tailwindcss';
 
-:root {
+@theme {
   --background: #f6f7f6;
   --foreground: #191c1c;
   --color-surface: #f8f8f7;
@@ -15,37 +14,71 @@
   --color-primary: #6d9197;
   --color-primary-strong: #3e6267;
   --color-primary-container: #577a80;
-  --badge-open-bg: #d4e2e5;
-  --badge-open-text: #17363d;
-  --badge-progress-bg: #fef9c3;
-  --badge-progress-text: #713f12;
-  --badge-resolved-bg: #dcfce7;
-  --badge-resolved-text: #166534;
+
+  --color-status-open: #17363d;
+  --color-status-progress: #713f12;
+  --color-status-resolved: #166534;
+
   --color-danger-soft: #fee2e2;
   --color-danger-strong: #b91c1c;
+
   --shadow-ambient: 0 12px 40px rgba(25, 28, 28, 0.06);
   --font-brand: 'Source Serif 4';
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: 'Inter';
-  --font-display: 'Manrope';
+@layer base {
+  ::selection,
+  ::-moz-selection {
+    background: rgba(109, 145, 151, 0.22);
+  }
+
+  * {
+    box-sizing: border-box;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 0.125rem;
+      border-radius: 0.25rem;
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family:
+      'Inter',
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      'Open Sans',
+      'Helvetica Neue',
+      sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 400;
+  }
 }
 
-* {
-  box-sizing: border-box;
-}
+@layer overrides {
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', sans-serif;
+  a {
+    text-decoration: none;
+  }
 }
 
 @utility sheet-enter {
@@ -62,27 +95,5 @@ body {
   to {
     opacity: 1;
     transform: translateX(0);
-  }
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-::selection {
-  background: rgba(109, 145, 151, 0.22);
-}
-
-@media (max-width: 768px) {
-  body {
-    background-image: linear-gradient(180deg, rgba(109, 145, 151, 0.08), transparent 20%);
   }
 }

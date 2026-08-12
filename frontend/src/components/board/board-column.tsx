@@ -12,9 +12,9 @@ type BoardColumnProps = {
 }
 
 const statusIndicatorVariants: Record<IncidentStatus, string> = {
-  open: 'text-[var(--badge-open-text)]',
-  in_progress: 'text-[var(--badge-progress-text)]',
-  resolved: 'text-[var(--badge-resolved-text)]',
+  open: 'text-status-open',
+  in_progress: 'text-status-progress',
+  resolved: 'text-status-resolved',
 }
 
 export function BoardColumn({ status, title, incidents, onSelectIncident }: BoardColumnProps) {
@@ -30,7 +30,7 @@ export function BoardColumn({ status, title, incidents, onSelectIncident }: Boar
             <div
               className={`inline-flex items-center gap-2 text-base font-semibold ${statusIndicatorVariants[status]}`}
             >
-              <span className="rounded-full border-2 border-current bg-current/15 size-4" />
+              <span className="size-4 rounded-full border-2 border-current bg-current/15" />
               <p>{title}</p>
             </div>
             <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-(--color-surface-container-highest) px-1.5 text-xs text-(--color-on-surface-variant)">

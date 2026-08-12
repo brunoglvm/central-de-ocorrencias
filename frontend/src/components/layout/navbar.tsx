@@ -37,7 +37,7 @@ export function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-100 hidden w-full lg:block">
-        <div className="w-full border-b border-[rgba(25,28,28,0.08)] bg-[rgba(243,244,243,0.82)] px-4 py-3 shadow-(--shadow-ambient) backdrop-blur-xl sm:px-6 lg:px-8">
+        <div className="w-full border-b border-[rgba(25,28,28,0.08)] bg-[#f3f5f3] px-4 py-3 shadow-ambient backdrop-blur-xl sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-400 grid-cols-[1fr_auto_1fr] items-center">
             <div>
               <Link href="/admin/quadro" className="inline-flex items-center gap-3">
@@ -49,13 +49,7 @@ export function Navbar() {
                   className="h-7 w-auto"
                   priority
                 />
-                <span
-                  className="flex flex-col leading-none text-(--color-on-surface-variant)"
-                  style={{
-                    fontFamily: 'var(--font-brand), serif',
-                    fontWeight: 500,
-                  }}
-                >
+                <span className="flex flex-col font-brand leading-none font-medium text-(--color-on-surface-variant)">
                   <span className="w-fit border-b border-(--color-on-surface-variant) text-sm uppercase">
                     Concept Garden
                   </span>
@@ -77,10 +71,9 @@ export function Navbar() {
                     className={cn(
                       'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-colors',
                       isActive
-                        ? 'bg-(--color-primary-container)'
+                        ? 'bg-(--color-primary-container) text-white'
                         : 'text-(--color-on-surface-variant) hover:bg-(--color-surface-container-highest) hover:text-(--color-primary-strong)',
                     )}
-                    style={isActive ? { color: '#fff' } : undefined}
                   >
                     {item.label}
                     {item.isPublic ? <IconArrowUpRight className="size-4" stroke={1.8} /> : null}
@@ -96,10 +89,10 @@ export function Navbar() {
                 <button
                   type="button"
                   aria-label="Sair"
-                  className="inline-flex cursor-pointer items-center justify-center rounded-full text-(--color-on-surface-variant) transition-colors hover:text-(--color-danger-strong) size-10"
+                  className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-(--color-on-surface-variant) transition-colors hover:text-(--color-danger-strong)"
                   onClick={() => setIsLogoutModalOpen(true)}
                 >
-                  <IconLogout2 className="transition-colors size-5" stroke={1.8} />
+                  <IconLogout2 className="size-5 transition-colors" stroke={1.8} />
                 </button>
               </Tooltip>
             </div>
@@ -107,7 +100,7 @@ export function Navbar() {
         </div>
       </header>
 
-      <nav className="fixed inset-x-4 bottom-4 z-100 rounded-[28px] bg-[rgba(249,249,248,0.85)] p-2 shadow-(--shadow-ambient) backdrop-blur-xl lg:hidden">
+      <nav className="fixed inset-x-4 bottom-4 z-100 rounded-[28px] bg-[rgba(249,249,248,0.85)] p-2 shadow-ambient backdrop-blur-xl lg:hidden">
         <div className="grid grid-cols-3 gap-1">
           {navigationItems.map((item) => {
             const Icon = item.icon
@@ -120,16 +113,14 @@ export function Navbar() {
                 target={item.isPublic ? '_blank' : undefined}
                 rel={item.isPublic ? 'noopener noreferrer' : undefined}
                 className={cn(
-                  'flex flex-col items-center gap-1 rounded-[22px] text-xs transition-colors p-3',
+                  'flex flex-col items-center gap-1 rounded-[22px] p-3 text-xs transition-colors',
                   isActive ? 'bg-(--color-primary-container)' : 'text-(--color-on-surface-variant)',
                 )}
                 style={isActive ? { color: '#fff' } : undefined}
               >
                 <div className="relative">
                   <Icon className="size-5" stroke={1.8} />
-                  {item.isPublic ? (
-                    <IconArrowUpRight className="absolute -top-1 -right-2 size-3.5" stroke={2} />
-                  ) : null}
+                  {item.isPublic ? <IconArrowUpRight className="absolute -top-1 -right-2 size-3.5" stroke={2} /> : null}
                 </div>
                 <span>{item.label}</span>
               </Link>

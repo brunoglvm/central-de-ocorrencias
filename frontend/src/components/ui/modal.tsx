@@ -52,7 +52,7 @@ export function Modal({ confirmLabel = 'Confirmar', description, isOpen, onClose
 
       <Card className="relative z-10 w-full max-w-md rounded-4xl p-6 sm:p-7">
         <div className="space-y-3">
-          <h2 className="font-display text-3xl tracking-[-0.03em] text-(--color-on-surface)">{title}</h2>
+          <h2 className="text-3xl tracking-[-0.03em] text-(--color-on-surface)">{title}</h2>
           <p className="text-sm leading-7 text-(--color-on-surface-variant)">{description}</p>
         </div>
 

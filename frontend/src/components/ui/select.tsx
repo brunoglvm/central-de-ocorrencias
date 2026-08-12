@@ -92,7 +92,7 @@ export function Select({
             {selectedOption?.label ?? placeholder}
           </span>
           <IconChevronDown
-            className={cn('text-(--color-on-surface-variant) transition-transform size-4', isOpen && 'rotate-180')}
+            className={cn('size-4 text-(--color-on-surface-variant) transition-transform', isOpen && 'rotate-180')}
             stroke={1.8}
           />
         </button>
@@ -101,7 +101,7 @@ export function Select({
           <div
             id={`${selectId}-listbox`}
             role="listbox"
-            className="absolute z-30 mt-2 max-h-64 w-full overflow-auto rounded-2xl bg-(--color-surface-container-lowest) p-2 shadow-(--shadow-ambient)"
+            className="absolute z-30 mt-2 max-h-64 w-full overflow-auto rounded-2xl bg-(--color-surface-container-lowest) p-2 shadow-ambient"
           >
             {options.map((option) => {
               const isSelected = option.value === value
@@ -113,7 +113,7 @@ export function Select({
                   role="option"
                   aria-selected={isSelected}
                   className={cn(
-                    'flex w-full cursor-pointer items-center rounded-2xl text-left text-sm text-(--color-on-surface) transition-colors p-3',
+                    'flex w-full cursor-pointer items-center rounded-2xl p-3 text-left text-sm text-(--color-on-surface) transition-colors',
                     isSelected
                       ? 'bg-(--color-surface-container-highest)'
                       : 'hover:bg-(--color-surface-container-lowest)',

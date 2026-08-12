@@ -13,10 +13,8 @@
     "check": "pnpm format:check && pnpm lint"
   },
   "dependencies": {
-    "@fontsource/cormorant-garamond": "^5.2.11",
     "@fontsource/inter": "^5.2.8",
-    "@fontsource/manrope": "^5.2.8",
-    "@fontsource/source-serif-4": "^5.2.9",
+    "@fontsource/source-serif-4": "^5.3.0",
     "@hello-pangea/dnd": "^18.0.1",
     "@hookform/resolvers": "^5.2.2",
     "@tabler/icons-react": "^3.41.1",
