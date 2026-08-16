@@ -1,0 +1,6 @@
+cache:
+  enabled: true
+  dir: ""
+  # Replace with the hostname or IP address of your cache server
+  host: "192.168.0.133"
+  port: 8088
