@@ -14,10 +14,10 @@ export function MainLayout({ children }: MainLayoutProps) {
   const shouldShowNavbar = navbarRoutes.includes(pathname)
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className='flex min-h-screen flex-col'>
       {shouldShowNavbar ? <Navbar /> : null}
 
-      <main className="mx-auto w-full max-w-7xl flex-1 px-0 pt-8 pb-28 sm:px-6 lg:px-8 lg:pt-12 lg:pb-0">
+      <main className='mx-auto w-full max-w-7xl flex-1 px-0 pt-8 pb-28 sm:px-6 lg:px-8 lg:pt-12 lg:pb-0'>
         {children}
       </main>
     </div>

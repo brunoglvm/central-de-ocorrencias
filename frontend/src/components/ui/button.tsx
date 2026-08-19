@@ -6,7 +6,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 }
 
 const buttonClassName =
-  'inline-flex cursor-pointer appearance-none items-center justify-center rounded-[1.5rem] border-0 bg-primary px-5 py-3 text-base leading-none font-medium no-underline shadow-ambient transition-colors hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-[rgba(62,98,103,0.25)] disabled:cursor-not-allowed disabled:opacity-60'
+  'inline-flex cursor-pointer appearance-none items-center justify-center rounded-[1.5rem] border-0 bg-primary px-5 py-3 text-base leading-none font-medium no-underline shadow-ambient transition-colors hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary-hover/25 disabled:cursor-not-allowed disabled:opacity-60'
 
 export function Button({ className, href, type = 'button', ...props }: ButtonProps) {
   if (href) {

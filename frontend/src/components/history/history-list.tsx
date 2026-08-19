@@ -28,67 +28,67 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
   const visiblePages = getVisiblePages(currentPage, totalPages)
 
   return (
-    <section className="rounded-[2.25rem] bg-surface-container-low p-5 sm:p-6">
+    <section className='rounded-[2.25rem] bg-surface-container-low p-5 sm:p-6'>
       {incidents.length ? (
-        <div className="space-y-6">
+        <div className='space-y-6'>
           {incidents.map((incident, index) => (
             <article
               key={incident.id}
-              className="grid gap-4 rounded-[1.75rem] bg-surface-container-lowest p-5 lg:grid-cols-[auto_1fr]"
+              className='grid gap-4 rounded-[1.75rem] bg-surface-container-lowest p-5 lg:grid-cols-[auto_1fr]'
             >
-              <div className="flex items-start gap-4 lg:flex-col lg:items-center">
-                <div className="flex flex-col items-center">
-                  <span className="size-3 rounded-full bg-surface-container-highest" />
+              <div className='flex items-start gap-4 lg:flex-col lg:items-center'>
+                <div className='flex flex-col items-center'>
+                  <span className='size-3 rounded-full bg-surface-container-highest' />
                   {index < incidents.length - 1 ? (
-                    <span className="mt-2 h-20 w-px bg-[linear-gradient(to_bottom,rgba(225,227,226,1),rgba(225,227,226,0))]" />
+                    <span className='mt-2 h-20 w-px bg-linear-to-b from-surface-container-highest to-transparent' />
                   ) : null}
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
-                  <div className="min-w-0 space-y-4">
-                    <h2 className="text-3xl tracking-[-0.03em]">{incident.title}</h2>
+              <div className='space-y-4'>
+                <div className='grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start'>
+                  <div className='min-w-0 space-y-4'>
+                    <h2 className='text-3xl tracking-[-0.03em]'>{incident.title}</h2>
 
-                    <p className="text-sm leading-7 text-foreground-muted">{incident.description}</p>
+                    <p className='text-sm leading-7 text-foreground-muted'>{incident.description}</p>
                   </div>
 
                   <button
-                    type="button"
-                    className="inline-flex cursor-pointer items-center justify-center gap-1.5 self-start rounded-3xl border border-[rgba(62,98,103,0.22)] bg-transparent px-3 py-1.5 text-xs font-medium text-primary-hover transition-colors hover:bg-surface-container-highest"
+                    type='button'
+                    className='inline-flex cursor-pointer items-center justify-center gap-1.5 self-start rounded-3xl border border-[rgba(62,98,103,0.22)] bg-transparent px-3 py-1.5 text-xs font-medium text-primary-hover transition-colors hover:bg-surface-container-highest'
                     style={{ fontSize: '12px' }}
                     onClick={() => onRestoreIncident(incident.id)}
                   >
-                    <IconArrowUpLeft className="size-3.5" stroke={1.8} />
+                    <IconArrowUpLeft className='size-3.5' stroke={1.8} />
                     Retornar
                   </button>
                 </div>
 
-                <div className="flex items-center gap-3 text-xs text-foreground-muted">
-                  <span className="inline-flex items-center gap-1">
-                    <IconMapPin className="size-4" stroke={1.8} />
+                <div className='flex items-center gap-3 text-xs text-foreground-muted'>
+                  <span className='inline-flex items-center gap-1'>
+                    <IconMapPin className='size-4' stroke={1.8} />
                     {incident.location}
                   </span>
-                  <span className="inline-flex items-center gap-1 border-l border-[rgba(25,28,28,0.12)] pl-3">
-                    <IconClock className="size-4" stroke={1.8} />
+                  <span className='inline-flex items-center gap-1 border-l border-foreground/12 pl-3'>
+                    <IconClock className='size-4' stroke={1.8} />
                     {incident.createdAt}
                   </span>
-                  <span className="inline-flex items-center gap-1 border-l border-[rgba(25,28,28,0.12)] pl-3">
+                  <span className='inline-flex items-center gap-1 border-l border-foreground/12 pl-3'>
                     {incident.userType === 'staff' ? (
-                      <IconUserCog className="size-4" stroke={1.8} />
+                      <IconUserCog className='size-4' stroke={1.8} />
                     ) : (
-                      <IconUser className="size-4" stroke={1.8} />
+                      <IconUser className='size-4' stroke={1.8} />
                     )}
                     <span>{incident.userType === 'staff' ? 'Funcionário' : 'Morador'}</span>
                   </span>
                   {incident.hasAttachment && incident.attachmentUrl ? (
                     <button
-                      type="button"
-                      aria-label="Visualizar imagem anexada"
-                      className="inline-flex cursor-pointer items-center gap-1 border-l border-[rgba(25,28,28,0.12)] pl-3 transition-colors hover:text-foreground"
+                      type='button'
+                      aria-label='Visualizar imagem anexada'
+                      className='inline-flex cursor-pointer items-center gap-1 border-l border-foreground/12 pl-3 transition-colors hover:text-foreground'
                       onClick={() => setPreviewIncident(incident)}
                     >
-                      <IconPhoto className="size-4" stroke={1.8} />
+                      <IconPhoto className='size-4' stroke={1.8} />
                       <span>Imagem anexada</span>
                     </button>
                   ) : null}
@@ -98,49 +98,49 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
           ))}
         </div>
       ) : (
-        <div className="rounded-[1.75rem] bg-surface-container-lowest px-5 py-12 text-center text-sm text-foreground-muted">
+        <div className='rounded-[1.75rem] bg-surface-container-lowest px-5 py-12 text-center text-sm text-foreground-muted'>
           Nenhuma ocorrência foi enviada para o histórico ainda.
         </div>
       )}
 
       {totalPages > 1 ? (
-        <div className="mt-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="space-y-1">
-            <p className="text-sm font-medium">
+        <div className='mt-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between'>
+          <div className='space-y-1'>
+            <p className='text-sm font-medium'>
               Página {currentPage} de {totalPages}
             </p>
-            <p className="text-sm text-foreground-muted">{totalItems} ocorrências no histórico.</p>
+            <p className='text-sm text-foreground-muted'>{totalItems} ocorrências no histórico.</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className='flex flex-wrap items-center gap-3'>
             {currentPage > 1 ? (
               <Link
                 href={`/admin/historico?page=${currentPage - 1}`}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-[rgba(25,28,28,0.08)] bg-foreground-inverse px-4 text-sm font-medium transition-colors hover:bg-surface-container-highest"
+                className='inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium transition-colors hover:bg-surface-container-highest'
               >
-                <IconChevronLeft className="size-5" stroke={1.8} />
+                <IconChevronLeft className='size-5' stroke={1.8} />
                 Anterior
               </Link>
             ) : (
-              <span className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-[rgba(25,28,28,0.08)] bg-foreground-inverse px-4 text-sm font-medium text-foreground-muted opacity-60">
-                <IconChevronLeft className="size-5" stroke={1.8} />
+              <span className='inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium text-foreground-muted opacity-60'>
+                <IconChevronLeft className='size-5' stroke={1.8} />
                 Anterior
               </span>
             )}
 
-            <div className="flex flex-wrap items-center gap-3">
+            <div className='flex flex-wrap items-center gap-3'>
               {visiblePages.map((page, index) =>
                 page === 'ellipsis' ? (
                   <span
                     key={`${page}-${index}`}
-                    className="inline-flex h-10 min-w-10 items-center justify-center rounded-2xl border border-[rgba(25,28,28,0.08)] bg-foreground-inverse px-3 text-sm font-medium text-foreground-muted"
+                    className='inline-flex h-10 min-w-10 items-center justify-center rounded-2xl border border-foreground/8 bg-foreground-inverse px-3 text-sm font-medium text-foreground-muted'
                   >
                     ...
                   </span>
                 ) : page === currentPage ? (
                   <span
                     key={page}
-                    className="inline-flex h-10 min-w-10 items-center justify-center rounded-2xl bg-primary-hover px-3 text-sm font-medium text-foreground-inverse"
+                    className='inline-flex h-10 min-w-10 items-center justify-center rounded-2xl bg-primary-hover px-3 text-sm font-medium text-foreground-inverse'
                   >
                     {page}
                   </span>
@@ -148,7 +148,7 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                   <Link
                     key={page}
                     href={`/admin/historico?page=${page}`}
-                    className="inline-flex h-10 min-w-10 items-center justify-center rounded-2xl border border-[rgba(25,28,28,0.08)] bg-foreground-inverse px-3 text-sm font-medium transition-colors hover:bg-surface-container-highest"
+                    className='inline-flex h-10 min-w-10 items-center justify-center rounded-2xl border border-foreground/8 bg-foreground-inverse px-3 text-sm font-medium transition-colors hover:bg-surface-container-highest'
                   >
                     {page}
                   </Link>
@@ -159,26 +159,26 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
             {currentPage < totalPages ? (
               <Link
                 href={`/admin/historico?page=${currentPage + 1}`}
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-[rgba(25,28,28,0.08)] bg-foreground-inverse px-4 text-sm font-medium transition-colors hover:bg-surface-container-highest"
+                className='inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium transition-colors hover:bg-surface-container-highest'
               >
                 Próxima
-                <IconChevronRight className="size-5" stroke={1.8} />
+                <IconChevronRight className='size-5' stroke={1.8} />
               </Link>
             ) : (
-              <span className="inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-[rgba(25,28,28,0.08)] bg-foreground-inverse px-4 text-sm font-medium text-foreground-muted opacity-60">
+              <span className='inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium text-foreground-muted opacity-60'>
                 Próxima
-                <IconChevronRight className="size-5" stroke={1.8} />
+                <IconChevronRight className='size-5' stroke={1.8} />
               </span>
             )}
           </div>
         </div>
       ) : (
-        <div className="mt-6">
-          <div className="space-y-1">
-            <p className="text-sm font-medium">
+        <div className='mt-6'>
+          <div className='space-y-1'>
+            <p className='text-sm font-medium'>
               Página {currentPage} de {totalPages}
             </p>
-            <p className="text-sm text-foreground-muted">{totalItems} ocorrências no histórico.</p>
+            <p className='text-sm text-foreground-muted'>{totalItems} ocorrências no histórico.</p>
           </div>
         </div>
       )}

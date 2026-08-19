@@ -184,11 +184,11 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
   }
 
   return (
-    <section className="w-full">
+    <section className='w-full'>
       {isMounted ? (
         <DragDropContext onDragEnd={handleDragEnd}>
-          <div className="overflow-x-auto pb-6">
-            <div className="mx-auto flex min-w-full justify-center gap-5">
+          <div className='overflow-x-auto pb-6'>
+            <div className='mx-auto flex min-w-full justify-center gap-5'>
               {incidentColumns.map((status) => (
                 <BoardColumn
                   key={status}
@@ -202,32 +202,29 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
           </div>
         </DragDropContext>
       ) : (
-        <div className="overflow-x-auto pb-6">
-          <div className="mx-auto flex min-w-full justify-center gap-5">
+        <div className='overflow-x-auto pb-6'>
+          <div className='mx-auto flex min-w-full justify-center gap-5'>
             {incidentColumns.map((status) => (
               <section
                 key={status}
-                className="flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[1.25rem] bg-surface-container-low p-3"
+                className='flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[1.25rem] bg-surface-container-low p-3'
               >
-                <div className="flex items-center justify-between px-2 pt-1 pb-3">
+                <div className='flex items-center justify-between px-2 pt-1 pb-3'>
                   <div className={`inline-flex items-center gap-2 text-base font-semibold`}>
-                    <span className="size-4 rounded-full border-2 border-current bg-current/15" />
+                    <span className='size-4 rounded-full border-2 border-current bg-current/15' />
                     <p>{statusMeta[status].label}</p>
                   </div>
-                  <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-surface-container-highest px-1.5 text-xs text-foreground-muted">
+                  <span className='inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-surface-container-highest px-1.5 text-xs text-foreground-muted'>
                     {incidentsByStatus[status].length}
                   </span>
                 </div>
 
-                <div className="min-h-24 flex-1 space-y-3 overflow-y-auto rounded-2xl p-1 pr-2">
+                <div className='min-h-24 flex-1 space-y-3 overflow-y-auto rounded-2xl p-1 pr-2'>
                   {incidentsByStatus[status].map((incident) => (
-                    <div
-                      key={incident.id}
-                      className="rounded-2xl bg-surface-container-lowest p-4 shadow-[0_1px_0_rgba(25,28,28,0.03)]"
-                    >
+                    <div key={incident.id} className='rounded-2xl bg-surface-container-lowest p-4'>
                       <button
-                        type="button"
-                        className="line-clamp-2 cursor-pointer text-left text-sm leading-5 font-medium decoration-primary-hover underline-offset-4 transition-colors hover:text-primary-hover hover:underline"
+                        type='button'
+                        className='line-clamp-2 cursor-pointer text-left text-sm leading-5 font-medium decoration-primary-hover underline-offset-4 transition-colors hover:text-primary-hover hover:underline'
                         onClick={() => handleSelectIncident(incident.id)}
                       >
                         {incident.title}
@@ -242,74 +239,74 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
       )}
 
       {selectedIncident ? (
-        <div className="pointer-events-none fixed inset-x-0 top-15.25 bottom-0 z-80 hidden lg:block">
+        <div className='pointer-events-none fixed inset-x-0 top-15.25 bottom-0 z-80 hidden lg:block'>
           <button
-            type="button"
-            aria-label="Fechar detalhes da ocorrência"
-            className="pointer-events-auto absolute inset-0"
+            type='button'
+            aria-label='Fechar detalhes da ocorrência'
+            className='pointer-events-auto absolute inset-0'
             onClick={handleCloseDetails}
           />
 
-          <aside className="pointer-events-auto absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col rounded-l-[1.25rem] border border-r-0 border-[rgba(25,28,28,0.08)] bg-surface-container-lowest">
-            <div className="-mb-3 flex items-center justify-end rounded-tl-[1.25rem] px-5 pt-3 sm:px-6 sm:pt-4">
+          <aside className='pointer-events-auto absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col rounded-l-[1.25rem] border border-r-0 border-foreground/8 bg-surface-container-lowest'>
+            <div className='-mb-3 flex items-center justify-end rounded-tl-[1.25rem] px-5 pt-3 sm:px-6 sm:pt-4'>
               <button
-                type="button"
-                aria-label="Fechar painel lateral"
-                className="flex size-8 cursor-pointer items-center justify-center rounded-full text-foreground-muted transition-colors hover:text-foreground"
+                type='button'
+                aria-label='Fechar painel lateral'
+                className='flex size-8 cursor-pointer items-center justify-center rounded-full text-foreground-muted transition-colors hover:text-foreground'
                 onClick={handleCloseDetails}
               >
-                <IconX className="size-5" stroke={1.8} />
+                <IconX className='size-5' stroke={1.8} />
               </button>
             </div>
-            <div className="flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6">
-              <div className="space-y-4">
-                <h2 className="pr-8 text-4xl tracking-[-0.04em] sm:pr-10">{selectedIncident.title}</h2>
+            <div className='flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6'>
+              <div className='space-y-4'>
+                <h2 className='pr-8 text-4xl tracking-[-0.04em] sm:pr-10'>{selectedIncident.title}</h2>
 
                 <div
                   className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-foreground-inverse ${statusBadgeVariants[selectedIncident.status]}`}
                 >
-                  <span className="size-4 rounded-full border-2 border-foreground-inverse bg-[rgba(249,249,248,0.22)]" />
+                  <span className='size-4 rounded-full border-2 border-foreground-inverse bg-surface-container-lowest/20' />
                   <span>{statusLabels[selectedIncident.status]}</span>
                 </div>
 
-                <div className="border-t border-[rgba(25,28,28,0.08)] pt-5">
-                  <div className="rounded-[1.25rem] border border-[rgba(25,28,28,0.08)] p-4">
-                    <div className="flex items-center gap-2 text-sm text-foreground-muted">
+                <div className='border-t border-foreground/8 pt-5'>
+                  <div className='rounded-[1.25rem] border border-foreground/8 p-4'>
+                    <div className='flex items-center gap-2 text-sm text-foreground-muted'>
                       {selectedIncident.userType === 'staff' ? (
-                        <IconUserCog className="size-4" stroke={1.8} />
+                        <IconUserCog className='size-4' stroke={1.8} />
                       ) : (
-                        <IconUser className="size-4" stroke={1.8} />
+                        <IconUser className='size-4' stroke={1.8} />
                       )}
                       <p>
                         <span>Registrado por: </span>
-                        <span className="font-medium text-primary-hover">
+                        <span className='font-medium text-primary-hover'>
                           {selectedIncident.userType === 'resident' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
 
-                    <p className="mt-4 text-sm leading-7 text-foreground-muted">{selectedIncident.description}</p>
+                    <p className='mt-4 text-sm leading-7 text-foreground-muted'>{selectedIncident.description}</p>
 
                     {selectedIncident.hasAttachment && selectedIncident.attachmentUrl ? (
-                      <div className="mt-4 overflow-hidden rounded-[1.125rem] border border-[rgba(25,28,28,0.08)]">
+                      <div className='mt-4 overflow-hidden rounded-[1.125rem] border border-foreground/8'>
                         <Image
                           src={selectedIncident.attachmentUrl}
                           alt={selectedIncident.attachmentName ?? 'Imagem anexada'}
                           width={1200}
                           height={800}
-                          className="h-auto w-full object-contain"
+                          className='h-auto w-full object-contain'
                           unoptimized
                         />
                       </div>
                     ) : null}
 
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-foreground-muted">
-                        <IconMapPin className="size-4" stroke={1.8} />
+                    <div className='mt-3 flex flex-wrap gap-2'>
+                      <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
+                        <IconMapPin className='size-4' stroke={1.8} />
                         <span>Localização: {selectedIncident.location}</span>
                       </span>
-                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-foreground-muted">
-                        <IconClock className="size-4" stroke={1.8} />
+                      <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
+                        <IconClock className='size-4' stroke={1.8} />
                         <span>Data: {selectedIncident.createdAt}</span>
                       </span>
                     </div>
@@ -317,31 +314,31 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
+              <div className='flex flex-col gap-3 sm:flex-row sm:justify-end'>
                 <button
-                  type="button"
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl border border-danger-strong bg-transparent px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-[rgba(185,28,28,0.08)]"
+                  type='button'
+                  className='inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl border border-danger-strong bg-transparent px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-danger-strong/8'
                   onClick={handleRequestRemoveIncident}
                 >
-                  <IconTrash className="size-4.5" stroke={1.8} />
+                  <IconTrash className='size-4.5' stroke={1.8} />
                   Remover ocorrência
                 </button>
 
                 {selectedIncident.status === 'resolved' ? (
-                  <Button type="button" onClick={handleArchiveIncident}>
-                    <span className="inline-flex items-center gap-2">
-                      <IconHistory className="size-4.5" stroke={1.8} />
+                  <Button type='button' onClick={handleArchiveIncident}>
+                    <span className='inline-flex items-center gap-2'>
+                      <IconHistory className='size-4.5' stroke={1.8} />
                       Mover para histórico
                     </span>
                   </Button>
                 ) : (
                   <button
-                    type="button"
+                    type='button'
                     disabled
-                    aria-disabled="true"
-                    className="inline-flex items-center justify-center gap-2 rounded-3xl bg-[rgba(81,119,127,0.12)] px-5 py-3 text-base font-medium text-[rgba(81,119,127,0.48)]"
+                    aria-disabled='true'
+                    className='inline-flex items-center justify-center gap-2 rounded-3xl bg-primary/12 px-5 py-3 text-base font-medium text-primary/48'
                   >
-                    <IconHistory className="size-4.5" stroke={1.8} />
+                    <IconHistory className='size-4.5' stroke={1.8} />
                     Mover para histórico
                   </button>
                 )}
@@ -352,74 +349,74 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
       ) : null}
 
       {selectedIncident ? (
-        <div className="fixed inset-0 z-80 lg:hidden">
+        <div className='fixed inset-0 z-80 lg:hidden'>
           <button
-            type="button"
-            aria-label="Fechar detalhes da ocorrencia"
-            className="absolute inset-0 bg-[rgba(25,28,28,0.28)] backdrop-blur-[.125rem]"
+            type='button'
+            aria-label='Fechar detalhes da ocorrencia'
+            className='absolute inset-0 bg-foreground/28 backdrop-blur-[.125rem]'
             onClick={handleCloseDetails}
           />
 
-          <aside className="absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col border-l border-[rgba(25,28,28,0.08)] bg-surface-container-lowest sm:w-160">
-            <div className="-mb-3 flex items-center justify-end px-5 pt-3 sm:px-6 sm:pt-4">
+          <aside className='absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col border-l border-foreground/8 bg-surface-container-lowest sm:w-160'>
+            <div className='-mb-3 flex items-center justify-end px-5 pt-3 sm:px-6 sm:pt-4'>
               <button
-                type="button"
-                aria-label="Fechar painel lateral"
-                className="flex size-8 cursor-pointer items-center justify-center rounded-full text-foreground-muted transition-colors hover:text-foreground"
+                type='button'
+                aria-label='Fechar painel lateral'
+                className='flex size-8 cursor-pointer items-center justify-center rounded-full text-foreground-muted transition-colors hover:text-foreground'
                 onClick={handleCloseDetails}
               >
-                <IconX className="size-5" stroke={1.8} />
+                <IconX className='size-5' stroke={1.8} />
               </button>
             </div>
-            <div className="flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6">
-              <div className="space-y-4">
-                <h2 className="pr-8 text-4xl tracking-[-0.04em] sm:pr-10">{selectedIncident.title}</h2>
+            <div className='flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6'>
+              <div className='space-y-4'>
+                <h2 className='pr-8 text-4xl tracking-[-0.04em] sm:pr-10'>{selectedIncident.title}</h2>
 
                 <div
                   className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold ${statusBadgeVariants[selectedIncident.status]}`}
                 >
-                  <span className="size-4 rounded-full border-2 border-foreground-inverse bg-[rgba(249,249,248,0.22)]" />
+                  <span className='size-4 rounded-full border-2 border-foreground-inverse bg-surface-container-lowest/20' />
                   <span>{statusLabels[selectedIncident.status]}</span>
                 </div>
 
-                <div className="border-t border-[rgba(25,28,28,0.08)] pt-5">
-                  <div className="rounded-[1.25rem] border border-[rgba(25,28,28,0.08)] p-4">
-                    <div className="flex items-center gap-2 text-sm text-foreground-muted">
+                <div className='border-t border-foreground/8 pt-5'>
+                  <div className='rounded-[1.25rem] border border-foreground/8 p-4'>
+                    <div className='flex items-center gap-2 text-sm text-foreground-muted'>
                       {selectedIncident.userType === 'staff' ? (
-                        <IconUserCog className="size-4" stroke={1.8} />
+                        <IconUserCog className='size-4' stroke={1.8} />
                       ) : (
-                        <IconUser className="size-4" stroke={1.8} />
+                        <IconUser className='size-4' stroke={1.8} />
                       )}
                       <p>
                         <span>Registrado por: </span>
-                        <span className="font-medium text-primary-hover">
+                        <span className='font-medium text-primary-hover'>
                           {selectedIncident.userType === 'resident' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
 
-                    <p className="mt-4 text-sm leading-7 text-foreground-muted">{selectedIncident.description}</p>
+                    <p className='mt-4 text-sm leading-7 text-foreground-muted'>{selectedIncident.description}</p>
 
                     {selectedIncident.hasAttachment && selectedIncident.attachmentUrl ? (
-                      <div className="mt-4 overflow-hidden rounded-[1.125rem] border border-[rgba(25,28,28,0.08)]">
+                      <div className='mt-4 overflow-hidden rounded-[1.125rem] border border-foreground/8'>
                         <Image
                           src={selectedIncident.attachmentUrl}
                           alt={selectedIncident.attachmentName ?? 'Imagem anexada'}
                           width={1200}
                           height={800}
-                          className="h-auto w-full object-contain"
+                          className='h-auto w-full object-contain'
                           unoptimized
                         />
                       </div>
                     ) : null}
 
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-foreground-muted">
-                        <IconMapPin className="size-4" stroke={1.8} />
+                    <div className='mt-3 flex flex-wrap gap-2'>
+                      <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
+                        <IconMapPin className='size-4' stroke={1.8} />
                         <span>Localização: {selectedIncident.location}</span>
                       </span>
-                      <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(25,28,28,0.08)] px-3 py-1.5 text-xs text-foreground-muted">
-                        <IconClock className="size-4" stroke={1.8} />
+                      <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
+                        <IconClock className='size-4' stroke={1.8} />
                         <span>Data: {selectedIncident.createdAt}</span>
                       </span>
                     </div>
@@ -427,31 +424,31 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
+              <div className='flex flex-col gap-3 sm:flex-row sm:justify-end'>
                 <button
-                  type="button"
-                  className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl bg-danger-soft px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-[rgba(185,28,28,0.18)]"
+                  type='button'
+                  className='inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl bg-danger-soft px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-[rgba(185,28,28,0.18)]'
                   onClick={handleRequestRemoveIncident}
                 >
-                  <IconTrash className="size-4.5" stroke={1.8} />
+                  <IconTrash className='size-4.5' stroke={1.8} />
                   Remover ocorrência
                 </button>
 
                 {selectedIncident.status === 'resolved' ? (
-                  <Button type="button" onClick={handleArchiveIncident}>
-                    <span className="inline-flex items-center gap-2">
-                      <IconHistory className="size-4.5" stroke={1.8} />
+                  <Button type='button' onClick={handleArchiveIncident}>
+                    <span className='inline-flex items-center gap-2'>
+                      <IconHistory className='size-4.5' stroke={1.8} />
                       Mover para histórico
                     </span>
                   </Button>
                 ) : (
                   <button
-                    type="button"
+                    type='button'
                     disabled
-                    aria-disabled="true"
-                    className="inline-flex items-center justify-center gap-2 rounded-3xl bg-[rgba(81,119,127,0.12)] px-5 py-3 text-base font-medium text-[rgba(81,119,127,0.48)]"
+                    aria-disabled='true'
+                    className='inline-flex items-center justify-center gap-2 rounded-3xl bg-primary/12 px-5 py-3 text-base font-medium text-primary/48'
                   >
-                    <IconHistory className="size-4.5" stroke={1.8} />
+                    <IconHistory className='size-4.5' stroke={1.8} />
                     Mover para histórico
                   </button>
                 )}
@@ -463,9 +460,9 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
 
       <Modal
         isOpen={isRemoveModalOpen}
-        title="Remover ocorrência?"
-        description="Essa ação exclui a ocorrência do quadro e do histórico local deste navegador."
-        confirmLabel="Remover"
+        title='Remover ocorrência?'
+        description='Essa ação exclui a ocorrência do quadro e do histórico local deste navegador.'
+        confirmLabel='Remover'
         onClose={() => setIsRemoveModalOpen(false)}
         onConfirm={handleRemoveIncident}
       />

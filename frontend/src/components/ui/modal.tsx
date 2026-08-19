@@ -42,31 +42,31 @@ export function Modal({ confirmLabel = 'Confirmar', description, isOpen, onClose
   }
 
   return (
-    <div className="fixed inset-0 z-300 flex items-center justify-center p-4">
+    <div className='fixed inset-0 z-300 flex items-center justify-center p-4'>
       <button
-        type="button"
-        aria-label="Fechar modal"
-        className="absolute inset-0 bg-[rgba(25,28,28,0.72)] backdrop-blur-sm"
+        type='button'
+        aria-label='Fechar modal'
+        className='absolute inset-0 bg-foreground/72 backdrop-blur-sm'
         onClick={onClose}
       />
 
-      <Card className="relative z-10 w-full max-w-md rounded-4xl p-6 sm:p-7">
-        <div className="space-y-3">
-          <h2 className="text-3xl tracking-[-0.03em]">{title}</h2>
-          <p className="text-sm leading-7 text-foreground-muted">{description}</p>
+      <Card className='relative z-10 w-full max-w-md rounded-4xl p-6 sm:p-7'>
+        <div className='space-y-3'>
+          <h2 className='text-3xl tracking-[-0.03em]'>{title}</h2>
+          <p className='text-sm leading-7 text-foreground-muted'>{description}</p>
         </div>
 
-        <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+        <div className='mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end'>
           <button
-            type="button"
-            className="inline-flex cursor-pointer items-center justify-center rounded-3xl border border-[rgba(25,28,28,0.12)] bg-transparent px-5 py-3 text-base font-medium text-foreground-muted transition-colors hover:bg-surface-container-highest hover:text-foreground"
+            type='button'
+            className='inline-flex cursor-pointer items-center justify-center rounded-3xl border border-foreground/12 bg-transparent px-5 py-3 text-base font-medium text-foreground-muted transition-colors hover:bg-surface-container-highest hover:text-foreground'
             style={{ fontSize: '16px', fontWeight: 500 }}
             onClick={onClose}
           >
             Cancelar
           </button>
 
-          <Button type="button" onClick={onConfirm}>
+          <Button type='button' onClick={onConfirm}>
             {confirmLabel}
           </Button>
         </div>

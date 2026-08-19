@@ -68,19 +68,19 @@ export function Select({
   }
 
   return (
-    <label className="block space-y-2" htmlFor={selectId}>
-      <span className="text-sm text-foreground-muted">{label}</span>
+    <label className='block space-y-2' htmlFor={selectId}>
+      <span className='text-sm text-foreground-muted'>{label}</span>
 
-      <div className="relative" ref={containerRef}>
+      <div className='relative' ref={containerRef}>
         <button
           id={selectId}
-          type="button"
+          type='button'
           aria-controls={`${selectId}-listbox`}
           aria-expanded={isOpen}
-          aria-haspopup="listbox"
+          aria-haspopup='listbox'
           className={cn(
-            'flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-surface-container-lowest px-4 py-3 text-left text-sm transition-colors outline-none focus:ring-2 focus:ring-[rgba(62,98,103,0.2)]',
-            error && 'ring-2 ring-[rgba(185,28,28,0.18)]',
+            'flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-surface-container-lowest px-4 py-3 text-left text-sm transition-colors outline-none focus:ring-2 focus:ring-primary-hover/20',
+            error && 'ring-2 ring-danger-strong/18',
             className,
           )}
           onBlur={() => {
@@ -98,8 +98,8 @@ export function Select({
         {isOpen ? (
           <div
             id={`${selectId}-listbox`}
-            role="listbox"
-            className="absolute z-30 mt-2 max-h-64 w-full overflow-auto rounded-2xl bg-surface-container-lowest p-2 shadow-ambient"
+            role='listbox'
+            className='absolute z-30 mt-2 max-h-64 w-full overflow-auto rounded-2xl bg-surface-container-lowest p-2 shadow-ambient'
           >
             {options.map((option) => {
               const isSelected = option.value === value
@@ -107,8 +107,8 @@ export function Select({
               return (
                 <button
                   key={option.value}
-                  type="button"
-                  role="option"
+                  type='button'
+                  role='option'
                   aria-selected={isSelected}
                   className={cn(
                     'flex w-full cursor-pointer items-center rounded-2xl p-3 text-left text-sm transition-colors',
@@ -124,7 +124,7 @@ export function Select({
         ) : null}
       </div>
 
-      {error ? <p className="text-sm text-danger-strong">{error}</p> : null}
+      {error ? <p className='text-sm text-danger-strong'>{error}</p> : null}
     </label>
   )
 }

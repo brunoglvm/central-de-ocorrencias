@@ -67,29 +67,29 @@ export function RegisterForm() {
   }
 
   return (
-    <Card className="w-full rounded-[2.25rem] p-6 shadow-none sm:p-8">
-      <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid gap-6 lg:grid-cols-12">
-          <div className="lg:col-span-6">
+    <Card className='w-full rounded-[2.25rem] p-6 shadow-none sm:p-8'>
+      <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
+        <div className='grid gap-6 lg:grid-cols-12'>
+          <div className='lg:col-span-6'>
             <Input
-              className="min-h-12"
+              className='min-h-12'
               error={errors.title?.message}
-              label="Título"
-              placeholder="Ex.: Vazamento no bloco B"
+              label='Título'
+              placeholder='Ex.: Vazamento no bloco B'
               {...register('title')}
               required
             />
           </div>
 
-          <div className="lg:col-span-6">
+          <div className='lg:col-span-6'>
             <Controller
               control={control}
-              name="location"
+              name='location'
               render={({ field }) => (
                 <Select
-                  className="min-h-12"
+                  className='min-h-12'
                   error={errors.location?.message}
-                  label="Local do problema"
+                  label='Local do problema'
                   onBlur={field.onBlur}
                   onValueChange={(value) => {
                     field.onChange(value)
@@ -107,38 +107,38 @@ export function RegisterForm() {
 
         {shouldShowCustomLocation ? (
           <Input
-            className="min-h-12"
+            className='min-h-12'
             error={errors.customLocation?.message}
-            label="Qual é o local do problema?"
-            placeholder="Ex.: Escadaria lateral do bloco C"
+            label='Qual é o local do problema?'
+            placeholder='Ex.: Escadaria lateral do bloco C'
             {...register('customLocation')}
             required
           />
         ) : null}
 
         <Textarea
-          className="min-h-44"
+          className='min-h-44'
           error={errors.description?.message}
-          label="Descrição"
-          placeholder="Descreva o contexto, local exato e impacto percebido."
+          label='Descrição'
+          placeholder='Descreva o contexto, local exato e impacto percebido.'
           {...register('description')}
           required
         />
 
-        <div className="grid gap-6 lg:grid-cols-12 lg:items-start">
-          <div className="lg:col-span-6">
+        <div className='grid gap-6 lg:grid-cols-12 lg:items-start'>
+          <div className='lg:col-span-6'>
             <Controller
               control={control}
-              name="userType"
+              name='userType'
               render={({ field }) => (
                 <Select
-                  className="min-h-12"
+                  className='min-h-12'
                   error={errors.userType?.message}
-                  label="Quem está registrando?"
+                  label='Quem está registrando?'
                   onBlur={field.onBlur}
                   onValueChange={field.onChange}
                   options={userTypeOptions}
-                  placeholder="Selecione"
+                  placeholder='Selecione'
                   value={field.value}
                 />
               )}
@@ -147,21 +147,21 @@ export function RegisterForm() {
 
           <Controller
             control={control}
-            name="attachmentName"
+            name='attachmentName'
             render={({ field }) => (
-              <AttachmentDropzone className="lg:col-span-6" fileName={field.value} onFileSelect={field.onChange} />
+              <AttachmentDropzone className='lg:col-span-6' fileName={field.value} onFileSelect={field.onChange} />
             )}
           />
         </div>
 
-        <div className="flex justify-center">
-          <Button type="submit" disabled={isSubmitting}>
+        <div className='flex justify-center'>
+          <Button type='submit' disabled={isSubmitting}>
             Enviar ocorrência
           </Button>
         </div>
 
         {feedback ? (
-          <div className="rounded-3xl bg-surface-container-highest px-4 py-3 text-sm leading-7">{feedback}</div>
+          <div className='rounded-3xl bg-surface-container-highest px-4 py-3 text-sm leading-7'>{feedback}</div>
         ) : null}
       </form>
     </Card>

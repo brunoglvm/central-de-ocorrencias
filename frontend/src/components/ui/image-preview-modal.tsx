@@ -40,38 +40,38 @@ export function ImagePreviewModal({ fileName, imageUrl, isOpen, onClose }: Image
   }
 
   return createPortal(
-    <div className="fixed inset-0 z-300 flex items-center justify-center p-4 sm:p-6">
+    <div className='fixed inset-0 z-300 flex items-center justify-center p-4 sm:p-6'>
       <button
-        type="button"
-        aria-label="Fechar visualizacao da imagem"
-        className="absolute inset-0 bg-[rgba(25,28,28,0.72)] backdrop-blur-sm"
+        type='button'
+        aria-label='Fechar visualizacao da imagem'
+        className='absolute inset-0 bg-foreground/72 backdrop-blur-sm'
         onClick={onClose}
       />
 
-      <div className="relative z-10 flex max-h-[90vh] w-fit max-w-[min(92vw,64rem)] flex-col gap-3">
-        <div className="flex justify-end">
+      <div className='relative z-10 flex max-h-[90vh] w-fit max-w-[min(92vw,64rem)] flex-col gap-3'>
+        <div className='flex justify-end'>
           <button
-            type="button"
-            aria-label="Fechar visualizacao"
-            className="flex size-8 cursor-pointer items-center justify-center text-white transition-colors hover:text-surface-container-highest"
+            type='button'
+            aria-label='Fechar visualizacao'
+            className='flex size-8 cursor-pointer items-center justify-center text-white transition-colors hover:text-surface-container-highest'
             onClick={onClose}
           >
-            <IconX className="size-5" stroke={1.8} />
+            <IconX className='size-5' stroke={1.8} />
           </button>
         </div>
 
-        <div className="flex w-fit max-w-full flex-1 items-center justify-center overflow-hidden rounded-[1.75rem] bg-foreground-inverse shadow-ambient">
+        <div className='flex w-fit max-w-full flex-1 items-center justify-center overflow-hidden rounded-[1.75rem] bg-foreground-inverse shadow-ambient'>
           <Image
             src={imageUrl}
             alt={fileName || 'Imagem anexada'}
             width={1200}
             height={900}
-            className="size-auto max-h-[calc(90vh-5.5rem)] max-w-full object-contain"
+            className='size-auto max-h-[calc(90vh-5.5rem)] max-w-full object-contain'
             unoptimized
           />
         </div>
 
-        <div className="max-w-full min-w-0 truncate text-sm text-white">{fileName}</div>
+        <div className='max-w-full min-w-0 truncate text-sm text-white'>{fileName}</div>
       </div>
     </div>,
     document.body,

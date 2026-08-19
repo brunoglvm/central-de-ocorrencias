@@ -20,31 +20,25 @@ const statusIndicatorVariants: Record<IncidentStatus, string> = {
 export function BoardColumn({ status, title, incidents, onSelectIncident }: BoardColumnProps) {
   return (
     <Droppable droppableId={status}>
-      {(provided, snapshot) => (
+      {(provided) => (
         <section
           ref={provided.innerRef}
           {...provided.droppableProps}
-          className="flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[1.25rem] bg-surface-container-low p-3"
+          className='flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[1.25rem] bg-surface-container-low p-3'
         >
-          <div className="flex items-center justify-between px-2 pt-1 pb-3">
+          <div className='flex items-center justify-between px-2 pt-1 pb-3'>
             <div
               className={`inline-flex items-center gap-2 text-base font-semibold ${statusIndicatorVariants[status]}`}
             >
-              <span className="size-4 rounded-full border-2 border-current bg-current/15" />
+              <span className='size-4 rounded-full border-2 border-current bg-current/15' />
               <p>{title}</p>
             </div>
-            <span className="inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-surface-container-highest px-1.5 text-xs text-foreground-muted">
+            <span className='inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-surface-container-highest px-1.5 text-xs text-foreground-muted'>
               {incidents.length}
             </span>
           </div>
 
-          <div
-            className={
-              snapshot.isDraggingOver
-                ? 'min-h-24 flex-1 space-y-3 overflow-y-auto rounded-2xl bg-[rgba(225,227,226,0.72)] p-1 pr-2 transition-colors'
-                : 'min-h-24 flex-1 space-y-3 overflow-y-auto rounded-2xl p-1 pr-2 transition-colors'
-            }
-          >
+          <div className='min-h-24 flex-1 space-y-3 overflow-y-auto rounded-2xl p-1 pr-2 transition-colors'>
             {incidents.map((incident, index) => (
               <IncidentCard key={incident.id} incident={incident} index={index} onSelect={onSelectIncident} />
             ))}

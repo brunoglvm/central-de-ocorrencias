@@ -36,27 +36,27 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-100 hidden w-full lg:block">
-        <div className="w-full border-b border-[rgba(25,28,28,0.08)] bg-foreground-inverse px-4 py-3 shadow-ambient backdrop-blur-xl sm:px-6 lg:px-8">
-          <div className="mx-auto grid max-w-400 grid-cols-[1fr_auto_1fr] items-center">
+      <header className='sticky top-0 z-100 hidden w-full lg:block'>
+        <div className='w-full border-b border-foreground/8 bg-foreground-inverse px-4 py-3 shadow-ambient backdrop-blur-xl sm:px-6 lg:px-8'>
+          <div className='mx-auto grid max-w-400 grid-cols-[1fr_auto_1fr] items-center'>
             <div>
-              <Link href="/admin/quadro" className="inline-flex items-center gap-3">
+              <Link href='/admin/quadro' className='inline-flex items-center gap-3'>
                 <Image
-                  src="/images/logo.png"
-                  alt="Central de Ocorrências"
+                  src='/images/logo.png'
+                  alt='Central de Ocorrências'
                   width={34}
                   height={36}
-                  className="h-7 w-auto"
+                  className='h-7 w-auto'
                   priority
                 />
-                <span className="flex flex-col font-brand leading-none font-medium text-foreground-muted">
-                  <span className="w-fit border-b border-foreground-muted text-sm uppercase">Concept Garden</span>
-                  <span className="mt-1 text-[.625rem] uppercase">Central de Ocorrências</span>
+                <span className='flex flex-col font-brand leading-none font-medium text-foreground-muted'>
+                  <span className='w-fit border-b border-foreground-muted text-sm uppercase'>Concept Garden</span>
+                  <span className='mt-1 text-[.625rem] uppercase'>Central de Ocorrências</span>
                 </span>
               </Link>
             </div>
 
-            <nav className="flex items-center justify-center gap-2">
+            <nav className='flex items-center justify-center gap-2'>
               {navigationItems.map((item) => {
                 const isActive = pathname === item.href
 
@@ -69,28 +69,28 @@ export function Navbar() {
                     className={cn(
                       'inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm transition-colors',
                       isActive
-                        ? 'bg-primary text-white'
+                        ? 'bg-primary text-foreground-inverse'
                         : 'text-foreground-muted hover:bg-surface-container-highest hover:text-primary-hover',
                     )}
                   >
                     {item.label}
-                    {item.isPublic ? <IconArrowUpRight className="size-4" stroke={1.8} /> : null}
+                    {item.isPublic ? <IconArrowUpRight className='size-4' stroke={1.8} /> : null}
                   </Link>
                 )
               })}
             </nav>
 
-            <div className="flex items-center justify-end gap-3">
-              <EditableAvatar alt="Perfil" initialSrc="/images/pfp.webp" size={36} />
+            <div className='flex items-center justify-end gap-3'>
+              <EditableAvatar alt='Perfil' initialSrc='/images/pfp.webp' size={36} />
 
-              <Tooltip content="Sair">
+              <Tooltip content='Sair'>
                 <button
-                  type="button"
-                  aria-label="Sair"
-                  className="inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-foreground-muted transition-colors hover:text-danger-strong"
+                  type='button'
+                  aria-label='Sair'
+                  className='inline-flex size-10 cursor-pointer items-center justify-center rounded-full text-foreground-muted transition-colors hover:text-danger-strong'
                   onClick={() => setIsLogoutModalOpen(true)}
                 >
-                  <IconLogout2 className="size-5 transition-colors" stroke={1.8} />
+                  <IconLogout2 className='size-5 transition-colors' stroke={1.8} />
                 </button>
               </Tooltip>
             </div>
@@ -98,8 +98,8 @@ export function Navbar() {
         </div>
       </header>
 
-      <nav className="fixed inset-x-4 bottom-4 z-100 rounded-[1.75rem] bg-[rgba(249,249,248,0.85)] p-2 shadow-ambient backdrop-blur-xl lg:hidden">
-        <div className="grid grid-cols-3 gap-1">
+      <nav className='fixed inset-x-4 bottom-4 z-100 rounded-[1.75rem] bg-surface-container-lowest/85 p-2 shadow-ambient backdrop-blur-xl lg:hidden'>
+        <div className='grid grid-cols-3 gap-1'>
           {navigationItems.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
@@ -112,13 +112,12 @@ export function Navbar() {
                 rel={item.isPublic ? 'noopener noreferrer' : undefined}
                 className={cn(
                   'flex flex-col items-center gap-1 rounded-[1.375rem] p-3 text-xs transition-colors',
-                  isActive ? 'bg-primary' : 'text-foreground-muted',
+                  isActive ? 'bg-primary text-foreground-inverse' : 'text-foreground-muted',
                 )}
-                style={isActive ? { color: '#fff' } : undefined}
               >
-                <div className="relative">
-                  <Icon className="size-5" stroke={1.8} />
-                  {item.isPublic ? <IconArrowUpRight className="absolute -top-1 -right-2 size-3.5" stroke={2} /> : null}
+                <div className='relative'>
+                  <Icon className='size-5' stroke={1.8} />
+                  {item.isPublic ? <IconArrowUpRight className='absolute -top-1 -right-2 size-3.5' stroke={2} /> : null}
                 </div>
                 <span>{item.label}</span>
               </Link>
@@ -129,9 +128,9 @@ export function Navbar() {
 
       <Modal
         isOpen={isLogoutModalOpen}
-        title="Sair do sistema?"
-        description="Você realmente deseja encerrar a sessão atual e voltar para a tela de login?"
-        confirmLabel="Sair"
+        title='Sair do sistema?'
+        description='Você realmente deseja encerrar a sessão atual e voltar para a tela de login?'
+        confirmLabel='Sair'
         onClose={() => setIsLogoutModalOpen(false)}
         onConfirm={() => {
           setIsLogoutModalOpen(false)
