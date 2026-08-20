@@ -247,6 +247,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             onClick={handleCloseDetails}
           />
 
+          {/* Desktop */}
           <aside className='pointer-events-auto absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col rounded-l-[1.25rem] border border-r-0 border-foreground/8 bg-surface-container-lowest'>
             <div className='-mb-3 flex items-center justify-end rounded-tl-[1.25rem] px-5 pt-3 sm:px-6 sm:pt-4'>
               <button
@@ -357,6 +358,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             onClick={handleCloseDetails}
           />
 
+          {/* Mobile */}
           <aside className='absolute inset-y-0 right-0 flex w-full max-w-160 sheet-enter flex-col border-l border-foreground/8 bg-surface-container-lowest sm:w-160'>
             <div className='-mb-3 flex items-center justify-end px-5 pt-3 sm:px-6 sm:pt-4'>
               <button
@@ -373,7 +375,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                 <h2 className='pr-8 text-4xl tracking-[-0.04em] sm:pr-10'>{selectedIncident.title}</h2>
 
                 <div
-                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold ${statusBadgeVariants[selectedIncident.status]}`}
+                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-foreground-inverse ${statusBadgeVariants[selectedIncident.status]}`}
                 >
                   <span className='size-4 rounded-full border-2 border-foreground-inverse bg-surface-container-lowest/20' />
                   <span>{statusLabels[selectedIncident.status]}</span>
@@ -427,7 +429,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
               <div className='flex flex-col gap-3 sm:flex-row sm:justify-end'>
                 <button
                   type='button'
-                  className='inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl bg-danger-soft px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-[rgba(185,28,28,0.18)]'
+                  className='inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl border border-danger-strong bg-transparent px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-danger-strong/8'
                   onClick={handleRequestRemoveIncident}
                 >
                   <IconTrash className='size-4.5' stroke={1.8} />

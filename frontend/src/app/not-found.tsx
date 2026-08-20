@@ -10,7 +10,7 @@ export default function NotFound() {
         width={780}
         height={620}
         priority
-        className='h-auto w-full max-w-105 drop-shadow-[0_18px_40px_rgba(25,28,28,0.12)] sm:max-w-130'
+        className='h-auto w-full max-w-105 sm:max-w-130'
       />
 
       <Button href='/registrar'>Ir para o formulário</Button>

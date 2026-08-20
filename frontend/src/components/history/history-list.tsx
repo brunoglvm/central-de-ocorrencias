@@ -55,8 +55,7 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
 
                   <button
                     type='button'
-                    className='inline-flex cursor-pointer items-center justify-center gap-1.5 self-start rounded-3xl border border-[rgba(62,98,103,0.22)] bg-transparent px-3 py-1.5 text-xs font-medium text-primary-hover transition-colors hover:bg-surface-container-highest'
-                    style={{ fontSize: '12px' }}
+                    className='inline-flex cursor-pointer items-center justify-center gap-1.5 self-start rounded-3xl border border-primary/20 bg-transparent px-3 py-1.5 text-xs font-medium text-primary-hover transition-colors hover:bg-surface-container-highest'
                     onClick={() => onRestoreIncident(incident.id)}
                   >
                     <IconArrowUpLeft className='size-3.5' stroke={1.8} />
