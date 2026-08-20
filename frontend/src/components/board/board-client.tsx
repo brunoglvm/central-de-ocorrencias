@@ -316,14 +316,12 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
               </div>
 
               <div className='flex flex-col gap-3 sm:flex-row sm:justify-end'>
-                <button
-                  type='button'
-                  className='inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl border border-danger-strong bg-transparent px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-danger-strong/8'
-                  onClick={handleRequestRemoveIncident}
-                >
-                  <IconTrash className='size-4.5' stroke={1.8} />
-                  Remover ocorrência
-                </button>
+                <Button variant='danger' onClick={handleRequestRemoveIncident}>
+                  <span className='inline-flex items-center gap-2'>
+                    <IconTrash className='size-4.5' stroke={1.8} />
+                    Remover ocorrência
+                  </span>
+                </Button>
 
                 <Button type='button' onClick={handleArchiveIncident}>
                   <span className='inline-flex items-center gap-2'>
@@ -415,14 +413,12 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
               </div>
 
               <div className='flex flex-col gap-3 sm:flex-row sm:justify-end'>
-                <button
-                  type='button'
-                  className='inline-flex cursor-pointer items-center justify-center gap-2 rounded-3xl border border-danger-strong bg-transparent px-5 py-3 text-base font-medium text-danger-strong transition-colors hover:bg-danger-strong/8'
-                  onClick={handleRequestRemoveIncident}
-                >
-                  <IconTrash className='size-4.5' stroke={1.8} />
-                  Remover ocorrência
-                </button>
+                <Button variant='danger' onClick={handleRequestRemoveIncident}>
+                  <span className='inline-flex items-center gap-2'>
+                    <IconTrash className='size-4.5' stroke={1.8} />
+                    Remover ocorrência
+                  </span>
+                </Button>
 
                 <Button type='button' onClick={handleArchiveIncident}>
                   <span className='inline-flex items-center gap-2'>
