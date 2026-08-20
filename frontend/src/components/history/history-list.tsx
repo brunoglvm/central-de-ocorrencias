@@ -12,6 +12,7 @@ import {
   IconUser,
   IconUserCog,
 } from '@tabler/icons-react'
+import { Button } from '@/components/ui/button'
 import { ImagePreviewModal } from '@/components/ui/image-preview-modal'
 import type { Incident } from '@/types/incident'
 
@@ -53,14 +54,13 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                     <p className='text-sm leading-7 text-foreground-muted'>{incident.description}</p>
                   </div>
 
-                  <button
-                    type='button'
-                    className='inline-flex cursor-pointer items-center justify-center gap-1.5 self-start rounded-3xl border border-primary/20 bg-transparent px-3 py-1.5 text-xs font-medium text-primary-hover transition-colors hover:bg-surface-container-highest'
+                  <Button
+                    variant='outline'
                     onClick={() => onRestoreIncident(incident.id)}
                   >
                     <IconArrowUpLeft className='size-3.5' stroke={1.8} />
                     Retornar
-                  </button>
+                  </Button>
                 </div>
 
                 <div className='flex items-center gap-3 text-xs text-foreground-muted'>

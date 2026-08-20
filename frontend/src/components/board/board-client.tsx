@@ -18,9 +18,9 @@ type BoardClientProps = {
 }
 
 const statusBadgeVariants: Record<IncidentStatus, string> = {
-  open: 'bg-status-open text-surface',
-  in_progress: 'bg-status-progress text-surface',
-  resolved: 'bg-status-resolved text-surface',
+  open: 'bg-status-open',
+  in_progress: 'bg-status-progress',
+  resolved: 'bg-status-resolved',
 }
 
 const statusLabels: Record<IncidentStatus, string> = {
@@ -325,24 +325,12 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                   Remover ocorrência
                 </button>
 
-                {selectedIncident.status === 'resolved' ? (
-                  <Button type='button' onClick={handleArchiveIncident}>
-                    <span className='inline-flex items-center gap-2'>
-                      <IconHistory className='size-4.5' stroke={1.8} />
-                      Mover para histórico
-                    </span>
-                  </Button>
-                ) : (
-                  <button
-                    type='button'
-                    disabled
-                    aria-disabled='true'
-                    className='inline-flex items-center justify-center gap-2 rounded-3xl bg-primary/12 px-5 py-3 text-base font-medium text-primary/48'
-                  >
+                <Button type='button' onClick={handleArchiveIncident}>
+                  <span className='inline-flex items-center gap-2'>
                     <IconHistory className='size-4.5' stroke={1.8} />
                     Mover para histórico
-                  </button>
-                )}
+                  </span>
+                </Button>
               </div>
             </div>
           </aside>
@@ -436,24 +424,12 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                   Remover ocorrência
                 </button>
 
-                {selectedIncident.status === 'resolved' ? (
-                  <Button type='button' onClick={handleArchiveIncident}>
-                    <span className='inline-flex items-center gap-2'>
-                      <IconHistory className='size-4.5' stroke={1.8} />
-                      Mover para histórico
-                    </span>
-                  </Button>
-                ) : (
-                  <button
-                    type='button'
-                    disabled
-                    aria-disabled='true'
-                    className='inline-flex items-center justify-center gap-2 rounded-3xl bg-primary/12 px-5 py-3 text-base font-medium text-primary/48'
-                  >
+                <Button type='button' onClick={handleArchiveIncident}>
+                  <span className='inline-flex items-center gap-2'>
                     <IconHistory className='size-4.5' stroke={1.8} />
                     Mover para histórico
-                  </button>
-                )}
+                  </span>
+                </Button>
               </div>
             </div>
           </aside>
