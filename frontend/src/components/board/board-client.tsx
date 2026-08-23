@@ -188,7 +188,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
       {isMounted ? (
         <DragDropContext onDragEnd={handleDragEnd}>
           <div className='overflow-x-auto pb-6'>
-            <div className='mx-auto flex min-w-full justify-center gap-5'>
+            <div className='mx-auto flex w-max min-w-full justify-center gap-5 px-4 sm:px-0'>
               {incidentColumns.map((status) => (
                 <BoardColumn
                   key={status}
@@ -203,7 +203,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
         </DragDropContext>
       ) : (
         <div className='overflow-x-auto pb-6'>
-          <div className='mx-auto flex min-w-full justify-center gap-5'>
+          <div className='mx-auto flex w-max min-w-full justify-center gap-5 px-4 sm:px-0'>
             {incidentColumns.map((status) => (
               <section
                 key={status}
