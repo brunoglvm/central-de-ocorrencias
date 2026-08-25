@@ -54,12 +54,14 @@ export function HistoryClient({ initialIncidents }: HistoryClientProps) {
   }
 
   return (
-    <HistoryList
-      currentPage={currentPage}
-      incidents={paginatedIncidents}
-      onRestoreIncident={handleRestoreIncident}
-      totalItems={archivedIncidents.length}
-      totalPages={totalPages}
-    />
+    <div className='px-4 sm:px-6 lg:px-8'>
+      <HistoryList
+        currentPage={currentPage}
+        incidents={paginatedIncidents}
+        onRestoreIncident={handleRestoreIncident}
+        totalItems={archivedIncidents.length}
+        totalPages={totalPages}
+      />
+    </div>
   )
 }

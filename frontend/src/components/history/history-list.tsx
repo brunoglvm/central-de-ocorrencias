@@ -54,10 +54,7 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                     <p className='text-sm leading-7 text-foreground-muted'>{incident.description}</p>
                   </div>
 
-                  <Button
-                    variant='outline'
-                    onClick={() => onRestoreIncident(incident.id)}
-                  >
+                  <Button variant='outline' onClick={() => onRestoreIncident(incident.id)}>
                     <IconArrowUpLeft className='size-3.5' stroke={1.8} />
                     Retornar
                   </Button>

@@ -4,7 +4,7 @@
 
 @theme {
   /* Base */
-  --color-background: red;
+  --color-background: #f6f7f6;
   --color-foreground: #191c1c;
   --color-foreground-muted: #414849;
   --color-foreground-inverse: #f3f5f3;

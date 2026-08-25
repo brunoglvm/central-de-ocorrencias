@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { MainLayout } from '@/components/layout/main-layout'
 
 export const metadata: Metadata = {
   manifest: '/manifest.json',
@@ -23,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang='pt-BR' data-scroll-behavior='smooth' className='h-full antialiased'>
       <body className='min-h-full' suppressHydrationWarning>
-        <MainLayout>{children}</MainLayout>
+        {children}
       </body>
     </html>
   )
