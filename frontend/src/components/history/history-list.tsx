@@ -81,7 +81,7 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                     <button
                       type='button'
                       aria-label='Visualizar imagem anexada'
-                      className='inline-flex cursor-pointer items-center gap-1 border-l border-foreground/12 pl-3 transition-colors hover:text-foreground'
+                      className='inline-flex cursor-pointer items-center gap-1 border-l border-foreground/12 pl-3 text-primary-hover transition-colors hover:underline'
                       onClick={() => setPreviewIncident(incident)}
                     >
                       <IconPhoto className='size-4' stroke={1.8} />
