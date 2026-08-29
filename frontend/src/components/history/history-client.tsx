@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { HistoryList } from '@/components/history/history-list'
 import { historyPageSize } from '@/constants/incidents'
-import { readStoredIncidents, writeStoredIncidents } from '@/lib/incident-storage'
 import type { Incident } from '@/types/incident'
 
 type HistoryClientProps = {
@@ -17,10 +16,6 @@ export function HistoryClient({ initialIncidents }: HistoryClientProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const rawPage = Number(searchParams.get('page') ?? '1')
-
-  useEffect(() => {
-    setIncidents(readStoredIncidents(initialIncidents))
-  }, [initialIncidents])
 
   const archivedIncidents = useMemo(() => incidents.filter((incident) => Boolean(incident.archivedAt)), [incidents])
   const totalPages = Math.max(1, Math.ceil(archivedIncidents.length / historyPageSize))
@@ -45,23 +40,18 @@ export function HistoryClient({ initialIncidents }: HistoryClientProps) {
   }, [currentPage, pathname, rawPage, router, searchParams])
 
   function handleRestoreIncident(incidentId: string) {
-    const nextIncidents = incidents.map((incident) =>
+    setIncidents((current) => current.map((incident) =>
       incident.id === incidentId ? { ...incident, archivedAt: null } : incident,
-    )
-
-    setIncidents(nextIncidents)
-    writeStoredIncidents(nextIncidents)
+    ))
   }
 
   return (
-    <div className='px-4 sm:px-6 lg:px-8'>
-      <HistoryList
-        currentPage={currentPage}
-        incidents={paginatedIncidents}
-        onRestoreIncident={handleRestoreIncident}
-        totalItems={archivedIncidents.length}
-        totalPages={totalPages}
-      />
-    </div>
+    <HistoryList
+      currentPage={currentPage}
+      incidents={paginatedIncidents}
+      onRestoreIncident={handleRestoreIncident}
+      totalItems={archivedIncidents.length}
+      totalPages={totalPages}
+    />
   )
 }

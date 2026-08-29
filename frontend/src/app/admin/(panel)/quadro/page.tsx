@@ -1,16 +1,15 @@
 import type { Metadata } from 'next'
-import { Suspense } from 'react'
 import { BoardClient } from '@/components/board/board-client'
 import { mockIncidents } from '@/data/mock-incidents'
+// import { fetchIncidents } from '@/services/api/fetch-incident'
 
 export const metadata: Metadata = {
   title: 'Quadro',
 }
 
-export default function AdminBoardPage() {
-  return (
-    <Suspense fallback={null}>
-      <BoardClient initialIncidents={mockIncidents} />
-    </Suspense>
-  )
+export default async function AdminBoardPage() {
+  // const incidents = await fetchIncidents()
+  const incidents = mockIncidents
+
+  return <BoardClient initialIncidents={incidents} />
 }

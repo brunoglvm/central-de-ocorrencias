@@ -10,3 +10,13 @@ export function groupIncidentsByStatus(incidents: Incident[]) {
     {} as Record<IncidentStatus, Incident[]>,
   )
 }
+
+export function getImageFileName(imageUrl?: string | null) {
+  if (!imageUrl) {
+    return 'Imagem anexada'
+  }
+
+  const segments = imageUrl.split('/')
+  return segments[segments.length - 1] || 'Imagem anexada'
+}
+

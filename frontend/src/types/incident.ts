@@ -1,17 +1,15 @@
 export type IncidentStatus = 'open' | 'in_progress' | 'resolved'
 
-export type UserType = 'resident' | 'staff'
+export type IncidentSource = 'resident' | 'employee'
 
 export type Incident = {
   id: string
   title: string
   description: string
-  attachmentName?: string | null
-  attachmentUrl?: string | null
+  image?: string | null
   createdAt: string
   status: IncidentStatus
   location: string
-  userType: UserType
-  hasAttachment: boolean
+  source: IncidentSource
   archivedAt?: string | null
 }

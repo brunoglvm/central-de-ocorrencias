@@ -14,6 +14,7 @@ import {
 } from '@tabler/icons-react'
 import { Button } from '@/components/ui/button'
 import { ImagePreviewModal } from '@/components/ui/image-preview-modal'
+import { getImageFileName } from '@/lib/incidents'
 import type { Incident } from '@/types/incident'
 
 type HistoryListProps = {
@@ -70,14 +71,14 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                     {incident.createdAt}
                   </span>
                   <span className='inline-flex items-center gap-1 border-l border-foreground/12 pl-3'>
-                    {incident.userType === 'staff' ? (
+                    {incident.source === 'employee' ? (
                       <IconUserCog className='size-4' stroke={1.8} />
                     ) : (
                       <IconUser className='size-4' stroke={1.8} />
                     )}
-                    <span>{incident.userType === 'staff' ? 'Funcionário' : 'Morador'}</span>
+                    <span>{incident.source === 'employee' ? 'Funcionário' : 'Morador'}</span>
                   </span>
-                  {incident.hasAttachment && incident.attachmentUrl ? (
+                  {incident.image ? (
                     <button
                       type='button'
                       aria-label='Visualizar imagem anexada'
@@ -180,9 +181,9 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
       )}
 
       <ImagePreviewModal
-        fileName={previewIncident?.attachmentName ?? 'Imagem anexada'}
-        imageUrl={previewIncident?.attachmentUrl ?? ''}
-        isOpen={Boolean(previewIncident?.attachmentUrl)}
+        fileName={getImageFileName(previewIncident?.image)}
+        imageUrl={previewIncident?.image ?? ''}
+        isOpen={Boolean(previewIncident?.image)}
         onClose={() => setPreviewIncident(null)}
       />
     </section>

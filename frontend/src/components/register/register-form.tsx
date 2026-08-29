@@ -29,7 +29,7 @@ const locationOptions: SelectOption[] = [
 
 const userTypeOptions: SelectOption[] = [
   { label: 'Morador', value: 'resident' },
-  { label: 'Funcionário', value: 'staff' },
+  { label: 'Funcionário', value: 'employee' },
 ]
 
 const initialForm: RegisterIncidentFormValues = {
