@@ -11,5 +11,5 @@ export type Occurrence = {
   status: OccurrenceStatus
   location: string
   source: OccurrenceSource
-  archivedAt?: string | null
+  archived: boolean
 }

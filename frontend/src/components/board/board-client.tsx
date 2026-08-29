@@ -40,7 +40,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const selectedOccurrenceId = searchParams.get('occurrence')
-  const activeOccurrences = useMemo(() => occurrences.filter((occurrence) => !occurrence.archivedAt), [occurrences])
+  const activeOccurrences = useMemo(() => occurrences.filter((occurrence) => !occurrence.archived), [occurrences])
   const occurrencesByStatus = useMemo(() => groupOccurrencesByStatus(activeOccurrences), [activeOccurrences])
   const selectedOccurrence = useMemo(
     () =>
@@ -108,8 +108,8 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
     }
 
     setOccurrences((currentOccurrences) => {
-      const archivedOccurrences = currentOccurrences.filter((occurrence) => occurrence.archivedAt)
-      const activeCurrentOccurrences = currentOccurrences.filter((occurrence) => !occurrence.archivedAt)
+      const archivedOccurrences = currentOccurrences.filter((occurrence) => occurrence.archived)
+      const activeCurrentOccurrences = currentOccurrences.filter((occurrence) => !occurrence.archived)
       const grouped = groupOccurrencesByStatus(activeCurrentOccurrences)
       const sourceStatus = source.droppableId as OccurrenceStatus
       const destinationStatus = destination.droppableId as OccurrenceStatus
@@ -144,7 +144,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
 
     setOccurrences((currentOccurrences) =>
       currentOccurrences.map((occurrence) =>
-        occurrence.id === selectedOccurrence.id ? { ...occurrence, archivedAt: new Date().toISOString() } : occurrence,
+        occurrence.id === selectedOccurrence.id ? { ...occurrence, archived: true } : occurrence,
       ),
     )
     handleCloseDetails()

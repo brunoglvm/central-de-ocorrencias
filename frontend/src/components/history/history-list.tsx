@@ -37,7 +37,7 @@ export function HistoryList({
 
   return (
     <section className='rounded-[2.25rem] bg-surface-container-low p-5 sm:p-6'>
-      {occurrences.length ? (
+      {occurrences.length > 0 ? (
         <div className='space-y-6'>
           {occurrences.map((occurrence, index) => (
             <article

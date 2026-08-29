@@ -9,6 +9,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'open',
     location: 'Bloco A - 101',
     source: 'resident',
+    archived: false,
   },
   {
     id: '2',
@@ -18,6 +19,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'in_progress',
     location: 'Bloco B - 3º andar',
     source: 'resident',
+    archived: false,
   },
   {
     id: '3',
@@ -27,6 +29,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'resolved',
     location: 'Bloco C - 204',
     source: 'resident',
+    archived: true,
   },
   {
     id: '4',
@@ -36,6 +39,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'in_progress',
     location: 'Bloco A',
     source: 'resident',
+    archived: false,
   },
   {
     id: '5',
@@ -45,6 +49,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'open',
     location: 'Garagem',
     source: 'resident',
+    archived: false,
   },
   {
     id: '6',
@@ -54,6 +59,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'open',
     location: 'Entrada principal',
     source: 'resident',
+    archived: false,
   },
   {
     id: '7',
@@ -64,6 +70,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'in_progress',
     location: 'Bloco C - 305',
     source: 'resident',
+    archived: true,
   },
   {
     id: '8',
@@ -74,6 +81,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'open',
     location: 'Bloco A - Hall dos elevadores',
     source: 'resident',
+    archived: false,
   },
   {
     id: '9',
@@ -84,6 +92,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'resolved',
     location: 'Entrada da garagem',
     source: 'resident',
+    archived: false,
   },
   {
     id: '10',
@@ -93,6 +102,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'open',
     location: 'Área de serviço',
     source: 'resident',
+    archived: false,
   },
   {
     id: '11',
@@ -102,6 +112,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'in_progress',
     location: 'Entrada',
     source: 'resident',
+    archived: false,
   },
   {
     id: '12',
@@ -111,6 +122,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'in_progress',
     location: 'Bloco A',
     source: 'employee',
+    archived: false,
   },
   {
     id: '13',
@@ -120,6 +132,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'resolved',
     location: 'Área de lazer',
     source: 'employee',
+    archived: false,
   },
   {
     id: '14',
@@ -129,6 +142,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'resolved',
     location: 'Bloco B',
     source: 'employee',
+    archived: false,
   },
   {
     id: '15',
@@ -138,6 +152,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'open',
     location: 'Bloco C',
     source: 'employee',
+    archived: false,
   },
   {
     id: '16',
@@ -147,6 +162,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'in_progress',
     location: 'Entrada principal',
     source: 'employee',
+    archived: false,
   },
   {
     id: '17',
@@ -156,6 +172,7 @@ export const mockOccurrences: Occurrence[] = [
     status: 'resolved',
     location: 'Garagem',
     source: 'employee',
+    archived: false,
   },
   {
     id: '18',
@@ -165,5 +182,6 @@ export const mockOccurrences: Occurrence[] = [
     status: 'open',
     location: 'Condomínio geral',
     source: 'employee',
+    archived: true,
   },
 ]

@@ -24,7 +24,7 @@ export function HistorySkeleton() {
                   <span className='block h-4 w-4/5 animate-pulse rounded-full bg-surface-container-highest/60' />
                 </div>
 
-                <span className='inline-flex h-10 w-24 shrink-0 animate-pulse rounded-2xl bg-surface-container-highest' />
+                <span className='inline-flex h-7 w-24 shrink-0 animate-pulse rounded-3xl bg-surface-container-highest' />
               </div>
 
               <div className='flex items-center gap-3'>

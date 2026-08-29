@@ -18,7 +18,7 @@ export function HistoryClient({ initialOccurrences }: HistoryClientProps) {
   const rawPage = Number(searchParams.get('page') ?? '1')
 
   const archivedOccurrences = useMemo(
-    () => occurrences.filter((occurrence) => Boolean(occurrence.archivedAt)),
+    () => occurrences.filter((occurrence) => Boolean(occurrence.archived)),
     [occurrences],
   )
   const totalPages = Math.max(1, Math.ceil(archivedOccurrences.length / historyPageSize))
@@ -45,7 +45,7 @@ export function HistoryClient({ initialOccurrences }: HistoryClientProps) {
   function handleRestoreOccurrence(occurrenceId: string) {
     setOccurrences((current) =>
       current.map((occurrence) =>
-        occurrence.id === occurrenceId ? { ...occurrence, archivedAt: null } : occurrence,
+        occurrence.id === occurrenceId ? { ...occurrence, archived: false } : occurrence,
       ),
     )
   }

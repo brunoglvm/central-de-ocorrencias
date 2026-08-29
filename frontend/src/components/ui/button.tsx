@@ -9,7 +9,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 }
 
 const baseClassName =
-  'inline-flex cursor-pointer appearance-none items-center justify-center no-underline transition-colors focus:outline-none focus:ring-2 focus:ring-primary-hover/25 disabled:cursor-not-allowed disabled:opacity-60'
+  'inline-flex cursor-pointer appearance-none items-center justify-center no-underline transition-colors disabled:cursor-not-allowed disabled:opacity-60'
 
 const variantClassName: Record<ButtonVariant, string> = {
   primary:
@@ -24,11 +24,10 @@ const variantClassName: Record<ButtonVariant, string> = {
 
 export function Button({ className, href, type = 'button', variant = 'primary', ...props }: ButtonProps) {
   const classNameValue = cn(baseClassName, variantClassName[variant], className)
-  const style = variant === 'primary' ? { color: 'var(--color-foreground-inverse)', fontSize: '16px', fontWeight: 500 } : undefined
 
   if (href) {
     return (
-      <Link href={href} className={classNameValue} style={style}>
+      <Link href={href} className={classNameValue}>
         {props.children}
       </Link>
     )
@@ -38,7 +37,6 @@ export function Button({ className, href, type = 'button', variant = 'primary', 
     <button
       type={type}
       className={classNameValue}
-      style={style}
       {...props}
     />
   )

@@ -71,16 +71,16 @@
     line-height: 1.5;
     font-weight: 400;
   }
-}
 
-@layer overrides {
   button,
   input,
   textarea,
   select {
     font: inherit;
   }
+}
 
+@layer overrides {
   a {
     text-decoration: none;
   }
