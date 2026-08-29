@@ -21,7 +21,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           id={inputId}
           ref={ref}
           className={cn(
-            'w-full rounded-2xl bg-surface-container-lowest px-4 py-3 text-sm outline-none placeholder:text-foreground-muted',
+            'w-full rounded-2xl bg-surface-container-lowest px-4 py-3 text-sm placeholder:text-foreground-muted',
             endAdornment ? 'pr-12' : '',
             error && 'ring-2 ring-danger-strong/18',
             className,

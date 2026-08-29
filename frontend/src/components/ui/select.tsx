@@ -79,7 +79,7 @@ export function Select({
           aria-expanded={isOpen}
           aria-haspopup='listbox'
           className={cn(
-            'flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-surface-container-lowest px-4 py-3 text-left text-sm transition-colors outline-none focus:ring-2 focus:ring-primary-hover/20',
+            'flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-surface-container-lowest px-4 py-3 text-left text-sm transition-colors',
             error && 'ring-2 ring-danger-strong/18',
             className,
           )}

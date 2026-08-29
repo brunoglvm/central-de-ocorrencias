@@ -19,7 +19,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
         id={textareaId}
         ref={ref}
         className={cn(
-          'min-h-40 w-full resize-none rounded-2xl bg-surface-container-lowest px-4 py-3 text-sm leading-7 outline-none placeholder:text-foreground-muted focus:ring-2 focus:ring-primary-hover/20',
+          'min-h-40 w-full resize-none rounded-2xl bg-surface-container-lowest px-4 py-3 text-sm leading-7 placeholder:text-foreground-muted',
           error && 'ring-2 ring-danger-strong/18',
           className,
         )}
