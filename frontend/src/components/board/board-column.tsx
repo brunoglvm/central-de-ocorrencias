@@ -1,23 +1,23 @@
 'use client'
 
 import { Droppable } from '@hello-pangea/dnd'
-import { IncidentCard } from '@/components/board/incident-card'
-import type { Incident, IncidentStatus } from '@/types/incident'
+import { OccurrenceCard } from '@/components/board/occurrence-card'
+import type { Occurrence, OccurrenceStatus } from '@/types/occurrence'
 
 type BoardColumnProps = {
-  status: IncidentStatus
+  status: OccurrenceStatus
   title: string
-  incidents: Incident[]
-  onSelectIncident: (incidentId: string) => void
+  occurrences: Occurrence[]
+  onSelectOccurrence: (occurrenceId: string) => void
 }
 
-const statusIndicatorVariants: Record<IncidentStatus, string> = {
+const statusIndicatorVariants: Record<OccurrenceStatus, string> = {
   open: 'text-status-open',
   in_progress: 'text-status-progress',
   resolved: 'text-status-resolved',
 }
 
-export function BoardColumn({ status, title, incidents, onSelectIncident }: BoardColumnProps) {
+export function BoardColumn({ status, title, occurrences, onSelectOccurrence }: BoardColumnProps) {
   return (
     <Droppable droppableId={status}>
       {(provided) => (
@@ -34,13 +34,18 @@ export function BoardColumn({ status, title, incidents, onSelectIncident }: Boar
               <p>{title}</p>
             </div>
             <span className='inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-surface-container-highest px-1.5 text-xs text-foreground-muted'>
-              {incidents.length}
+              {occurrences.length}
             </span>
           </div>
 
           <div className='min-h-24 flex-1 space-y-3 overflow-y-auto rounded-2xl p-1 pr-2 transition-colors'>
-            {incidents.map((incident, index) => (
-              <IncidentCard key={incident.id} incident={incident} index={index} onSelect={onSelectIncident} />
+            {occurrences.map((occurrence, index) => (
+              <OccurrenceCard
+                key={occurrence.id}
+                occurrence={occurrence}
+                index={index}
+                onSelect={onSelectOccurrence}
+              />
             ))}
             {provided.placeholder}
           </div>

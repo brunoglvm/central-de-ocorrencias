@@ -1,8 +1,8 @@
-import type { IncidentStatus } from '@/types/incident'
+import type { OccurrenceStatus } from '@/types/occurrence'
 
-export const incidentColumns: IncidentStatus[] = ['open', 'in_progress', 'resolved']
+export const occurrenceColumns: OccurrenceStatus[] = ['open', 'in_progress', 'resolved']
 
-export const incidentLocations = [
+export const occurrenceLocations = [
   'Entrada principal',
   'Portaria',
   'Garagem',
@@ -15,7 +15,7 @@ export const incidentLocations = [
 
 export const historyPageSize = 4
 
-export const statusMeta: Record<IncidentStatus, { label: string; description: string }> = {
+export const statusMeta: Record<OccurrenceStatus, { label: string; description: string }> = {
   open: {
     label: 'Abertas',
     description: 'Ocorrências recém-registradas aguardando triagem inicial.',

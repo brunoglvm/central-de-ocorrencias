@@ -8,28 +8,28 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { BoardColumn } from '@/components/board/board-column'
 import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
-import { incidentColumns, statusMeta } from '@/constants/incidents'
-import { getImageFileName, groupIncidentsByStatus } from '@/lib/incidents'
-import type { Incident, IncidentStatus } from '@/types/incident'
+import { occurrenceColumns, statusMeta } from '@/constants/occurrences'
+import { getImageFileName, groupOccurrencesByStatus } from '@/lib/occurrences'
+import type { Occurrence, OccurrenceStatus } from '@/types/occurrence'
 
 type BoardClientProps = {
-  initialIncidents: Incident[]
+  initialOccurrences: Occurrence[]
 }
 
-const statusBadgeVariants: Record<IncidentStatus, string> = {
+const statusBadgeVariants: Record<OccurrenceStatus, string> = {
   open: 'bg-status-open',
   in_progress: 'bg-status-progress',
   resolved: 'bg-status-resolved',
 }
 
-const statusLabels: Record<IncidentStatus, string> = {
+const statusLabels: Record<OccurrenceStatus, string> = {
   open: 'Abertas',
   in_progress: 'Em andamento',
   resolved: 'Resolvidas',
 }
 
-export function BoardClient({ initialIncidents }: BoardClientProps) {
-  const [incidents, setIncidents] = useState(initialIncidents)
+export function BoardClient({ initialOccurrences }: BoardClientProps) {
+  const [occurrences, setOccurrences] = useState(initialOccurrences)
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false)
   const isMounted = useSyncExternalStore(
     () => () => undefined,
@@ -39,29 +39,31 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const selectedIncidentId = searchParams.get('incident')
-  const activeIncidents = useMemo(() => incidents.filter((incident) => !incident.archivedAt), [incidents])
-  const incidentsByStatus = useMemo(() => groupIncidentsByStatus(activeIncidents), [activeIncidents])
-  const selectedIncident = useMemo(
+  const selectedOccurrenceId = searchParams.get('occurrence')
+  const activeOccurrences = useMemo(() => occurrences.filter((occurrence) => !occurrence.archivedAt), [occurrences])
+  const occurrencesByStatus = useMemo(() => groupOccurrencesByStatus(activeOccurrences), [activeOccurrences])
+  const selectedOccurrence = useMemo(
     () =>
-      selectedIncidentId ? (activeIncidents.find((incident) => incident.id === selectedIncidentId) ?? null) : null,
-    [activeIncidents, selectedIncidentId],
+      selectedOccurrenceId
+        ? (activeOccurrences.find((occurrence) => occurrence.id === selectedOccurrenceId) ?? null)
+        : null,
+    [activeOccurrences, selectedOccurrenceId],
   )
 
-  function handleSelectIncident(incidentId: string) {
+  function handleSelectOccurrence(occurrenceId: string) {
     const nextParams = new URLSearchParams(searchParams.toString())
-    nextParams.set('incident', incidentId)
+    nextParams.set('occurrence', occurrenceId)
     router.push(`${pathname}?${nextParams.toString()}`)
   }
 
   function handleCloseDetails() {
     const nextParams = new URLSearchParams(searchParams.toString())
-    nextParams.delete('incident')
+    nextParams.delete('occurrence')
     router.push(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
   }
 
   useEffect(() => {
-    if (!selectedIncidentId) {
+    if (!selectedOccurrenceId) {
       return
     }
 
@@ -71,7 +73,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         const nextParams = new URLSearchParams(searchParams.toString())
-        nextParams.delete('incident')
+        nextParams.delete('occurrence')
         router.push(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
       }
     }
@@ -82,17 +84,17 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
       document.body.style.overflow = previousOverflow
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [selectedIncidentId, pathname, router, searchParams])
+  }, [selectedOccurrenceId, pathname, router, searchParams])
 
   useEffect(() => {
-    if (!selectedIncidentId || selectedIncident) {
+    if (!selectedOccurrenceId || selectedOccurrence) {
       return
     }
 
     const nextParams = new URLSearchParams(searchParams.toString())
-    nextParams.delete('incident')
+    nextParams.delete('occurrence')
     router.replace(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
-  }, [pathname, router, searchParams, selectedIncident, selectedIncidentId])
+  }, [pathname, router, searchParams, selectedOccurrence, selectedOccurrenceId])
 
   function handleDragEnd(result: DropResult) {
     const { destination, source } = result
@@ -105,23 +107,23 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
       return
     }
 
-    setIncidents((currentIncidents) => {
-      const archivedIncidents = currentIncidents.filter((incident) => incident.archivedAt)
-      const activeCurrentIncidents = currentIncidents.filter((incident) => !incident.archivedAt)
-      const grouped = groupIncidentsByStatus(activeCurrentIncidents)
-      const sourceStatus = source.droppableId as IncidentStatus
-      const destinationStatus = destination.droppableId as IncidentStatus
+    setOccurrences((currentOccurrences) => {
+      const archivedOccurrences = currentOccurrences.filter((occurrence) => occurrence.archivedAt)
+      const activeCurrentOccurrences = currentOccurrences.filter((occurrence) => !occurrence.archivedAt)
+      const grouped = groupOccurrencesByStatus(activeCurrentOccurrences)
+      const sourceStatus = source.droppableId as OccurrenceStatus
+      const destinationStatus = destination.droppableId as OccurrenceStatus
       const sourceItems = [...grouped[sourceStatus]]
       const destinationItems = sourceStatus === destinationStatus ? sourceItems : [...grouped[destinationStatus]]
 
-      const [movedIncident] = sourceItems.splice(source.index, 1)
+      const [movedOccurrence] = sourceItems.splice(source.index, 1)
 
-      if (!movedIncident) {
-        return currentIncidents
+      if (!movedOccurrence) {
+        return currentOccurrences
       }
 
       destinationItems.splice(destination.index, 0, {
-        ...movedIncident,
+        ...movedOccurrence,
         status: destinationStatus,
       })
 
@@ -131,34 +133,36 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
         [destinationStatus]: destinationItems,
       }
 
-      return [...incidentColumns.flatMap((status) => nextGroups[status]), ...archivedIncidents]
+      return [...occurrenceColumns.flatMap((status) => nextGroups[status]), ...archivedOccurrences]
     })
   }
 
-  function handleArchiveIncident() {
-    if (!selectedIncident) {
+  function handleArchiveOccurrence() {
+    if (!selectedOccurrence) {
       return
     }
 
-    setIncidents((currentIncidents) =>
-      currentIncidents.map((incident) =>
-        incident.id === selectedIncident.id ? { ...incident, archivedAt: new Date().toISOString() } : incident,
+    setOccurrences((currentOccurrences) =>
+      currentOccurrences.map((occurrence) =>
+        occurrence.id === selectedOccurrence.id ? { ...occurrence, archivedAt: new Date().toISOString() } : occurrence,
       ),
     )
     handleCloseDetails()
     router.push('/admin/historico')
   }
 
-  function handleRequestRemoveIncident() {
+  function handleRequestRemoveOccurrence() {
     setIsRemoveModalOpen(true)
   }
 
-  function handleRemoveIncident() {
-    if (!selectedIncident) {
+  function handleRemoveOccurrence() {
+    if (!selectedOccurrence) {
       return
     }
 
-    setIncidents((currentIncidents) => currentIncidents.filter((incident) => incident.id !== selectedIncident.id))
+    setOccurrences((currentOccurrences) =>
+      currentOccurrences.filter((occurrence) => occurrence.id !== selectedOccurrence.id),
+    )
     setIsRemoveModalOpen(false)
     handleCloseDetails()
   }
@@ -169,13 +173,13 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
         <DragDropContext onDragEnd={handleDragEnd}>
           <div className='overflow-x-auto pb-6'>
             <div className='mx-auto flex w-max min-w-full justify-center gap-5 px-4 sm:px-0'>
-              {incidentColumns.map((status) => (
+              {occurrenceColumns.map((status) => (
                 <BoardColumn
                   key={status}
                   status={status}
                   title={statusMeta[status].label}
-                  incidents={incidentsByStatus[status]}
-                  onSelectIncident={handleSelectIncident}
+                  occurrences={occurrencesByStatus[status]}
+                  onSelectOccurrence={handleSelectOccurrence}
                 />
               ))}
             </div>
@@ -183,7 +187,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
         </DragDropContext>
       ) : null}
 
-      {selectedIncident ? (
+      {selectedOccurrence ? (
         <div className='pointer-events-none fixed inset-x-0 top-15.25 bottom-0 z-80 hidden lg:block'>
           <button
             type='button'
@@ -206,19 +210,19 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             </div>
             <div className='flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6'>
               <div className='space-y-4'>
-                <h2 className='pr-8 text-4xl tracking-[-0.04em] sm:pr-10'>{selectedIncident.title}</h2>
+                <h2 className='pr-8 text-4xl tracking-[-0.04em] sm:pr-10'>{selectedOccurrence.title}</h2>
 
                 <div
-                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-foreground-inverse ${statusBadgeVariants[selectedIncident.status]}`}
+                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-foreground-inverse ${statusBadgeVariants[selectedOccurrence.status]}`}
                 >
                   <span className='size-4 rounded-full border-2 border-foreground-inverse bg-surface-container-lowest/20' />
-                  <span>{statusLabels[selectedIncident.status]}</span>
+                  <span>{statusLabels[selectedOccurrence.status]}</span>
                 </div>
 
                 <div className='border-t border-foreground/8 pt-5'>
                   <div className='rounded-[1.25rem] border border-foreground/8 p-4'>
                     <div className='flex items-center gap-2 text-sm text-foreground-muted'>
-                      {selectedIncident.source === 'employee' ? (
+                      {selectedOccurrence.source === 'employee' ? (
                         <IconUserCog className='size-4' stroke={1.8} />
                       ) : (
                         <IconUser className='size-4' stroke={1.8} />
@@ -226,18 +230,18 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                       <p>
                         <span>Registrado por: </span>
                         <span className='font-medium text-primary-hover'>
-                          {selectedIncident.source === 'resident' ? 'Morador' : 'Funcionário'}
+                          {selectedOccurrence.source === 'resident' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
 
-                    <p className='mt-4 text-sm leading-7 text-foreground-muted'>{selectedIncident.description}</p>
+                    <p className='mt-4 text-sm leading-7 text-foreground-muted'>{selectedOccurrence.description}</p>
 
-                    {selectedIncident.image ? (
+                    {selectedOccurrence.image ? (
                       <div className='mt-4 overflow-hidden rounded-[1.125rem] border border-foreground/8'>
                         <Image
-                          src={selectedIncident.image ?? ''}
-                          alt={getImageFileName(selectedIncident.image)}
+                          src={selectedOccurrence.image ?? ''}
+                          alt={getImageFileName(selectedOccurrence.image)}
                           width={1200}
                           height={800}
                           className='h-auto w-full object-contain'
@@ -249,11 +253,11 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                     <div className='mt-3 flex flex-wrap gap-2'>
                       <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
                         <IconMapPin className='size-4' stroke={1.8} />
-                        <span>Localização: {selectedIncident.location}</span>
+                        <span>Localização: {selectedOccurrence.location}</span>
                       </span>
                       <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
                         <IconClock className='size-4' stroke={1.8} />
-                        <span>Data: {selectedIncident.createdAt}</span>
+                        <span>Data: {selectedOccurrence.createdAt}</span>
                       </span>
                     </div>
                   </div>
@@ -261,14 +265,14 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
               </div>
 
               <div className='flex flex-col gap-3 sm:flex-row sm:justify-end'>
-                <Button variant='danger' onClick={handleRequestRemoveIncident}>
+                <Button variant='danger' onClick={handleRequestRemoveOccurrence}>
                   <span className='inline-flex items-center gap-2'>
                     <IconTrash className='size-4.5' stroke={1.8} />
                     Remover ocorrência
                   </span>
                 </Button>
 
-                <Button type='button' onClick={handleArchiveIncident}>
+                <Button type='button' onClick={handleArchiveOccurrence}>
                   <span className='inline-flex items-center gap-2'>
                     <IconHistory className='size-4.5' stroke={1.8} />
                     Mover para histórico
@@ -280,7 +284,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
         </div>
       ) : null}
 
-      {selectedIncident ? (
+      {selectedOccurrence ? (
         <div className='fixed inset-0 z-80 lg:hidden'>
           <button
             type='button'
@@ -303,19 +307,19 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
             </div>
             <div className='flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6'>
               <div className='space-y-4'>
-                <h2 className='pr-8 text-4xl tracking-[-0.04em] sm:pr-10'>{selectedIncident.title}</h2>
+                <h2 className='pr-8 text-4xl tracking-[-0.04em] sm:pr-10'>{selectedOccurrence.title}</h2>
 
                 <div
-                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-foreground-inverse ${statusBadgeVariants[selectedIncident.status]}`}
+                  className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-foreground-inverse ${statusBadgeVariants[selectedOccurrence.status]}`}
                 >
                   <span className='size-4 rounded-full border-2 border-foreground-inverse bg-surface-container-lowest/20' />
-                  <span>{statusLabels[selectedIncident.status]}</span>
+                  <span>{statusLabels[selectedOccurrence.status]}</span>
                 </div>
 
                 <div className='border-t border-foreground/8 pt-5'>
                   <div className='rounded-[1.25rem] border border-foreground/8 p-4'>
                     <div className='flex items-center gap-2 text-sm text-foreground-muted'>
-                      {selectedIncident.source === 'employee' ? (
+                      {selectedOccurrence.source === 'employee' ? (
                         <IconUserCog className='size-4' stroke={1.8} />
                       ) : (
                         <IconUser className='size-4' stroke={1.8} />
@@ -323,18 +327,18 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                       <p>
                         <span>Registrado por: </span>
                         <span className='font-medium text-primary-hover'>
-                          {selectedIncident.source === 'resident' ? 'Morador' : 'Funcionário'}
+                          {selectedOccurrence.source === 'resident' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
 
-                    <p className='mt-4 text-sm leading-7 text-foreground-muted'>{selectedIncident.description}</p>
+                    <p className='mt-4 text-sm leading-7 text-foreground-muted'>{selectedOccurrence.description}</p>
 
-                    {selectedIncident.image ? (
+                    {selectedOccurrence.image ? (
                       <div className='mt-4 overflow-hidden rounded-[1.125rem] border border-foreground/8'>
                         <Image
-                          src={selectedIncident.image ?? ''}
-                          alt={getImageFileName(selectedIncident.image)}
+                          src={selectedOccurrence.image ?? ''}
+                          alt={getImageFileName(selectedOccurrence.image)}
                           width={1200}
                           height={800}
                           className='h-auto w-full object-contain'
@@ -346,11 +350,11 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
                     <div className='mt-3 flex flex-wrap gap-2'>
                       <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
                         <IconMapPin className='size-4' stroke={1.8} />
-                        <span>Localização: {selectedIncident.location}</span>
+                        <span>Localização: {selectedOccurrence.location}</span>
                       </span>
                       <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
                         <IconClock className='size-4' stroke={1.8} />
-                        <span>Data: {selectedIncident.createdAt}</span>
+                        <span>Data: {selectedOccurrence.createdAt}</span>
                       </span>
                     </div>
                   </div>
@@ -358,14 +362,14 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
               </div>
 
               <div className='flex flex-col gap-3 sm:flex-row sm:justify-end'>
-                <Button type='button' onClick={handleArchiveIncident}>
+                <Button type='button' onClick={handleArchiveOccurrence}>
                   <span className='inline-flex items-center gap-2'>
                     <IconHistory className='size-4.5' stroke={1.8} />
                     Mover para histórico
                   </span>
                 </Button>
 
-                <Button variant='danger' onClick={handleRequestRemoveIncident}>
+                <Button variant='danger' onClick={handleRequestRemoveOccurrence}>
                   <span className='inline-flex items-center gap-2'>
                     <IconTrash className='size-4.5' stroke={1.8} />
                     Remover ocorrência
@@ -383,7 +387,7 @@ export function BoardClient({ initialIncidents }: BoardClientProps) {
         description='Essa ação exclui a ocorrência do quadro e do histórico local deste navegador.'
         confirmLabel='Remover'
         onClose={() => setIsRemoveModalOpen(false)}
-        onConfirm={handleRemoveIncident}
+        onConfirm={handleRemoveOccurrence}
       />
     </section>
   )

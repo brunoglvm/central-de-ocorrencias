@@ -3,25 +3,28 @@
 import { useEffect, useMemo, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { HistoryList } from '@/components/history/history-list'
-import { historyPageSize } from '@/constants/incidents'
-import type { Incident } from '@/types/incident'
+import { historyPageSize } from '@/constants/occurrences'
+import type { Occurrence } from '@/types/occurrence'
 
 type HistoryClientProps = {
-  initialIncidents: Incident[]
+  initialOccurrences: Occurrence[]
 }
 
-export function HistoryClient({ initialIncidents }: HistoryClientProps) {
-  const [incidents, setIncidents] = useState(initialIncidents)
+export function HistoryClient({ initialOccurrences }: HistoryClientProps) {
+  const [occurrences, setOccurrences] = useState(initialOccurrences)
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
   const rawPage = Number(searchParams.get('page') ?? '1')
 
-  const archivedIncidents = useMemo(() => incidents.filter((incident) => Boolean(incident.archivedAt)), [incidents])
-  const totalPages = Math.max(1, Math.ceil(archivedIncidents.length / historyPageSize))
+  const archivedOccurrences = useMemo(
+    () => occurrences.filter((occurrence) => Boolean(occurrence.archivedAt)),
+    [occurrences],
+  )
+  const totalPages = Math.max(1, Math.ceil(archivedOccurrences.length / historyPageSize))
   const currentPage = Number.isFinite(rawPage) && rawPage > 0 ? Math.min(rawPage, totalPages) : 1
   const startIndex = (currentPage - 1) * historyPageSize
-  const paginatedIncidents = archivedIncidents.slice(startIndex, startIndex + historyPageSize)
+  const paginatedOccurrences = archivedOccurrences.slice(startIndex, startIndex + historyPageSize)
 
   useEffect(() => {
     if (rawPage === currentPage) {
@@ -39,18 +42,20 @@ export function HistoryClient({ initialIncidents }: HistoryClientProps) {
     router.replace(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
   }, [currentPage, pathname, rawPage, router, searchParams])
 
-  function handleRestoreIncident(incidentId: string) {
-    setIncidents((current) => current.map((incident) =>
-      incident.id === incidentId ? { ...incident, archivedAt: null } : incident,
-    ))
+  function handleRestoreOccurrence(occurrenceId: string) {
+    setOccurrences((current) =>
+      current.map((occurrence) =>
+        occurrence.id === occurrenceId ? { ...occurrence, archivedAt: null } : occurrence,
+      ),
+    )
   }
 
   return (
     <HistoryList
       currentPage={currentPage}
-      incidents={paginatedIncidents}
-      onRestoreIncident={handleRestoreIncident}
-      totalItems={archivedIncidents.length}
+      occurrences={paginatedOccurrences}
+      onRestoreOccurrence={handleRestoreOccurrence}
+      totalItems={archivedOccurrences.length}
       totalPages={totalPages}
     />
   )

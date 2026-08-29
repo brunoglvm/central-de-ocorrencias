@@ -1,6 +1,6 @@
-import type { Incident } from '@/types/incident'
+import type { Occurrence } from '@/types/occurrence'
 
-export const mockIncidents: Incident[] = [
+export const mockOccurrences: Occurrence[] = [
   {
     id: '1',
     title: 'Barulho excessivo no apartamento 101',

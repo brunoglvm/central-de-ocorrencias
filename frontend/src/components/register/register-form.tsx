@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { incidentLocations } from '@/constants/incidents'
+import { occurrenceLocations } from '@/constants/occurrences'
 import { AttachmentDropzone } from '@/components/register/attachment-dropzone'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -12,12 +12,12 @@ import { Select, type SelectOption } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import {
   CUSTOM_LOCATION_VALUE,
-  type RegisterIncidentFormValues,
-  registerIncidentSchema,
-} from '@/lib/validations/register-incident'
+  type RegisterOccurrenceFormValues,
+  registerOccurrenceSchema,
+} from '@/lib/validations/register-occurrence'
 
 const locationOptions: SelectOption[] = [
-  ...incidentLocations.map((location) => ({
+  ...occurrenceLocations.map((location) => ({
     label: location,
     value: location,
   })),
@@ -32,7 +32,7 @@ const userTypeOptions: SelectOption[] = [
   { label: 'Funcionário', value: 'employee' },
 ]
 
-const initialForm: RegisterIncidentFormValues = {
+const initialForm: RegisterOccurrenceFormValues = {
   attachmentName: '',
   customLocation: '',
   description: '',
@@ -50,14 +50,14 @@ export function RegisterForm() {
     register,
     reset,
     setValue,
-  } = useForm<RegisterIncidentFormValues>({
+  } = useForm<RegisterOccurrenceFormValues>({
     defaultValues: initialForm,
-    resolver: zodResolver(registerIncidentSchema),
+    resolver: zodResolver(registerOccurrenceSchema),
   })
   const selectedLocation = useWatch({ control, name: 'location' })
   const shouldShowCustomLocation = selectedLocation === CUSTOM_LOCATION_VALUE
 
-  function onSubmit(values: RegisterIncidentFormValues) {
+  function onSubmit(values: RegisterOccurrenceFormValues) {
     const resolvedLocation = values.location === CUSTOM_LOCATION_VALUE ? values.customLocation.trim() : values.location
 
     setFeedback(

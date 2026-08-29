@@ -1,4 +1,4 @@
-import { incidentColumns, statusMeta } from '@/constants/incidents'
+import { occurrenceColumns, statusMeta } from '@/constants/occurrences'
 
 const statusIndicatorVariants: Record<string, string> = {
   open: 'text-status-open',
@@ -10,7 +10,7 @@ export function BoardSkeleton() {
   return (
     <div className='overflow-x-auto pb-6'>
       <div className='mx-auto flex w-max min-w-full justify-center gap-5 px-4 sm:px-0'>
-        {incidentColumns.map((status) => (
+        {occurrenceColumns.map((status) => (
           <section
             key={status}
             className='flex h-[calc(100vh-10rem)] w-sm shrink-0 flex-col rounded-[1.25rem] bg-surface-container-low p-3'

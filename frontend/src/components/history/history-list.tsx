@@ -14,34 +14,40 @@ import {
 } from '@tabler/icons-react'
 import { Button } from '@/components/ui/button'
 import { ImagePreviewModal } from '@/components/ui/image-preview-modal'
-import { getImageFileName } from '@/lib/incidents'
-import type { Incident } from '@/types/incident'
+import { getImageFileName } from '@/lib/occurrences'
+import type { Occurrence } from '@/types/occurrence'
 
 type HistoryListProps = {
   currentPage: number
-  incidents: Incident[]
-  onRestoreIncident: (incidentId: string) => void
+  occurrences: Occurrence[]
+  onRestoreOccurrence: (occurrenceId: string) => void
   totalItems: number
   totalPages: number
 }
 
-export function HistoryList({ currentPage, incidents, onRestoreIncident, totalItems, totalPages }: HistoryListProps) {
-  const [previewIncident, setPreviewIncident] = useState<Incident | null>(null)
+export function HistoryList({
+  currentPage,
+  occurrences,
+  onRestoreOccurrence,
+  totalItems,
+  totalPages,
+}: HistoryListProps) {
+  const [previewOccurrence, setPreviewOccurrence] = useState<Occurrence | null>(null)
   const visiblePages = getVisiblePages(currentPage, totalPages)
 
   return (
     <section className='rounded-[2.25rem] bg-surface-container-low p-5 sm:p-6'>
-      {incidents.length ? (
+      {occurrences.length ? (
         <div className='space-y-6'>
-          {incidents.map((incident, index) => (
+          {occurrences.map((occurrence, index) => (
             <article
-              key={incident.id}
+              key={occurrence.id}
               className='grid gap-4 rounded-[1.75rem] bg-surface-container-lowest p-5 lg:grid-cols-[auto_1fr]'
             >
               <div className='flex items-start gap-4 lg:flex-col lg:items-center'>
                 <div className='flex flex-col items-center'>
                   <span className='size-3 rounded-full bg-surface-container-highest' />
-                  {index < incidents.length - 1 ? (
+                  {index < occurrences.length - 1 ? (
                     <span className='mt-2 h-20 w-px bg-linear-to-b from-surface-container-highest to-transparent' />
                   ) : null}
                 </div>
@@ -50,12 +56,12 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
               <div className='space-y-4'>
                 <div className='grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start'>
                   <div className='min-w-0 space-y-4'>
-                    <h2 className='text-3xl tracking-[-0.03em]'>{incident.title}</h2>
+                    <h2 className='text-3xl tracking-[-0.03em]'>{occurrence.title}</h2>
 
-                    <p className='text-sm leading-7 text-foreground-muted'>{incident.description}</p>
+                    <p className='text-sm leading-7 text-foreground-muted'>{occurrence.description}</p>
                   </div>
 
-                  <Button variant='outline' onClick={() => onRestoreIncident(incident.id)}>
+                  <Button variant='outline' onClick={() => onRestoreOccurrence(occurrence.id)}>
                     <IconArrowUpLeft className='size-3.5' stroke={1.8} />
                     Retornar
                   </Button>
@@ -64,26 +70,26 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
                 <div className='flex items-center gap-3 text-xs text-foreground-muted'>
                   <span className='inline-flex items-center gap-1'>
                     <IconMapPin className='size-4' stroke={1.8} />
-                    {incident.location}
+                    {occurrence.location}
                   </span>
                   <span className='inline-flex items-center gap-1 border-l border-foreground/12 pl-3'>
                     <IconClock className='size-4' stroke={1.8} />
-                    {incident.createdAt}
+                    {occurrence.createdAt}
                   </span>
                   <span className='inline-flex items-center gap-1 border-l border-foreground/12 pl-3'>
-                    {incident.source === 'employee' ? (
+                    {occurrence.source === 'employee' ? (
                       <IconUserCog className='size-4' stroke={1.8} />
                     ) : (
                       <IconUser className='size-4' stroke={1.8} />
                     )}
-                    <span>{incident.source === 'employee' ? 'Funcionário' : 'Morador'}</span>
+                    <span>{occurrence.source === 'employee' ? 'Funcionário' : 'Morador'}</span>
                   </span>
-                  {incident.image ? (
+                  {occurrence.image ? (
                     <button
                       type='button'
                       aria-label='Visualizar imagem anexada'
                       className='inline-flex cursor-pointer items-center gap-1 border-l border-foreground/12 pl-3 text-primary-hover transition-colors hover:underline'
-                      onClick={() => setPreviewIncident(incident)}
+                      onClick={() => setPreviewOccurrence(occurrence)}
                     >
                       <IconPhoto className='size-4' stroke={1.8} />
                       <span>Imagem anexada</span>
@@ -181,10 +187,10 @@ export function HistoryList({ currentPage, incidents, onRestoreIncident, totalIt
       )}
 
       <ImagePreviewModal
-        fileName={getImageFileName(previewIncident?.image)}
-        imageUrl={previewIncident?.image ?? ''}
-        isOpen={Boolean(previewIncident?.image)}
-        onClose={() => setPreviewIncident(null)}
+        fileName={getImageFileName(previewOccurrence?.image)}
+        imageUrl={previewOccurrence?.image ?? ''}
+        isOpen={Boolean(previewOccurrence?.image)}
+        onClose={() => setPreviewOccurrence(null)}
       />
     </section>
   )

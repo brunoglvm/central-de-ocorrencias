@@ -2,17 +2,17 @@
 
 import { Draggable } from '@hello-pangea/dnd'
 import { IconClock, IconMapPin } from '@tabler/icons-react'
-import type { Incident } from '@/types/incident'
+import type { Occurrence } from '@/types/occurrence'
 
-type IncidentCardProps = {
-  incident: Incident
+type OccurrenceCardProps = {
+  occurrence: Occurrence
   index: number
-  onSelect: (incidentId: string) => void
+  onSelect: (occurrenceId: string) => void
 }
 
-export function IncidentCard({ incident, index, onSelect }: IncidentCardProps) {
+export function OccurrenceCard({ occurrence, index, onSelect }: OccurrenceCardProps) {
   return (
-    <Draggable draggableId={incident.id} index={index}>
+    <Draggable draggableId={occurrence.id} index={index}>
       {(provided, snapshot) => (
         <article
           ref={provided.innerRef}
@@ -29,23 +29,23 @@ export function IncidentCard({ incident, index, onSelect }: IncidentCardProps) {
               <button
                 type='button'
                 className='line-clamp-2 cursor-pointer text-left text-sm leading-5 font-medium decoration-primary-hover underline-offset-4 transition-colors hover:text-primary-hover hover:underline'
-                onClick={() => onSelect(incident.id)}
+                onClick={() => onSelect(occurrence.id)}
               >
-                {incident.title}
+                {occurrence.title}
               </button>
             </div>
           </div>
 
-          <p className='mt-2 line-clamp-2 text-xs leading-5 text-foreground-muted'>{incident.description}</p>
+          <p className='mt-2 line-clamp-2 text-xs leading-5 text-foreground-muted'>{occurrence.description}</p>
 
           <div className='mt-3 flex flex-wrap items-center gap-3 text-xs text-foreground-muted'>
             <span className='inline-flex items-center gap-1'>
               <IconMapPin className='size-4' stroke={1.8} />
-              {incident.location}
+              {occurrence.location}
             </span>
             <span className='inline-flex items-center gap-1 border-l border-foreground/12 pl-3'>
               <IconClock className='size-4' stroke={1.8} />
-              {incident.createdAt}
+              {occurrence.createdAt}
             </span>
           </div>
         </article>

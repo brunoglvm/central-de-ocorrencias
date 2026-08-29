@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const CUSTOM_LOCATION_VALUE = '__custom_location__'
 
-export const registerIncidentSchema = z
+export const registerOccurrenceSchema = z
   .object({
     attachmentName: z.string(),
     customLocation: z.string(),
@@ -21,4 +21,4 @@ export const registerIncidentSchema = z
     }
   })
 
-export type RegisterIncidentFormValues = z.infer<typeof registerIncidentSchema>
+export type RegisterOccurrenceFormValues = z.infer<typeof registerOccurrenceSchema>
