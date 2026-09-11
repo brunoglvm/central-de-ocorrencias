@@ -40,12 +40,7 @@ export function BoardColumn({ status, title, occurrences, onSelectOccurrence }: 
 
           <div className='min-h-24 flex-1 space-y-3 overflow-y-auto rounded-2xl p-1 pr-2 transition-colors'>
             {occurrences.map((occurrence, index) => (
-              <OccurrenceCard
-                key={occurrence.id}
-                occurrence={occurrence}
-                index={index}
-                onSelect={onSelectOccurrence}
-              />
+              <OccurrenceCard key={occurrence.id} occurrence={occurrence} index={index} onSelect={onSelectOccurrence} />
             ))}
             {provided.placeholder}
           </div>

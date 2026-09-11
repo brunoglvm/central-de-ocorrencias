@@ -57,7 +57,11 @@ export function Modal({ confirmLabel = 'Confirmar', description, isOpen, onClose
         </div>
 
         <div className='mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end'>
-          <Button variant='secondary' onClick={onClose}>
+          <Button
+            variant='outline'
+            className='self-auto border-foreground/12 px-5 py-3 text-base text-foreground-muted hover:text-foreground'
+            onClick={onClose}
+          >
             Cancelar
           </Button>
 

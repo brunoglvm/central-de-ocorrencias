@@ -44,9 +44,7 @@ export function HistoryClient({ initialOccurrences }: HistoryClientProps) {
 
   function handleRestoreOccurrence(occurrenceId: string) {
     setOccurrences((current) =>
-      current.map((occurrence) =>
-        occurrence.id === occurrenceId ? { ...occurrence, archived: false } : occurrence,
-      ),
+      current.map((occurrence) => (occurrence.id === occurrenceId ? { ...occurrence, archived: false } : occurrence)),
     )
   }
 

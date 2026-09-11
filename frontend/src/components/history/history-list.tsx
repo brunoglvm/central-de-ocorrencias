@@ -61,7 +61,11 @@ export function HistoryList({
                     <p className='text-sm leading-7 text-foreground-muted'>{occurrence.description}</p>
                   </div>
 
-                  <Button variant='outline' onClick={() => onRestoreOccurrence(occurrence.id)}>
+                  <Button
+                    variant='outline'
+                    className='gap-1.5 self-start border-primary/20 px-3 py-1.5 text-xs text-primary-hover'
+                    onClick={() => onRestoreOccurrence(occurrence.id)}
+                  >
                     <IconArrowUpLeft className='size-3.5' stroke={1.8} />
                     Retornar
                   </Button>
