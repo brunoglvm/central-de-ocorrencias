@@ -3,5 +3,8 @@
   "editor.formatOnSave": true,
   "symbols.files.associations": {
     "*.bruno.yml": "bruno"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "mkhl.shfmt"
   }
 }
