@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   allowedDevOrigins: [process.env.ALLOWED_DEV_HOST, process.env.ALLOWED_DEV_IP].filter((origin): origin is string =>
     Boolean(origin),
   ),

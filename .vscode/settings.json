@@ -6,5 +6,7 @@
   },
   "[shellscript]": {
     "editor.defaultFormatter": "mkhl.shfmt"
-  }
+  },
+  "docker.lsp.experimental.vulnerabilityScanning": false,
+  "docker.extension.editor.dockerfileBuildStageDecorationLines": true
 }
