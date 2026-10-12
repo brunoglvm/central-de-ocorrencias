@@ -1,6 +1,6 @@
 services:
   minio:
-    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
+    image: pgsty/minio:RELEASE.2026-08-04T00-00-00Z
     container_name: minio
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
@@ -13,7 +13,7 @@ services:
       - minio_data:/data
 
   minio-init:
-    image: minio/mc:RELEASE.2025-08-13T08-35-41Z
+    image: pgsty/mc:RELEASE.2026-09-16T00-00-00Z
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
@@ -30,9 +30,9 @@ services:
     container_name: backend
     env_file:
       - ./backend/.env
-    environment:
+    environment: # Replace the localhost values with your public domains in prod
       CORS_ORIGIN: http://localhost:8080
-      MINIO_ENDPOINT: minio
+      MINIO_ENDPOINT: minio # Compose service name, same in prod
       MINIO_PUBLIC_URL: http://localhost:9000
     volumes:
       - ./backend/.env:/app/.env:ro
@@ -50,16 +50,16 @@ services:
     depends_on:
       - backend
 
-  # nginx:
-  #   image: nginx:1.30.4-alpine3.24
-  #   container_name: nginx
-  #   ports:
-  #     - "8080:80"
-  #   volumes:
-  #     - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-  #   depends_on:
-  #     - frontend
-  #     - backend
+  nginx:
+    image: nginx:1.30.4-alpine3.24
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
 
 volumes:
   minio_data:
