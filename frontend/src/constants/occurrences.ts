@@ -1,6 +1,6 @@
 import type { OccurrenceStatus } from '@/types/occurrence'
 
-export const occurrenceColumns: OccurrenceStatus[] = ['open', 'in_progress', 'resolved']
+export const occurrenceColumns: OccurrenceStatus[] = ['OPEN', 'IN_PROGRESS', 'RESOLVED']
 
 export const occurrenceLocations = [
   'Entrada principal',
@@ -16,15 +16,15 @@ export const occurrenceLocations = [
 export const historyPageSize = 4
 
 export const statusMeta: Record<OccurrenceStatus, { label: string; description: string }> = {
-  open: {
+  OPEN: {
     label: 'Abertas',
     description: 'Ocorrências recém-registradas aguardando triagem inicial.',
   },
-  in_progress: {
+  IN_PROGRESS: {
     label: 'Em andamento',
     description: 'Casos em tratamento, com responsáveis já acionados.',
   },
-  resolved: {
+  RESOLVED: {
     label: 'Resolvidas',
     description: 'Demandas concluídas e prontas para consulta histórica.',
   },

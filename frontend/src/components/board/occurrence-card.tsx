@@ -2,17 +2,18 @@
 
 import { Draggable } from '@hello-pangea/dnd'
 import { IconClock, IconMapPin } from '@tabler/icons-react'
+import { formatOccurrenceDate } from '@/lib/occurrences'
 import type { Occurrence } from '@/types/occurrence'
 
 type OccurrenceCardProps = {
   occurrence: Occurrence
   index: number
-  onSelect: (occurrenceId: string) => void
+  onSelect: (occurrenceId: number) => void
 }
 
 export function OccurrenceCard({ occurrence, index, onSelect }: OccurrenceCardProps) {
   return (
-    <Draggable draggableId={occurrence.id} index={index}>
+    <Draggable draggableId={String(occurrence.id)} index={index}>
       {(provided, snapshot) => (
         <article
           ref={provided.innerRef}
@@ -45,7 +46,7 @@ export function OccurrenceCard({ occurrence, index, onSelect }: OccurrenceCardPr
             </span>
             <span className='inline-flex items-center gap-1 border-l border-foreground/12 pl-3'>
               <IconClock className='size-4' stroke={1.8} />
-              {occurrence.createdAt}
+              {formatOccurrenceDate(occurrence.createdAt)}
             </span>
           </div>
         </article>

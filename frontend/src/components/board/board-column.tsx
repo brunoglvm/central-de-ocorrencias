@@ -8,13 +8,13 @@ type BoardColumnProps = {
   status: OccurrenceStatus
   title: string
   occurrences: Occurrence[]
-  onSelectOccurrence: (occurrenceId: string) => void
+  onSelectOccurrence: (occurrenceId: number) => void
 }
 
 const statusIndicatorVariants: Record<OccurrenceStatus, string> = {
-  open: 'text-status-open',
-  in_progress: 'text-status-progress',
-  resolved: 'text-status-resolved',
+  OPEN: 'text-status-open',
+  IN_PROGRESS: 'text-status-progress',
+  RESOLVED: 'text-status-resolved',
 }
 
 export function BoardColumn({ status, title, occurrences, onSelectOccurrence }: BoardColumnProps) {

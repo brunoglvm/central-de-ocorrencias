@@ -4,7 +4,6 @@ export const CUSTOM_LOCATION_VALUE = '__custom_location__'
 
 export const registerOccurrenceSchema = z
   .object({
-    attachmentName: z.string(),
     customLocation: z.string(),
     description: z.string().min(10, 'Descreva o problema com pelo menos 10 caracteres.'),
     location: z.string().min(1, 'Selecione o local do problema.'),

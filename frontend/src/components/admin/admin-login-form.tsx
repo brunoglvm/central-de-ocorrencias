@@ -2,20 +2,64 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { IconEye, IconEyeOff } from '@tabler/icons-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { getErrorMessage } from '@/lib/errors'
+import { login } from '@/services/api/auth'
+import { setAuthToken } from '@/services/api/client'
 
-export function AdminLoginForm() {
+type AdminLoginFormProps = {
+  condominiumImage?: string | null
+}
+
+export function AdminLoginForm({ condominiumImage }: AdminLoginFormProps) {
+  const router = useRouter()
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
+  const [imageSrc, setImageSrc] = useState(condominiumImage || '/images/pfp.webp')
+  const [error, setError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const email = String(formData.get('email') ?? '').trim()
+    const password = String(formData.get('password') ?? '')
+
+    setError(null)
+    setIsSubmitting(true)
+
+    try {
+      const { token } = await login({ email, password })
+
+      setAuthToken(token)
+      router.replace('/admin/quadro')
+      router.refresh()
+    } catch (submitError) {
+      setError(getErrorMessage(submitError, 'E-mail ou senha inválidos.'))
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <Card className='w-full max-w-md rounded-[2.25rem] p-6 shadow-none sm:p-8'>
-      <form className='space-y-6'>
+      <form className='space-y-6' onSubmit={handleSubmit}>
         <div className='flex justify-center'>
           <div className='relative size-24 overflow-hidden rounded-full bg-surface-container-highest'>
-            <Image src='/images/pfp.webp' alt='Condomínio' fill className='object-cover' sizes='96px' priority />
+            <Image
+              src={imageSrc}
+              alt='Condomínio'
+              fill
+              className='object-cover'
+              sizes='96px'
+              priority
+              unoptimized
+              onError={() => setImageSrc('/images/pfp.webp')}
+            />
           </div>
         </div>
 
@@ -25,6 +69,7 @@ export function AdminLoginForm() {
           name='email'
           type='email'
           placeholder='admin@condominio.com.br'
+          autoComplete='email'
           required
         />
 
@@ -34,6 +79,7 @@ export function AdminLoginForm() {
           name='password'
           type={isPasswordVisible ? 'text' : 'password'}
           placeholder='Digite sua senha'
+          autoComplete='current-password'
           required
           endAdornment={
             <button
@@ -52,9 +98,15 @@ export function AdminLoginForm() {
           }
         />
 
+        {error ? (
+          <p role='alert' className='rounded-2xl bg-danger-soft px-4 py-3 text-sm text-danger-strong'>
+            {error}
+          </p>
+        ) : null}
+
         <div className='flex'>
-          <Button href='/admin/quadro' className='w-full'>
-            Entrar
+          <Button type='submit' className='w-full' disabled={isSubmitting}>
+            {isSubmitting ? 'Entrando...' : 'Entrar'}
           </Button>
         </div>
       </form>

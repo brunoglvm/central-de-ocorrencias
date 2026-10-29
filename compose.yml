@@ -31,9 +31,9 @@ services:
     env_file:
       - ./backend/.env
     environment: # Replace the localhost values with your public domains in prod
-      CORS_ORIGIN: http://localhost:8080
+      CORS_ORIGIN: http://192.168.0.128:8080
       MINIO_ENDPOINT: minio # Compose service name, same in prod
-      MINIO_PUBLIC_URL: http://localhost:9000
+      MINIO_PUBLIC_URL: http://192.168.0.128:9000
     volumes:
       - ./backend/.env:/app/.env:ro
       - ./backend/src/database:/app/src/database
@@ -43,10 +43,13 @@ services:
   frontend:
     build:
       context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: /api
     container_name: frontend
     environment:
       HOSTNAME: 0.0.0.0
       PORT: 3000
+      API_SERVER_ORIGIN: http://nginx
     depends_on:
       - backend
 

@@ -1,9 +1,10 @@
 import { occurrenceColumns, statusMeta } from '@/constants/occurrences'
+import type { OccurrenceStatus } from '@/types/occurrence'
 
-const statusIndicatorVariants: Record<string, string> = {
-  open: 'text-status-open',
-  in_progress: 'text-status-progress',
-  resolved: 'text-status-resolved',
+const statusIndicatorVariants: Record<OccurrenceStatus, string> = {
+  OPEN: 'text-status-open',
+  IN_PROGRESS: 'text-status-progress',
+  RESOLVED: 'text-status-resolved',
 }
 
 export function BoardSkeleton() {

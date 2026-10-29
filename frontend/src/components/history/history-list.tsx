@@ -14,13 +14,13 @@ import {
 } from '@tabler/icons-react'
 import { Button } from '@/components/ui/button'
 import { ImagePreviewModal } from '@/components/ui/image-preview-modal'
-import { getImageFileName } from '@/lib/occurrences'
+import { formatOccurrenceDate, getImageFileName, getOccurrenceSourceLabel } from '@/lib/occurrences'
 import type { Occurrence } from '@/types/occurrence'
 
 type HistoryListProps = {
   currentPage: number
   occurrences: Occurrence[]
-  onRestoreOccurrence: (occurrenceId: string) => void
+  onRestoreOccurrence: (occurrenceId: number) => void
   totalItems: number
   totalPages: number
 }
@@ -78,15 +78,15 @@ export function HistoryList({
                   </span>
                   <span className='inline-flex items-center gap-1 border-l border-foreground/12 pl-3'>
                     <IconClock className='size-4' stroke={1.8} />
-                    {occurrence.createdAt}
+                    {formatOccurrenceDate(occurrence.createdAt)}
                   </span>
                   <span className='inline-flex items-center gap-1 border-l border-foreground/12 pl-3'>
-                    {occurrence.source === 'employee' ? (
+                    {occurrence.source === 'EMPLOYEE' ? (
                       <IconUserCog className='size-4' stroke={1.8} />
                     ) : (
                       <IconUser className='size-4' stroke={1.8} />
                     )}
-                    <span>{occurrence.source === 'employee' ? 'Funcionário' : 'Morador'}</span>
+                    <span>{getOccurrenceSourceLabel(occurrence.source)}</span>
                   </span>
                   {occurrence.image ? (
                     <button

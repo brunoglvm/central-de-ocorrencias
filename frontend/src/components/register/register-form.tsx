@@ -3,18 +3,20 @@
 import { useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { occurrenceLocations } from '@/constants/occurrences'
 import { AttachmentDropzone } from '@/components/register/attachment-dropzone'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Select, type SelectOption } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { occurrenceLocations } from '@/constants/occurrences'
+import { getErrorMessage } from '@/lib/errors'
 import {
   CUSTOM_LOCATION_VALUE,
   type RegisterOccurrenceFormValues,
   registerOccurrenceSchema,
 } from '@/lib/validations/register-occurrence'
+import { createOccurrence } from '@/services/api/occurrences'
 
 const locationOptions: SelectOption[] = [
   ...occurrenceLocations.map((location) => ({
@@ -28,12 +30,11 @@ const locationOptions: SelectOption[] = [
 ]
 
 const userTypeOptions: SelectOption[] = [
-  { label: 'Morador', value: 'resident' },
-  { label: 'Funcionário', value: 'employee' },
+  { label: 'Morador', value: 'RESIDENT' },
+  { label: 'Funcionário', value: 'EMPLOYEE' },
 ]
 
 const initialForm: RegisterOccurrenceFormValues = {
-  attachmentName: '',
   customLocation: '',
   description: '',
   location: '',
@@ -41,8 +42,14 @@ const initialForm: RegisterOccurrenceFormValues = {
   userType: '',
 }
 
+type Feedback = {
+  message: string
+  type: 'error' | 'success'
+}
+
 export function RegisterForm() {
-  const [feedback, setFeedback] = useState<string>('')
+  const [attachment, setAttachment] = useState<File | null>(null)
+  const [feedback, setFeedback] = useState<Feedback | null>(null)
   const {
     control,
     formState: { errors, isSubmitting },
@@ -57,13 +64,36 @@ export function RegisterForm() {
   const selectedLocation = useWatch({ control, name: 'location' })
   const shouldShowCustomLocation = selectedLocation === CUSTOM_LOCATION_VALUE
 
-  function onSubmit(values: RegisterOccurrenceFormValues) {
+  async function onSubmit(values: RegisterOccurrenceFormValues) {
     const resolvedLocation = values.location === CUSTOM_LOCATION_VALUE ? values.customLocation.trim() : values.location
 
-    setFeedback(
-      `Ocorrência "${values.title}" enviada localmente com sucesso para ${resolvedLocation}. A integração persistente será conectada depois.`,
-    )
-    reset(initialForm)
+    if (values.userType !== 'RESIDENT' && values.userType !== 'EMPLOYEE') {
+      return
+    }
+
+    setFeedback(null)
+
+    try {
+      await createOccurrence({
+        title: values.title.trim(),
+        description: values.description.trim(),
+        location: resolvedLocation,
+        source: values.userType,
+        image: attachment,
+      })
+
+      setFeedback({
+        message: `Ocorrência "${values.title.trim()}" registrada com sucesso.`,
+        type: 'success',
+      })
+      reset(initialForm)
+      setAttachment(null)
+    } catch (error) {
+      setFeedback({
+        message: getErrorMessage(error, 'Não foi possível registrar a ocorrência.'),
+        type: 'error',
+      })
+    }
   }
 
   return (
@@ -145,23 +175,31 @@ export function RegisterForm() {
             />
           </div>
 
-          <Controller
-            control={control}
-            name='attachmentName'
-            render={({ field }) => (
-              <AttachmentDropzone className='lg:col-span-6' fileName={field.value} onFileSelect={field.onChange} />
-            )}
+          <AttachmentDropzone
+            className='lg:col-span-6'
+            file={attachment}
+            onFileSelect={setAttachment}
+            error={errors.root?.message}
           />
         </div>
 
         <div className='flex justify-center'>
           <Button type='submit' disabled={isSubmitting}>
-            Enviar ocorrência
+            {isSubmitting ? 'Enviando...' : 'Enviar ocorrência'}
           </Button>
         </div>
 
         {feedback ? (
-          <div className='rounded-3xl bg-surface-container-highest px-4 py-3 text-sm leading-7'>{feedback}</div>
+          <div
+            role={feedback.type === 'error' ? 'alert' : 'status'}
+            className={
+              feedback.type === 'error'
+                ? 'rounded-3xl bg-danger-soft px-4 py-3 text-sm leading-7 text-danger-strong'
+                : 'rounded-3xl bg-surface-container-highest px-4 py-3 text-sm leading-7'
+            }
+          >
+            {feedback.message}
+          </div>
         ) : null}
       </form>
     </Card>

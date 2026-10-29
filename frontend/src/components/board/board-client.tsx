@@ -9,7 +9,9 @@ import { BoardColumn } from '@/components/board/board-column'
 import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
 import { occurrenceColumns, statusMeta } from '@/constants/occurrences'
-import { getImageFileName, groupOccurrencesByStatus } from '@/lib/occurrences'
+import { getErrorMessage } from '@/lib/errors'
+import { formatOccurrenceDate, getImageFileName, groupOccurrencesByStatus } from '@/lib/occurrences'
+import { deleteOccurrence, updateOccurrenceArchive, updateOccurrenceStatus } from '@/services/api/occurrences'
 import type { Occurrence, OccurrenceStatus } from '@/types/occurrence'
 
 type BoardClientProps = {
@@ -17,19 +19,20 @@ type BoardClientProps = {
 }
 
 const statusBadgeVariants: Record<OccurrenceStatus, string> = {
-  open: 'bg-status-open',
-  in_progress: 'bg-status-progress',
-  resolved: 'bg-status-resolved',
+  OPEN: 'bg-status-open',
+  IN_PROGRESS: 'bg-status-progress',
+  RESOLVED: 'bg-status-resolved',
 }
 
 const statusLabels: Record<OccurrenceStatus, string> = {
-  open: 'Abertas',
-  in_progress: 'Em andamento',
-  resolved: 'Resolvidas',
+  OPEN: 'Abertas',
+  IN_PROGRESS: 'Em andamento',
+  RESOLVED: 'Resolvidas',
 }
 
 export function BoardClient({ initialOccurrences }: BoardClientProps) {
   const [occurrences, setOccurrences] = useState(initialOccurrences)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false)
   const isMounted = useSyncExternalStore(
     () => () => undefined,
@@ -42,17 +45,19 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
   const selectedOccurrenceId = searchParams.get('occurrence')
   const activeOccurrences = useMemo(() => occurrences.filter((occurrence) => !occurrence.archived), [occurrences])
   const occurrencesByStatus = useMemo(() => groupOccurrencesByStatus(activeOccurrences), [activeOccurrences])
-  const selectedOccurrence = useMemo(
-    () =>
-      selectedOccurrenceId
-        ? (activeOccurrences.find((occurrence) => occurrence.id === selectedOccurrenceId) ?? null)
-        : null,
-    [activeOccurrences, selectedOccurrenceId],
-  )
+  const selectedOccurrence = useMemo(() => {
+    const selectedId = Number(selectedOccurrenceId)
 
-  function handleSelectOccurrence(occurrenceId: string) {
+    if (!selectedOccurrenceId || !Number.isInteger(selectedId)) {
+      return null
+    }
+
+    return activeOccurrences.find((occurrence) => occurrence.id === selectedId) ?? null
+  }, [activeOccurrences, selectedOccurrenceId])
+
+  function handleSelectOccurrence(occurrenceId: number) {
     const nextParams = new URLSearchParams(searchParams.toString())
-    nextParams.set('occurrence', occurrenceId)
+    nextParams.set('occurrence', String(occurrenceId))
     router.push(`${pathname}?${nextParams.toString()}`)
   }
 
@@ -61,6 +66,10 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
     nextParams.delete('occurrence')
     router.push(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
   }
+
+  useEffect(() => {
+    setOccurrences(initialOccurrences)
+  }, [initialOccurrences])
 
   useEffect(() => {
     if (!selectedOccurrenceId) {
@@ -96,7 +105,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
     router.replace(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
   }, [pathname, router, searchParams, selectedOccurrence, selectedOccurrenceId])
 
-  function handleDragEnd(result: DropResult) {
+  async function handleDragEnd(result: DropResult) {
     const { destination, source } = result
 
     if (!destination) {
@@ -107,12 +116,21 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
       return
     }
 
+    const sourceStatus = source.droppableId as OccurrenceStatus
+    const destinationStatus = destination.droppableId as OccurrenceStatus
+    const movedOccurrence = occurrences.find((occurrence) => occurrence.id === Number(result.draggableId))
+
+    if (!movedOccurrence) {
+      return
+    }
+
+    const previousOccurrences = occurrences
+
+    setErrorMessage(null)
     setOccurrences((currentOccurrences) => {
       const archivedOccurrences = currentOccurrences.filter((occurrence) => occurrence.archived)
       const activeCurrentOccurrences = currentOccurrences.filter((occurrence) => !occurrence.archived)
       const grouped = groupOccurrencesByStatus(activeCurrentOccurrences)
-      const sourceStatus = source.droppableId as OccurrenceStatus
-      const destinationStatus = destination.droppableId as OccurrenceStatus
       const sourceItems = [...grouped[sourceStatus]]
       const destinationItems = sourceStatus === destinationStatus ? sourceItems : [...grouped[destinationStatus]]
 
@@ -135,40 +153,75 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
 
       return [...occurrenceColumns.flatMap((status) => nextGroups[status]), ...archivedOccurrences]
     })
+
+    if (sourceStatus === destinationStatus) {
+      return
+    }
+
+    try {
+      await updateOccurrenceStatus(movedOccurrence.id, destinationStatus)
+    } catch (error) {
+      setOccurrences(previousOccurrences)
+      setErrorMessage(getErrorMessage(error, 'Não foi possível atualizar o status da ocorrência.'))
+    }
   }
 
-  function handleArchiveOccurrence() {
+  async function handleArchiveOccurrence() {
     if (!selectedOccurrence) {
       return
     }
 
-    setOccurrences((currentOccurrences) =>
-      currentOccurrences.map((occurrence) =>
-        occurrence.id === selectedOccurrence.id ? { ...occurrence, archived: true } : occurrence,
-      ),
-    )
-    handleCloseDetails()
-    router.push('/admin/historico')
+    setErrorMessage(null)
+
+    try {
+      await updateOccurrenceArchive(selectedOccurrence.id, true)
+
+      setOccurrences((currentOccurrences) =>
+        currentOccurrences.map((occurrence) =>
+          occurrence.id === selectedOccurrence.id ? { ...occurrence, archived: true } : occurrence,
+        ),
+      )
+      handleCloseDetails()
+      router.push('/admin/historico')
+      router.refresh()
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error, 'Não foi possível mover a ocorrência para o histórico.'))
+    }
   }
 
   function handleRequestRemoveOccurrence() {
     setIsRemoveModalOpen(true)
   }
 
-  function handleRemoveOccurrence() {
+  async function handleRemoveOccurrence() {
     if (!selectedOccurrence) {
       return
     }
 
-    setOccurrences((currentOccurrences) =>
-      currentOccurrences.filter((occurrence) => occurrence.id !== selectedOccurrence.id),
-    )
+    setErrorMessage(null)
     setIsRemoveModalOpen(false)
-    handleCloseDetails()
+
+    try {
+      await deleteOccurrence(selectedOccurrence.id)
+
+      setOccurrences((currentOccurrences) =>
+        currentOccurrences.filter((occurrence) => occurrence.id !== selectedOccurrence.id),
+      )
+      handleCloseDetails()
+      router.refresh()
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error, 'Não foi possível remover a ocorrência.'))
+    }
   }
 
   return (
     <section className='w-full'>
+      {errorMessage ? (
+        <div role='alert' className='mx-4 mb-4 rounded-2xl bg-danger-soft px-4 py-3 text-sm text-danger-strong sm:mx-0'>
+          {errorMessage}
+        </div>
+      ) : null}
+
       {isMounted ? (
         <DragDropContext onDragEnd={handleDragEnd}>
           <div className='overflow-x-auto pb-6'>
@@ -222,7 +275,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
                 <div className='border-t border-foreground/8 pt-5'>
                   <div className='rounded-[1.25rem] border border-foreground/8 p-4'>
                     <div className='flex items-center gap-2 text-sm text-foreground-muted'>
-                      {selectedOccurrence.source === 'employee' ? (
+                      {selectedOccurrence.source === 'EMPLOYEE' ? (
                         <IconUserCog className='size-4' stroke={1.8} />
                       ) : (
                         <IconUser className='size-4' stroke={1.8} />
@@ -230,7 +283,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
                       <p>
                         <span>Registrado por: </span>
                         <span className='font-medium text-primary-hover'>
-                          {selectedOccurrence.source === 'resident' ? 'Morador' : 'Funcionário'}
+                          {selectedOccurrence.source === 'RESIDENT' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
@@ -257,7 +310,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
                       </span>
                       <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
                         <IconClock className='size-4' stroke={1.8} />
-                        <span>Data: {selectedOccurrence.createdAt}</span>
+                        <span>Data: {formatOccurrenceDate(selectedOccurrence.createdAt)}</span>
                       </span>
                     </div>
                   </div>
@@ -319,7 +372,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
                 <div className='border-t border-foreground/8 pt-5'>
                   <div className='rounded-[1.25rem] border border-foreground/8 p-4'>
                     <div className='flex items-center gap-2 text-sm text-foreground-muted'>
-                      {selectedOccurrence.source === 'employee' ? (
+                      {selectedOccurrence.source === 'EMPLOYEE' ? (
                         <IconUserCog className='size-4' stroke={1.8} />
                       ) : (
                         <IconUser className='size-4' stroke={1.8} />
@@ -327,7 +380,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
                       <p>
                         <span>Registrado por: </span>
                         <span className='font-medium text-primary-hover'>
-                          {selectedOccurrence.source === 'resident' ? 'Morador' : 'Funcionário'}
+                          {selectedOccurrence.source === 'RESIDENT' ? 'Morador' : 'Funcionário'}
                         </span>
                       </p>
                     </div>
@@ -354,7 +407,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
                       </span>
                       <span className='inline-flex items-center gap-1 rounded-full border border-foreground/8 px-3 py-1.5 text-xs text-foreground-muted'>
                         <IconClock className='size-4' stroke={1.8} />
-                        <span>Data: {selectedOccurrence.createdAt}</span>
+                        <span>Data: {formatOccurrenceDate(selectedOccurrence.createdAt)}</span>
                       </span>
                     </div>
                   </div>
@@ -384,7 +437,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
       <Modal
         isOpen={isRemoveModalOpen}
         title='Remover ocorrência?'
-        description='Essa ação exclui a ocorrência do quadro e do histórico local deste navegador.'
+        description='Essa ação exclui a ocorrência permanentemente do quadro e do histórico.'
         confirmLabel='Remover'
         onClose={() => setIsRemoveModalOpen(false)}
         onConfirm={handleRemoveOccurrence}

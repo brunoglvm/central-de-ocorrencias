@@ -11,7 +11,7 @@ mc anonymous set public local/admin
 mc mb local/occurrences || true
 mc anonymous set public local/occurrences
 
-# Imagens de exemplo (apenas para ambiente de desenvolvimento)
+# Sample images (development environment only)
 mc stat local/admin/avatar.webp || mc cp /setup/storage/avatar.webp local/admin/
 
 for image in /setup/storage/occurrences/mock-*.webp; do

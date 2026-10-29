@@ -8,6 +8,9 @@ import { IconArrowUpRight, IconHistory, IconLayoutKanban, IconLogout2, IconPlus 
 import { EditableAvatar } from '@/components/ui/editable-avatar'
 import { Modal } from '@/components/ui/modal'
 import { Tooltip } from '@/components/ui/tooltip'
+import { clearAuthToken } from '@/services/api/client'
+import { updateAvatar } from '@/services/api/profile'
+import type { AdminUser } from '@/types/auth'
 import { cn } from '@/lib/utils'
 
 const navigationItems = [
@@ -29,10 +32,26 @@ const navigationItems = [
   },
 ]
 
-export function Navbar() {
+export function Navbar({ user }: { user: AdminUser }) {
   const pathname = usePathname()
   const router = useRouter()
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
+  const [avatarSrc, setAvatarSrc] = useState(user.image || '/images/pfp.webp')
+
+  async function handleAvatarUpload(file: File) {
+    const { image } = await updateAvatar(file)
+
+    if (image) {
+      setAvatarSrc(`${image}${image.includes('?') ? '&' : '?'}v=${Date.now()}`)
+    }
+  }
+
+  function handleLogout() {
+    clearAuthToken()
+    setIsLogoutModalOpen(false)
+    router.replace('/admin')
+    router.refresh()
+  }
 
   return (
     <>
@@ -81,7 +100,7 @@ export function Navbar() {
             </nav>
 
             <div className='flex items-center justify-end gap-3'>
-              <EditableAvatar alt='Perfil' initialSrc='/images/pfp.webp' size={36} />
+              <EditableAvatar alt={user.email} initialSrc={avatarSrc} size={36} onUpload={handleAvatarUpload} />
 
               <Tooltip content='Sair'>
                 <button
@@ -132,10 +151,7 @@ export function Navbar() {
         description='Você realmente deseja encerrar a sessão atual e voltar para a tela de login?'
         confirmLabel='Sair'
         onClose={() => setIsLogoutModalOpen(false)}
-        onConfirm={() => {
-          setIsLogoutModalOpen(false)
-          router.push('/admin')
-        }}
+        onConfirm={handleLogout}
       />
     </>
   )

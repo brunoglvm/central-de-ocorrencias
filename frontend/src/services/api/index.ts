@@ -1,0 +1,5 @@
+export * from '@/services/api/auth'
+export * from '@/services/api/client'
+export * from '@/services/api/condominium'
+export * from '@/services/api/occurrences'
+export * from '@/services/api/profile'

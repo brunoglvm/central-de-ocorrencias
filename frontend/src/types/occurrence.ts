@@ -1,15 +1,23 @@
-export type OccurrenceStatus = 'open' | 'in_progress' | 'resolved'
+export type OccurrenceStatus = 'OPEN' | 'IN_PROGRESS' | 'RESOLVED'
 
-export type OccurrenceSource = 'resident' | 'employee'
+export type OccurrenceSource = 'EMPLOYEE' | 'RESIDENT'
 
 export type Occurrence = {
-  id: string
+  id: number
   title: string
   description: string
-  image?: string | null
+  image: string | null
   createdAt: string
   status: OccurrenceStatus
   location: string
   source: OccurrenceSource
   archived: boolean
+}
+
+export type CreateOccurrenceInput = {
+  title: string
+  description: string
+  location: string
+  source: OccurrenceSource
+  image?: File | null
 }
