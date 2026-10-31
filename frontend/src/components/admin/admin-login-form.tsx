@@ -66,7 +66,7 @@ export function AdminLoginForm({ condominiumImage }: AdminLoginFormProps) {
               alt='Condomínio'
               fill
               className='object-cover'
-              sizes='96px'
+              sizes='6rem'
               priority
               unoptimized
               onError={() => setImageSrc('/images/pfp.webp')}

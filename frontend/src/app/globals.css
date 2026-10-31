@@ -103,7 +103,6 @@
   }
 }
 
-/* Sonner: também carrega após o CSS do app, por isso o seletor com maior especificidade */
 html [data-sonner-toaster][data-sonner-theme='light'] {
   --normal-bg: var(--color-surface-container-lowest);
   --normal-bg-hover: var(--color-surface-container-low);
