@@ -24,18 +24,19 @@ O projeto é dividido em um front-end em **Next.js** e uma API em **Fastify**, c
 - Histórico de ocorrências, com arquivamento e remoção.
 - Atualização do avatar e dos dados do administrador.
 - Armazenamento de imagens no MinIO (buckets `admin` e `occurrences`).
+- Feedback de ações e erros por notificações (toasts) com **Sonner**.
 - API documentada com **Swagger/Scalar** e coleção de requisições no **Bruno**.
 - Validação de entrada com **Zod** e limitação de requisições (rate limit).
 
 ## Stack
 
-| Camada         | Tecnologias                                         |
-| -------------- | --------------------------------------------------- |
-| Front-end      | Next.js 16 (App Router), TypeScript, Tailwind CSS 4 |
-| Back-end       | Fastify 5, TypeScript, Zod, JWT, Prisma 7           |
-| Banco de dados | SQLite                                              |
-| Armazenamento  | MinIO (S3 compatível)                               |
-| Infra          | Docker, Docker Compose, Nginx, Gitea Actions        |
+| Camada         | Tecnologias                                                               |
+| -------------- | ------------------------------------------------------------------------- |
+| Front-end      | Next.js 16 (App Router), TypeScript, Tailwind CSS 4, React Hook Form, Zod |
+| Back-end       | Fastify 5, TypeScript, Zod, JWT, Prisma 7                                 |
+| Banco de dados | SQLite                                                                    |
+| Armazenamento  | MinIO (S3 compatível)                                                     |
+| Infra          | Docker, Docker Compose, Nginx, Gitea Actions                              |
 
 ## Estrutura do projeto
 
@@ -233,26 +234,34 @@ A coleção de requisições está em `backend/docs/bruno/` e pode ser importada
 | `pnpm db:reset`   | Recria o banco e roda as migrations             |
 | `pnpm admin:sync` | Sincroniza as credenciais do admin com o `.env` |
 | `pnpm studio`     | Abre o Prisma Studio                            |
-| `pnpm typecheck`  | Verifica os tipos com `tsc --noEmit`            |
-| `pnpm check`      | Formatação + lint + typecheck                   |
+| `pnpm check`      | Verifica formatação, lint e tipos               |
 | `pnpm perf`       | Testes de carga (throughput e latência)         |
 
 > `pnpm perf` lê `BASE_URL`, `ADMIN_EMAIL` e `ADMIN_PASSWORD` do `backend/.env` e dispara **10 conexões simultâneas por 20 segundos**. Rode com `DISABLE_RATE_LIMIT=true` no `.env` e reinicie o back-end: com o limitador ativo (100 req/min global e 5 req/min no login), a maioria das requisições retorna `429` e o resultado mede o limitador, não a API.
 
 ### Front-end (`frontend/`)
 
-| Script           | Descrição                            |
-| ---------------- | ------------------------------------ |
-| `pnpm dev`       | Sobe o Next.js em modo dev           |
-| `pnpm build`     | Gera o build de produção             |
-| `pnpm start`     | Executa o build                      |
-| `pnpm typecheck` | Verifica os tipos com `tsc --noEmit` |
-| `pnpm check`     | Formatação + lint + typecheck        |
+| Script       | Descrição                                      |
+| ------------ | ---------------------------------------------- |
+| `pnpm dev`   | Sobe o Next.js em modo dev                     |
+| `pnpm build` | Gera o build de produção                       |
+| `pnpm start` | Sobe o servidor standalone (após `pnpm build`) |
+| `pnpm check` | Verifica formatação, lint e tipos              |
 
 ## Qualidade e CI
 
-- **Gitea Actions** (`.gitea/workflows/ci.yml`): em pull requests para a branch `dev`, roda `pnpm check` no back-end, com Prettier, ESLint e `tsc --noEmit`.
-- No front-end, `pnpm check` executa os mesmos três passos: Prettier, ESLint e `tsc --noEmit`.
+Os dois projetos expõem os mesmos scripts de qualidade:
+
+| Script              | Descrição                                    |
+| ------------------- | -------------------------------------------- |
+| `pnpm format`       | Formata o código com Prettier                |
+| `pnpm format:check` | Verifica a formatação sem alterar arquivos   |
+| `pnpm lint`         | Analisa o código com ESLint                  |
+| `pnpm lint:fix`     | Corrige automaticamente o que for possível   |
+| `pnpm typecheck`    | Verifica os tipos com `tsc --noEmit`         |
+| `pnpm check`        | Executa `format:check`, `lint` e `typecheck` |
+
+- **Gitea Actions** (`.gitea/workflows/ci.yml`): em pull requests para a branch `dev`, roda `pnpm check` no back-end.
 - **Testes de carga** com autocannon ficam em `backend/tests/performance/` e cobrem `POST /auth/login` e `GET /occurrences`.
 
 ## Observações
