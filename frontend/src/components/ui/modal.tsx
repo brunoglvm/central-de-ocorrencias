@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 
@@ -18,6 +19,8 @@ export function Modal({ confirmLabel = 'Confirmar', description, isOpen, onClose
     if (!isOpen) {
       return
     }
+
+    toast.dismiss()
 
     const previousOverflow = document.body.style.overflow
 
