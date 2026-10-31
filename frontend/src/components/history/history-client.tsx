@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { toast } from 'sonner'
 import { HistoryList } from '@/components/history/history-list'
 import { historyPageSize } from '@/constants/occurrences'
 import { getErrorMessage } from '@/lib/errors'
@@ -14,7 +15,6 @@ type HistoryClientProps = {
 
 export function HistoryClient({ initialOccurrences }: HistoryClientProps) {
   const [occurrences, setOccurrences] = useState(initialOccurrences)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -52,7 +52,6 @@ export function HistoryClient({ initialOccurrences }: HistoryClientProps) {
   async function handleRestoreOccurrence(occurrenceId: number) {
     const previousOccurrences = occurrences
 
-    setErrorMessage(null)
     setOccurrences((current) =>
       current.map((occurrence) => (occurrence.id === occurrenceId ? { ...occurrence, archived: false } : occurrence)),
     )
@@ -60,20 +59,15 @@ export function HistoryClient({ initialOccurrences }: HistoryClientProps) {
     try {
       await updateOccurrenceArchive(occurrenceId, false)
       router.refresh()
+      toast.success('Ocorrência restaurada ao quadro.')
     } catch (error) {
       setOccurrences(previousOccurrences)
-      setErrorMessage(getErrorMessage(error, 'Não foi possível retornar a ocorrência para o quadro.'))
+      toast.error(getErrorMessage(error, 'Não foi possível retornar a ocorrência para o quadro.'))
     }
   }
 
   return (
     <div className='space-y-4'>
-      {errorMessage ? (
-        <div role='alert' className='rounded-2xl bg-danger-soft px-4 py-3 text-sm text-danger-strong'>
-          {errorMessage}
-        </div>
-      ) : null}
-
       <HistoryList
         currentPage={currentPage}
         occurrences={paginatedOccurrences}

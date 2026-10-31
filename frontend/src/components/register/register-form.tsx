@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { toast } from 'sonner'
 import { AttachmentDropzone } from '@/components/register/attachment-dropzone'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -42,14 +43,8 @@ const initialForm: RegisterOccurrenceFormValues = {
   userType: '',
 }
 
-type Feedback = {
-  message: string
-  type: 'error' | 'success'
-}
-
 export function RegisterForm() {
   const [attachment, setAttachment] = useState<File | null>(null)
-  const [feedback, setFeedback] = useState<Feedback | null>(null)
   const {
     control,
     formState: { errors, isSubmitting },
@@ -71,8 +66,6 @@ export function RegisterForm() {
       return
     }
 
-    setFeedback(null)
-
     try {
       await createOccurrence({
         title: values.title.trim(),
@@ -82,23 +75,17 @@ export function RegisterForm() {
         image: attachment,
       })
 
-      setFeedback({
-        message: `Ocorrência "${values.title.trim()}" registrada com sucesso.`,
-        type: 'success',
-      })
+      toast.success(`Ocorrência "${values.title.trim()}" registrada com sucesso.`)
       reset(initialForm)
       setAttachment(null)
     } catch (error) {
-      setFeedback({
-        message: getErrorMessage(error, 'Não foi possível registrar a ocorrência.'),
-        type: 'error',
-      })
+      toast.error(getErrorMessage(error, 'Não foi possível registrar a ocorrência.'))
     }
   }
 
   return (
     <Card className='w-full rounded-[2.25rem] p-6 shadow-none sm:p-8'>
-      <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
+      <form className='space-y-6' noValidate onSubmit={handleSubmit(onSubmit)}>
         <div className='grid gap-6 lg:grid-cols-12'>
           <div className='lg:col-span-6'>
             <Input
@@ -188,19 +175,6 @@ export function RegisterForm() {
             {isSubmitting ? 'Enviando...' : 'Enviar ocorrência'}
           </Button>
         </div>
-
-        {feedback ? (
-          <div
-            role={feedback.type === 'error' ? 'alert' : 'status'}
-            className={
-              feedback.type === 'error'
-                ? 'rounded-3xl bg-danger-soft px-4 py-3 text-sm leading-7 text-danger-strong'
-                : 'rounded-3xl bg-surface-container-highest px-4 py-3 text-sm leading-7'
-            }
-          >
-            {feedback.message}
-          </div>
-        ) : null}
       </form>
     </Card>
   )

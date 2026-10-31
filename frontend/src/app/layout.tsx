@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { AppToaster } from '@/components/ui/toaster'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang='pt-BR' data-scroll-behavior='smooth' className='h-full antialiased'>
       <body className='min-h-full' suppressHydrationWarning>
         {children}
+        <AppToaster />
       </body>
     </html>
   )

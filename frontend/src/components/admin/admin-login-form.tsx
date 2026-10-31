@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { IconEye, IconEyeOff } from '@tabler/icons-react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -15,11 +16,12 @@ type AdminLoginFormProps = {
   condominiumImage?: string | null
 }
 
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export function AdminLoginForm({ condominiumImage }: AdminLoginFormProps) {
   const router = useRouter()
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [imageSrc, setImageSrc] = useState(condominiumImage || '/images/pfp.webp')
-  const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -29,7 +31,16 @@ export function AdminLoginForm({ condominiumImage }: AdminLoginFormProps) {
     const email = String(formData.get('email') ?? '').trim()
     const password = String(formData.get('password') ?? '')
 
-    setError(null)
+    if (!email || !password) {
+      toast.error('Informe e-mail e senha.')
+      return
+    }
+
+    if (!emailPattern.test(email)) {
+      toast.error('Informe um e-mail válido.')
+      return
+    }
+
     setIsSubmitting(true)
 
     try {
@@ -39,7 +50,7 @@ export function AdminLoginForm({ condominiumImage }: AdminLoginFormProps) {
       router.replace('/admin/quadro')
       router.refresh()
     } catch (submitError) {
-      setError(getErrorMessage(submitError, 'E-mail ou senha inválidos.'))
+      toast.error(getErrorMessage(submitError, 'E-mail ou senha inválidos.'))
     } finally {
       setIsSubmitting(false)
     }
@@ -47,7 +58,7 @@ export function AdminLoginForm({ condominiumImage }: AdminLoginFormProps) {
 
   return (
     <Card className='w-full max-w-md rounded-[2.25rem] p-6 shadow-none sm:p-8'>
-      <form className='space-y-6' onSubmit={handleSubmit}>
+      <form className='space-y-6' noValidate onSubmit={handleSubmit}>
         <div className='flex justify-center'>
           <div className='relative size-24 overflow-hidden rounded-full bg-surface-container-highest'>
             <Image
@@ -97,12 +108,6 @@ export function AdminLoginForm({ condominiumImage }: AdminLoginFormProps) {
             </button>
           }
         />
-
-        {error ? (
-          <p role='alert' className='rounded-2xl bg-danger-soft px-4 py-3 text-sm text-danger-strong'>
-            {error}
-          </p>
-        ) : null}
 
         <div className='flex'>
           <Button type='submit' className='w-full' disabled={isSubmitting}>

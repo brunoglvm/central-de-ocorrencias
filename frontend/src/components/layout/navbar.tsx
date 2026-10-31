@@ -5,9 +5,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { IconArrowUpRight, IconHistory, IconLayoutKanban, IconLogout2, IconPlus } from '@tabler/icons-react'
+import { toast } from 'sonner'
 import { EditableAvatar } from '@/components/ui/editable-avatar'
 import { Modal } from '@/components/ui/modal'
 import { Tooltip } from '@/components/ui/tooltip'
+import { getErrorMessage } from '@/lib/errors'
 import { clearAuthToken } from '@/services/api/client'
 import { updateAvatar } from '@/services/api/profile'
 import type { AdminUser } from '@/types/auth'
@@ -39,10 +41,17 @@ export function Navbar({ user }: { user: AdminUser }) {
   const [avatarSrc, setAvatarSrc] = useState(user.image || '/images/pfp.webp')
 
   async function handleAvatarUpload(file: File) {
-    const { image } = await updateAvatar(file)
+    try {
+      const { image } = await updateAvatar(file)
 
-    if (image) {
-      setAvatarSrc(`${image}${image.includes('?') ? '&' : '?'}v=${Date.now()}`)
+      if (image) {
+        setAvatarSrc(`${image}${image.includes('?') ? '&' : '?'}v=${Date.now()}`)
+      }
+
+      toast.success('Imagem atualizada.')
+    } catch (error) {
+      toast.error(getErrorMessage(error, 'Não foi possível atualizar a imagem.'))
+      throw error
     }
   }
 

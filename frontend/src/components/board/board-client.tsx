@@ -5,6 +5,7 @@ import { DragDropContext, type DropResult } from '@hello-pangea/dnd'
 import Image from 'next/image'
 import { IconClock, IconHistory, IconMapPin, IconTrash, IconUser, IconUserCog, IconX } from '@tabler/icons-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { toast } from 'sonner'
 import { BoardColumn } from '@/components/board/board-column'
 import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
@@ -32,7 +33,6 @@ const statusLabels: Record<OccurrenceStatus, string> = {
 
 export function BoardClient({ initialOccurrences }: BoardClientProps) {
   const [occurrences, setOccurrences] = useState(initialOccurrences)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [isRemoveModalOpen, setIsRemoveModalOpen] = useState(false)
   const isMounted = useSyncExternalStore(
     () => () => undefined,
@@ -126,7 +126,6 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
 
     const previousOccurrences = occurrences
 
-    setErrorMessage(null)
     setOccurrences((currentOccurrences) => {
       const archivedOccurrences = currentOccurrences.filter((occurrence) => occurrence.archived)
       const activeCurrentOccurrences = currentOccurrences.filter((occurrence) => !occurrence.archived)
@@ -162,7 +161,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
       await updateOccurrenceStatus(movedOccurrence.id, destinationStatus)
     } catch (error) {
       setOccurrences(previousOccurrences)
-      setErrorMessage(getErrorMessage(error, 'Não foi possível atualizar o status da ocorrência.'))
+      toast.error(getErrorMessage(error, 'Não foi possível atualizar o status da ocorrência.'))
     }
   }
 
@@ -170,8 +169,6 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
     if (!selectedOccurrence) {
       return
     }
-
-    setErrorMessage(null)
 
     try {
       await updateOccurrenceArchive(selectedOccurrence.id, true)
@@ -184,8 +181,9 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
       handleCloseDetails()
       router.push('/admin/historico')
       router.refresh()
+      toast.success('Ocorrência movida para o histórico.')
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'Não foi possível mover a ocorrência para o histórico.'))
+      toast.error(getErrorMessage(error, 'Não foi possível mover a ocorrência para o histórico.'))
     }
   }
 
@@ -198,7 +196,6 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
       return
     }
 
-    setErrorMessage(null)
     setIsRemoveModalOpen(false)
 
     try {
@@ -209,19 +206,14 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
       )
       handleCloseDetails()
       router.refresh()
+      toast.success('Ocorrência removida.')
     } catch (error) {
-      setErrorMessage(getErrorMessage(error, 'Não foi possível remover a ocorrência.'))
+      toast.error(getErrorMessage(error, 'Não foi possível remover a ocorrência.'))
     }
   }
 
   return (
     <section className='w-full'>
-      {errorMessage ? (
-        <div role='alert' className='mx-4 mb-4 rounded-2xl bg-danger-soft px-4 py-3 text-sm text-danger-strong sm:mx-0'>
-          {errorMessage}
-        </div>
-      ) : null}
-
       {isMounted ? (
         <DragDropContext onDragEnd={handleDragEnd}>
           <div className='overflow-x-auto pb-6'>

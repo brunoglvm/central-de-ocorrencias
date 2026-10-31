@@ -7,8 +7,8 @@ export const registerOccurrenceSchema = z
     customLocation: z.string(),
     description: z.string().min(10, 'Descreva o problema com pelo menos 10 caracteres.'),
     location: z.string().min(1, 'Selecione o local do problema.'),
-    title: z.string().min(3, 'Informe um titulo com pelo menos 3 caracteres.'),
-    userType: z.string().min(1, 'Selecione quem esta registrando.'),
+    title: z.string().min(3, 'Informe um título com pelo menos 3 caracteres.'),
+    userType: z.string().min(1, 'Selecione quem está registrando.'),
   })
   .superRefine((values, context) => {
     if (values.location === CUSTOM_LOCATION_VALUE && values.customLocation.trim().length < 3) {
