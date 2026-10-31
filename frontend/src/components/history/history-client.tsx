@@ -18,7 +18,7 @@ export function HistoryClient({ initialOccurrences }: HistoryClientProps) {
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const rawPage = Number(searchParams.get('page') ?? '1')
+  const rawPage = Number(searchParams.get('pagina') ?? '1')
 
   useEffect(() => {
     setOccurrences(initialOccurrences)
@@ -41,9 +41,9 @@ export function HistoryClient({ initialOccurrences }: HistoryClientProps) {
     const nextParams = new URLSearchParams(searchParams.toString())
 
     if (currentPage <= 1) {
-      nextParams.delete('page')
+      nextParams.delete('pagina')
     } else {
-      nextParams.set('page', String(currentPage))
+      nextParams.set('pagina', String(currentPage))
     }
 
     router.replace(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)

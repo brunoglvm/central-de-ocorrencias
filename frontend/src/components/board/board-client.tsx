@@ -42,7 +42,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
-  const selectedOccurrenceId = searchParams.get('occurrence')
+  const selectedOccurrenceId = searchParams.get('ocorrencia')
   const activeOccurrences = useMemo(() => occurrences.filter((occurrence) => !occurrence.archived), [occurrences])
   const occurrencesByStatus = useMemo(() => groupOccurrencesByStatus(activeOccurrences), [activeOccurrences])
   const selectedOccurrence = useMemo(() => {
@@ -57,13 +57,13 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
 
   function handleSelectOccurrence(occurrenceId: number) {
     const nextParams = new URLSearchParams(searchParams.toString())
-    nextParams.set('occurrence', String(occurrenceId))
+    nextParams.set('ocorrencia', String(occurrenceId))
     router.push(`${pathname}?${nextParams.toString()}`)
   }
 
   function handleCloseDetails() {
     const nextParams = new URLSearchParams(searchParams.toString())
-    nextParams.delete('occurrence')
+    nextParams.delete('ocorrencia')
     router.push(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
   }
 
@@ -82,7 +82,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         const nextParams = new URLSearchParams(searchParams.toString())
-        nextParams.delete('occurrence')
+        nextParams.delete('ocorrencia')
         router.push(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
       }
     }
@@ -101,7 +101,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
     }
 
     const nextParams = new URLSearchParams(searchParams.toString())
-    nextParams.delete('occurrence')
+    nextParams.delete('ocorrencia')
     router.replace(nextParams.size ? `${pathname}?${nextParams.toString()}` : pathname)
   }, [pathname, router, searchParams, selectedOccurrence, selectedOccurrenceId])
 

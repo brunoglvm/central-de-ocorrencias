@@ -122,7 +122,7 @@ export function HistoryList({
           <div className='flex flex-wrap items-center gap-3'>
             {currentPage > 1 ? (
               <Link
-                href={`/admin/historico?page=${currentPage - 1}`}
+                href={`/admin/historico?pagina=${currentPage - 1}`}
                 className='inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium transition-colors hover:bg-surface-container-highest'
               >
                 <IconChevronLeft className='size-5' stroke={1.8} />
@@ -154,7 +154,7 @@ export function HistoryList({
                 ) : (
                   <Link
                     key={page}
-                    href={`/admin/historico?page=${page}`}
+                    href={`/admin/historico?pagina=${page}`}
                     className='inline-flex h-10 min-w-10 items-center justify-center rounded-2xl border border-foreground/8 bg-foreground-inverse px-3 text-sm font-medium transition-colors hover:bg-surface-container-highest'
                   >
                     {page}
@@ -165,7 +165,7 @@ export function HistoryList({
 
             {currentPage < totalPages ? (
               <Link
-                href={`/admin/historico?page=${currentPage + 1}`}
+                href={`/admin/historico?pagina=${currentPage + 1}`}
                 className='inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium transition-colors hover:bg-surface-container-highest'
               >
                 Próxima
