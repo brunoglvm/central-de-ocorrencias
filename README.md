@@ -8,6 +8,7 @@
     <img src="https://img.shields.io/badge/Fastify-000000?style=for-the-badge&logo=fastify&logoColor=white" alt="Fastify Badge">
     <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" alt="Prisma Badge">
     <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite Badge">
+    <img src="https://img.shields.io/badge/MinIO-C72E49?style=for-the-badge&logo=minio&logoColor=white" alt="MinIO">
     <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker Badge">
     <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white" alt="Nginx Badge">
 </div>
@@ -152,13 +153,13 @@ docker compose up --build
 
 Serviços disponíveis:
 
-| Serviço  | Endereço              | Descrição                             |
-| -------- | --------------------- | ------------------------------------- |
-| Nginx    | http://localhost:8080 | Aplicação (front-end + proxy `/api/`) |
-| MinIO    | http://localhost:9000 | API S3                                |
-| MinIO    | http://localhost:9001 | Console web                           |
-| Backend  | interno (porta 3333)  | API, acessível via Nginx em `/api/`   |
-| Frontend | interno (porta 3000)  | Next.js, acessível via Nginx          |
+| Serviço  | Endereço              | Descrição                                     |
+| -------- | --------------------- | --------------------------------------------- |
+| Nginx    | http://localhost:8080 | Proxy reverso para front-end e backend (API). |
+| MinIO    | http://localhost:9000 | API S3                                        |
+| MinIO    | http://localhost:9001 | Console web                                   |
+| Backend  | interno (porta 3333)  | API, acessível via Nginx em `/api/`           |
+| Frontend | interno (porta 3000)  | Next.js, acessível via Nginx                  |
 
 Páginas principais:
 
