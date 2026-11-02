@@ -129,7 +129,7 @@ export function HistoryList({
                 Anterior
               </Link>
             ) : (
-              <span className='inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium text-foreground-muted opacity-60'>
+              <span className='inline-flex h-10 cursor-not-allowed items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium text-foreground-muted opacity-60 select-none'>
                 <IconChevronLeft className='size-5' stroke={1.8} />
                 Anterior
               </span>
@@ -172,7 +172,7 @@ export function HistoryList({
                 <IconChevronRight className='size-5' stroke={1.8} />
               </Link>
             ) : (
-              <span className='inline-flex h-10 items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium text-foreground-muted opacity-60'>
+              <span className='inline-flex h-10 cursor-not-allowed items-center justify-center gap-2 rounded-2xl border border-foreground/8 bg-foreground-inverse px-4 text-sm font-medium text-foreground-muted opacity-60 select-none'>
                 Próxima
                 <IconChevronRight className='size-5' stroke={1.8} />
               </span>
