@@ -8,14 +8,17 @@ export const occurrenceParamsSchema = z.object({
 export const occurrenceBodySchema = z.object({
   title: z
     .string('O título deve ser um texto')
+    .trim()
     .min(3, 'O título deve ter pelo menos 3 caracteres')
     .max(100, 'O título deve ter no máximo 100 caracteres'),
   description: z
-    .string('O título deve ser um texto')
-    .min(5, 'A descrição deve ter pelo menos 5 caracteres')
+    .string('A descrição deve ser um texto')
+    .trim()
+    .min(10, 'A descrição deve ter pelo menos 10 caracteres')
     .max(800, 'A descrição deve ter no máximo 800 caracteres'),
   location: z
-    .string('O título deve ser um texto')
+    .string('A localização deve ser um texto')
+    .trim()
     .min(2, 'A localização deve ter pelo menos 2 caracteres')
     .max(200, 'A localização deve ter no máximo 200 caracteres'),
   source: z.enum(OccurrenceSource, 'A origem da ocorrência é inválida'),
