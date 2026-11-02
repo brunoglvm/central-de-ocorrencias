@@ -30,7 +30,7 @@ const locationOptions: SelectOption[] = [
   },
 ]
 
-const userTypeOptions: SelectOption[] = [
+const sourceOptions: SelectOption[] = [
   { label: 'Morador', value: 'RESIDENT' },
   { label: 'Funcionário', value: 'EMPLOYEE' },
 ]
@@ -40,7 +40,7 @@ const initialForm: RegisterOccurrenceFormValues = {
   description: '',
   location: '',
   title: '',
-  userType: '',
+  source: '',
 }
 
 export function RegisterForm() {
@@ -62,7 +62,7 @@ export function RegisterForm() {
   async function onSubmit(values: RegisterOccurrenceFormValues) {
     const resolvedLocation = values.location === CUSTOM_LOCATION_VALUE ? values.customLocation.trim() : values.location
 
-    if (values.userType !== 'RESIDENT' && values.userType !== 'EMPLOYEE') {
+    if (values.source !== 'RESIDENT' && values.source !== 'EMPLOYEE') {
       return
     }
 
@@ -71,7 +71,7 @@ export function RegisterForm() {
         title: values.title.trim(),
         description: values.description.trim(),
         location: resolvedLocation,
-        source: values.userType,
+        source: values.source,
         image: attachment,
       })
 
@@ -146,15 +146,15 @@ export function RegisterForm() {
           <div className='lg:col-span-6'>
             <Controller
               control={control}
-              name='userType'
+              name='source'
               render={({ field }) => (
                 <Select
                   className='min-h-12'
-                  error={errors.userType?.message}
+                  error={errors.source?.message}
                   label='Quem está registrando?'
                   onBlur={field.onBlur}
                   onValueChange={field.onChange}
-                  options={userTypeOptions}
+                  options={sourceOptions}
                   placeholder='Selecione'
                   value={field.value}
                 />

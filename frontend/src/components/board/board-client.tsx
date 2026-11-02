@@ -429,7 +429,7 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
       <Modal
         isOpen={isRemoveModalOpen}
         title='Remover ocorrência?'
-        description='Essa ação exclui a ocorrência permanentemente do quadro e do histórico.'
+        description='Essa ação exclui a ocorrência permanentemente do quadro.'
         confirmLabel='Remover'
         onClose={() => setIsRemoveModalOpen(false)}
         onConfirm={handleRemoveOccurrence}
