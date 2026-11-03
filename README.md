@@ -159,7 +159,7 @@ Serviços disponíveis:
 | MinIO    | http://localhost:9000 | API S3                                        |
 | MinIO    | http://localhost:9001 | Console web                                   |
 | Backend  | interno (porta 3333)  | API, acessível via Nginx em `/api/`           |
-| Frontend | interno (porta 3000)  | Next.js, acessível via Nginx                  |
+| Frontend | interno (porta 3000)  | Next.js, acessível via Nginx em `/`           |
 
 Páginas principais:
 
