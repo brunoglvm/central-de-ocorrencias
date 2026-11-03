@@ -18,6 +18,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
       <textarea
         id={textareaId}
         ref={ref}
+        suppressHydrationWarning
         className={cn(
           'min-h-40 w-full resize-none rounded-2xl bg-surface-container-lowest px-4 py-3 text-sm leading-7 placeholder:text-foreground-muted',
           error && 'ring-2 ring-danger-strong/18',

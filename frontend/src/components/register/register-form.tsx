@@ -85,7 +85,7 @@ export function RegisterForm() {
 
   return (
     <Card className='w-full rounded-[2.25rem] p-6 shadow-none sm:p-8'>
-      <form className='space-y-6' noValidate onSubmit={handleSubmit(onSubmit)}>
+      <form className='space-y-6' noValidate onSubmit={handleSubmit(onSubmit)} suppressHydrationWarning>
         <div className='grid gap-6 lg:grid-cols-12'>
           <div className='lg:col-span-6'>
             <Input

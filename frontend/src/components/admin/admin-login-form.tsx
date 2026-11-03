@@ -58,7 +58,7 @@ export function AdminLoginForm({ condominiumImage }: AdminLoginFormProps) {
 
   return (
     <Card className='w-full max-w-md rounded-[2.25rem] p-6 shadow-none sm:p-8'>
-      <form className='space-y-6' noValidate onSubmit={handleSubmit}>
+      <form className='space-y-6' noValidate onSubmit={handleSubmit} suppressHydrationWarning>
         <div className='flex justify-center'>
           <div className='relative size-24 overflow-hidden rounded-full bg-surface-container-highest'>
             <Image
