@@ -1,0 +1,10 @@
+{
+  "name": "central-de-ocorrencias",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Aplicação web para registro e gerenciamento de ocorrências em condomínios.",
+  "scripts": {},
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}

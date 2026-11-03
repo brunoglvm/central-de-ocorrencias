@@ -1,4 +1,4 @@
-node_modules/
 .env
+.env.development
 dist/
 prisma/src/generated/

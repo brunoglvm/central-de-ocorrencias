@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: [process.env.ALLOWED_DEV_HOST, process.env.ALLOWED_DEV_IP].filter((origin): origin is string =>
     Boolean(origin),
   ),
+  turbopack: {
+    root: process.cwd(),
+  },
   images: {
     remotePatterns: [
       {

@@ -16,8 +16,13 @@ const app = fastify().withTypeProvider<ZodTypeProvider>()
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
+const corsOrigins = (process.env.CORS_ORIGIN ?? 'http://localhost:3000')
+  .split(',')
+  .map((origin) => origin.trim().replace(/\/$/, ''))
+  .filter(Boolean)
+
 app.register(fastifyCors, {
-  origin: process.env.CORS_ORIGIN ?? 'http://localhost:3000',
+  origin: corsOrigins,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 })
 

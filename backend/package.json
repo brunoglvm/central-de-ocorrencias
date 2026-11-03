@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "tsdown",
-    "dev": "tsx watch --env-file=.env src/index.ts",
+    "dev": "tsx watch --env-file=.env.development src/index.ts",
     "start": "node dist/index.mjs",
     "db:seed": "prisma db seed",
     "db:reset": "prisma migrate reset --force",
