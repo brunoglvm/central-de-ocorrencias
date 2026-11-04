@@ -21,16 +21,15 @@ export function OccurrenceCard({ occurrence, index, onSelect }: OccurrenceCardPr
           {...provided.dragHandleProps}
           className={
             snapshot.isDragging
-              ? 'w-full min-w-0 max-w-full overflow-hidden rounded-2xl bg-surface-container-lowest p-4 ring-1 ring-foreground/5'
-              : 'w-full min-w-0 max-w-full overflow-hidden rounded-2xl bg-surface-container-lowest p-4'
+              ? 'w-full max-w-full min-w-0 cursor-grabbing overflow-hidden rounded-2xl bg-surface-container-lowest p-4 ring-1 ring-foreground/5'
+              : 'w-full max-w-full min-w-0 cursor-grab overflow-hidden rounded-2xl bg-surface-container-lowest p-4 active:cursor-grabbing'
           }
         >
           <div className='flex items-start justify-between gap-3'>
             <div className='min-w-0 flex-1'>
               <button
                 type='button'
-                title={occurrence.title}
-                className='block w-full max-w-full overflow-hidden line-clamp-2 break-all cursor-pointer text-left text-sm leading-5 font-medium decoration-primary-hover underline-offset-4 transition-colors hover:text-primary-hover hover:underline'
+                className='line-clamp-2 w-full max-w-full cursor-pointer overflow-hidden text-left text-sm leading-5 font-medium wrap-break-word decoration-primary-hover underline-offset-2 transition-colors hover:text-primary-hover hover:underline active:cursor-grabbing'
                 onClick={() => onSelect(occurrence.id)}
               >
                 {occurrence.title}
@@ -38,15 +37,12 @@ export function OccurrenceCard({ occurrence, index, onSelect }: OccurrenceCardPr
             </div>
           </div>
 
-          <p
-            className='mt-2 block w-full max-w-full overflow-hidden line-clamp-2 break-all text-xs leading-5 text-foreground-muted'
-            title={occurrence.description}
-          >
+          <p className='mt-2 line-clamp-3 w-full max-w-full overflow-hidden text-xs leading-5 wrap-break-word text-foreground-muted'>
             {occurrence.description}
           </p>
 
           <div className='mt-3 flex flex-wrap items-center gap-3 text-xs text-foreground-muted'>
-            <span className='inline-flex max-w-full min-w-0 items-center gap-1' title={occurrence.location}>
+            <span className='inline-flex max-w-full min-w-0 items-center gap-1'>
               <IconMapPin className='size-4 shrink-0' stroke={1.8} />
               <span className='truncate'>{occurrence.location}</span>
             </span>
