@@ -56,9 +56,9 @@ export function HistoryList({
               <div className='space-y-4'>
                 <div className='grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start'>
                   <div className='min-w-0 space-y-4'>
-                    <h2 className='text-3xl tracking-[-0.03em]'>{occurrence.title}</h2>
+                    <h2 className='text-3xl tracking-[-0.03em] wrap-break-word'>{occurrence.title}</h2>
 
-                    <p className='text-sm leading-7 text-foreground-muted'>{occurrence.description}</p>
+                    <p className='text-sm leading-7 wrap-break-word text-foreground-muted'>{occurrence.description}</p>
                   </div>
 
                   <Button

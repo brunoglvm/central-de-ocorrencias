@@ -255,7 +255,9 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
             </div>
             <div className='flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6'>
               <div className='space-y-4'>
-                <h2 className='pr-8 text-4xl tracking-[-0.04em] sm:pr-10'>{selectedOccurrence.title}</h2>
+                <h2 className='pr-8 text-4xl tracking-[-0.04em] wrap-break-word sm:pr-10'>
+                  {selectedOccurrence.title}
+                </h2>
 
                 <div
                   className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-foreground-inverse ${statusBadgeVariants[selectedOccurrence.status]}`}
@@ -280,7 +282,9 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
                       </p>
                     </div>
 
-                    <p className='mt-4 text-sm leading-7 text-foreground-muted'>{selectedOccurrence.description}</p>
+                    <p className='mt-4 text-sm leading-7 wrap-break-word text-foreground-muted'>
+                      {selectedOccurrence.description}
+                    </p>
 
                     {selectedOccurrence.image ? (
                       <div className='mt-4 overflow-hidden rounded-[1.125rem] border border-foreground/8'>
@@ -352,7 +356,9 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
             </div>
             <div className='flex-1 space-y-4 overflow-y-auto px-5 pt-0 pb-5 sm:px-6 sm:pt-0 sm:pb-6'>
               <div className='space-y-4'>
-                <h2 className='pr-8 text-4xl tracking-[-0.04em] sm:pr-10'>{selectedOccurrence.title}</h2>
+                <h2 className='pr-8 text-4xl tracking-[-0.04em] wrap-break-word sm:pr-10'>
+                  {selectedOccurrence.title}
+                </h2>
 
                 <div
                   className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold text-foreground-inverse ${statusBadgeVariants[selectedOccurrence.status]}`}
@@ -377,7 +383,9 @@ export function BoardClient({ initialOccurrences }: BoardClientProps) {
                       </p>
                     </div>
 
-                    <p className='mt-4 text-sm leading-7 text-foreground-muted'>{selectedOccurrence.description}</p>
+                    <p className='mt-4 text-sm leading-7 wrap-break-word text-foreground-muted'>
+                      {selectedOccurrence.description}
+                    </p>
 
                     {selectedOccurrence.image ? (
                       <div className='mt-4 overflow-hidden rounded-[1.125rem] border border-foreground/8'>
