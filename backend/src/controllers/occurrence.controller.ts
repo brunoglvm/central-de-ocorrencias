@@ -55,6 +55,10 @@ export const createOccurrence = async (request: FastifyRequest, reply: FastifyRe
     }
 
     buffer = await part.toBuffer()
+
+    if (part.file.truncated) {
+      return reply.code(413).send({ error: 'O arquivo enviado excede o tamanho máximo permitido (5MB)' })
+    }
   }
 
   const result = occurrenceBodySchema.safeParse(fields)
@@ -130,7 +134,7 @@ export const getOccurrence = async (request: FastifyRequest<{ Params: { id: numb
     where: { id },
   })
 
-  if (!occurrence) return reply.code(404).send({ error: 'Ocorrencia não encontrada' })
+  if (!occurrence) return reply.code(404).send({ error: 'Ocorrência não encontrada' })
 
   return reply.send(occurrence)
 }

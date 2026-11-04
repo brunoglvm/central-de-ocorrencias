@@ -2,7 +2,11 @@ import { z } from 'zod/v4'
 import { OccurrenceSource, OccurrenceStatus } from '../../prisma/src/generated/prisma/enums.js'
 
 export const occurrenceParamsSchema = z.object({
-  id: z.coerce.number().int().positive().describe('Identificador da ocorrência'),
+  id: z.coerce
+    .number('O identificador deve ser um número')
+    .int('O identificador deve ser um número inteiro')
+    .positive('O identificador deve ser maior que zero')
+    .describe('Identificador da ocorrência'),
 })
 
 export const occurrenceBodySchema = z.object({

@@ -21,7 +21,7 @@ const swaggerConfig = {
           avatar: {
             type: 'string',
             format: 'binary',
-            description: 'Arquivo de imagem. Formatos aceitos: JPEG, PNG, WebP, HEIC e HEIF',
+            description: 'Arquivo de imagem. Formatos aceitos: JPEG, PNG, WebP, HEIC e HEIF. Tamanho máximo: 2MB',
           },
         },
       }
@@ -52,7 +52,7 @@ const swaggerConfig = {
           occurrence: {
             type: 'string',
             format: 'binary',
-            description: 'Arquivo de imagem opcional da ocorrência. Formatos aceitos: JPEG, PNG, WebP, HEIC e HEIF',
+            description: 'Arquivo de imagem opcional da ocorrência. Formatos aceitos: JPEG, PNG, WebP, HEIC e HEIF. Tamanho máximo: 5MB',
           },
         },
       }

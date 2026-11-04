@@ -12,8 +12,8 @@ export const authRoutes = async (app: FastifyInstance) => {
         summary: 'Realiza login do administrador',
         description: 'Autentica um administrador através de email e senha e retorna um token JWT.',
         body: z.object({
-          email: z.email().describe('Email do administrador'),
-          password: z.string().min(1).describe('Senha do administrador'),
+          email: z.email('Informe um e-mail válido').describe('Email do administrador'),
+          password: z.string().min(1, 'Informe a senha').describe('Senha do administrador'),
         }),
         response: {
           200: z

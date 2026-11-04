@@ -87,7 +87,7 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
         params: occurrenceParamsSchema,
         headers: bearerAuthHeaderSchema,
         body: z.object({
-          status: z.enum(OccurrenceStatus).describe('Novo status da ocorrência'),
+          status: z.enum(OccurrenceStatus, 'Status da ocorrência inválido').describe('Novo status da ocorrência'),
         }),
         response: {
           200: z
@@ -114,7 +114,9 @@ export const occurrenceRoutes: FastifyPluginAsyncZod = async (app) => {
         params: occurrenceParamsSchema,
         headers: bearerAuthHeaderSchema,
         body: z.object({
-          archived: z.boolean().describe('Indica se a ocorrência deve ser arquivada'),
+          archived: z
+            .boolean('Informe se a ocorrência deve ser arquivada')
+            .describe('Indica se a ocorrência deve ser arquivada'),
         }),
         response: {
           200: z

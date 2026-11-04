@@ -37,6 +37,8 @@ export const changeAvatar = async (request: FastifyRequest, reply: FastifyReply)
 
   const buffer = await file.toBuffer()
 
+  if (file.file.truncated) return reply.code(413).send({ error: 'O arquivo enviado excede o tamanho máximo permitido (2MB)' })
+
   const type = await fileTypeFromBuffer(buffer)
 
   if (!type || !IMAGE_MIME_TYPES.includes(type.mime)) return reply.code(400).send({ error: 'Formato não permitido' })

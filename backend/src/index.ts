@@ -34,6 +34,10 @@ if (!disableRateLimit) {
   app.register(fastifyRateLimit, {
     max: 100,
     timeWindow: '1 minute',
+    errorResponseBuilder: () => ({
+      statusCode: 429,
+      error: 'Muitas tentativas. Aguarde um minuto e tente novamente',
+    }),
   })
 }
 
