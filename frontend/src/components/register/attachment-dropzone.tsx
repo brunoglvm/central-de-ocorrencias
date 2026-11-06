@@ -5,6 +5,7 @@ import { useDropzone } from 'react-dropzone'
 import { IconEye } from '@tabler/icons-react'
 import { ImagePreviewModal } from '@/components/ui/image-preview-modal'
 import { Tooltip } from '@/components/ui/tooltip'
+import { imageUploadAccept, imageUploadTypeErrorMessage, occurrenceImageMaxSize } from '@/constants/image-upload'
 import { cn } from '@/lib/utils'
 
 type AttachmentDropzoneProps = {
@@ -16,8 +17,10 @@ type AttachmentDropzoneProps = {
 
 export function AttachmentDropzone({ className, error, file, onFileSelect }: AttachmentDropzoneProps) {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
+  const [fileError, setFileError] = useState<string | null>(null)
   const previewUrl = useMemo(() => (file ? URL.createObjectURL(file) : null), [file])
   const fileName = file?.name ?? ''
+  const displayedError = fileError ?? error
 
   useEffect(() => {
     return () => {
@@ -28,13 +31,32 @@ export function AttachmentDropzone({ className, error, file, onFileSelect }: Att
   }, [previewUrl])
 
   const { getInputProps, getRootProps, isDragActive } = useDropzone({
-    accept: {
-      'image/*': [],
-    },
+    accept: imageUploadAccept,
     maxFiles: 1,
-    onDrop: (acceptedFiles) => {
+    maxSize: occurrenceImageMaxSize,
+    onDrop: (acceptedFiles, rejections) => {
       setIsPreviewOpen(false)
-      onFileSelect(acceptedFiles[0] ?? null)
+
+      if (acceptedFiles.length > 0) {
+        setFileError(null)
+        onFileSelect(acceptedFiles[0])
+      }
+
+      if (rejections.length === 0) {
+        return
+      }
+
+      const rejectionCodes = new Set(rejections[0].errors.map((rejection) => rejection.code))
+
+      if (rejectionCodes.has('file-too-large')) {
+        setFileError('A imagem deve ter no máximo 5 MB.')
+      } else if (rejectionCodes.has('file-invalid-type')) {
+        setFileError(imageUploadTypeErrorMessage)
+      } else if (rejectionCodes.has('too-many-files')) {
+        setFileError('Envie apenas uma imagem.')
+      } else {
+        setFileError('Não foi possível usar este arquivo.')
+      }
     },
   })
 
@@ -48,7 +70,7 @@ export function AttachmentDropzone({ className, error, file, onFileSelect }: Att
           className={cn(
             'flex min-h-12 w-full cursor-pointer items-center justify-between rounded-2xl bg-surface-container-lowest px-4 py-3 text-left text-sm transition-colors',
             isDragActive && 'bg-surface-container-highest',
-            error && 'ring-2 ring-danger-strong/18',
+            displayedError && 'ring-2 ring-danger-strong/18',
           )}
         >
           <input {...getInputProps()} />
@@ -80,7 +102,7 @@ export function AttachmentDropzone({ className, error, file, onFileSelect }: Att
         </div>
       </div>
 
-      {error ? <p className='text-sm text-danger-strong'>{error}</p> : null}
+      {displayedError ? <p className='text-sm text-danger-strong'>{displayedError}</p> : null}
 
       <ImagePreviewModal
         fileName={fileName || 'Imagem anexada'}

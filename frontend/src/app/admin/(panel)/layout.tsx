@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import { Navbar } from '@/components/layout/navbar'
 import { getServerAuthToken } from '@/lib/auth/session'
 import { getMe } from '@/services/api/auth'
+import { ApiError } from '@/services/api/client'
 
 export default async function AdminPanelLayout({ children }: { children: ReactNode }) {
   const token = await getServerAuthToken()
@@ -11,7 +12,9 @@ export default async function AdminPanelLayout({ children }: { children: ReactNo
     redirect('/admin')
   }
 
-  const user = await getMe(token).catch(() => redirect('/admin'))
+  const user = await getMe(token).catch((error: unknown) => {
+    redirect(error instanceof ApiError && error.status === 401 ? '/admin?expirado=1' : '/admin')
+  })
 
   return (
     <>

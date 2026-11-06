@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { IconEye, IconEyeOff } from '@tabler/icons-react'
@@ -10,7 +10,7 @@ import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { getErrorMessage } from '@/lib/errors'
 import { login } from '@/services/api/auth'
-import { setAuthToken } from '@/services/api/client'
+import { clearAuthToken, setAuthToken } from '@/services/api/client'
 
 type AdminLoginFormProps = {
   condominiumImage?: string | null
@@ -24,7 +24,22 @@ export function AdminLoginForm({ condominiumImage }: AdminLoginFormProps) {
   const [imageSrc, setImageSrc] = useState(condominiumImage || '/images/pfp.webp')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+
+    if (params.get('expirado') !== '1') {
+      return
+    }
+
+    clearAuthToken()
+    toast.error('Sua sessão expirou. Entre novamente.')
+    params.delete('expirado')
+
+    const query = params.toString()
+    window.history.replaceState(null, '', `${window.location.pathname}${query ? `?${query}` : ''}`)
+  }, [])
+
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget)

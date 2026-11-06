@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { EditableAvatar } from '@/components/ui/editable-avatar'
 import { Modal } from '@/components/ui/modal'
 import { Tooltip } from '@/components/ui/tooltip'
+import { avatarImageMaxSize, imageUploadMimeTypes, imageUploadTypeErrorMessage } from '@/constants/image-upload'
 import { getErrorMessage } from '@/lib/errors'
 import { clearAuthToken } from '@/services/api/client'
 import { updateAvatar } from '@/services/api/profile'
@@ -41,6 +42,16 @@ export function Navbar({ user }: { user: AdminUser }) {
   const [avatarSrc, setAvatarSrc] = useState(user.image || '/images/pfp.webp')
 
   async function handleAvatarUpload(file: File) {
+    if (file.type && !imageUploadMimeTypes.includes(file.type)) {
+      toast.error(imageUploadTypeErrorMessage)
+      throw new Error('Formato de imagem não permitido')
+    }
+
+    if (file.size > avatarImageMaxSize) {
+      toast.error('A imagem deve ter no máximo 2 MB.')
+      throw new Error('Imagem acima do tamanho máximo')
+    }
+
     try {
       const { image } = await updateAvatar(file)
 

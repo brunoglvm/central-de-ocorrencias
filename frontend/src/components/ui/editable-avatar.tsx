@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { IconPhoto } from '@tabler/icons-react'
 import { Tooltip } from '@/components/ui/tooltip'
+import { imageUploadAcceptAttribute } from '@/constants/image-upload'
 
 type EditableAvatarProps = {
   alt: string
@@ -86,7 +87,7 @@ export function EditableAvatar({ alt, className, initialSrc, onUpload, size = 40
       <input
         ref={inputRef}
         type='file'
-        accept='image/*'
+        accept={imageUploadAcceptAttribute}
         className='sr-only'
         disabled={isUploading}
         onChange={handleFileChange}

@@ -13,7 +13,7 @@ export default async function AdminHistoryPage() {
   const token = await requireServerAuthToken()
   const occurrences = await getOccurrences(token).catch((error: unknown) => {
     if (error instanceof ApiError && error.status === 401) {
-      redirect('/admin')
+      redirect('/admin?expirado=1')
     }
 
     throw error

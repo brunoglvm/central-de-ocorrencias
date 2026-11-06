@@ -104,18 +104,69 @@ async function parseResponseBody(response: Response) {
   }
 }
 
-function getErrorMessage(data: unknown, fallback: string) {
+const genericHttpErrors = new Set([
+  'Bad Request',
+  'Unauthorized',
+  'Forbidden',
+  'Not Found',
+  'Method Not Allowed',
+  'Conflict',
+  'Payload Too Large',
+  'Unsupported Media Type',
+  'Unprocessable Entity',
+  'Too Many Requests',
+  'Internal Server Error',
+  'Not Implemented',
+  'Bad Gateway',
+  'Service Unavailable',
+  'Gateway Timeout',
+])
+
+function getStatusMessage(status: number) {
+  switch (status) {
+    case 400:
+      return 'Dados inválidos. Revise os campos e tente novamente.'
+    case 401:
+      return 'Sua sessão expirou. Entre novamente.'
+    case 403:
+      return 'Você não tem permissão para esta ação.'
+    case 404:
+      return 'Conteúdo não encontrado.'
+    case 409:
+      return 'Conflito com dados existentes.'
+    case 413:
+      return 'O arquivo enviado é muito grande.'
+    case 415:
+      return 'Formato de arquivo não suportado.'
+    case 429:
+      return 'Muitas tentativas. Aguarde um minuto e tente novamente.'
+  }
+
+  if (status >= 500) {
+    return 'Erro interno. Tente novamente em instantes.'
+  }
+
+  return null
+}
+
+function getErrorMessage(data: unknown, status: number, fallback: string) {
   if (data && typeof data === 'object') {
-    if ('error' in data && typeof data.error === 'string') {
+    if ('error' in data && typeof data.error === 'string' && !genericHttpErrors.has(data.error)) {
       return data.error
     }
 
-    if ('message' in data && typeof data.message === 'string') {
+    const statusMessage = getStatusMessage(status)
+
+    if (statusMessage) {
+      return statusMessage
+    }
+
+    if ('message' in data && typeof data.message === 'string' && !genericHttpErrors.has(data.message)) {
       return data.message
     }
   }
 
-  return fallback
+  return getStatusMessage(status) ?? fallback
 }
 
 export async function apiFetch<T>(path: string, options: ApiRequestOptions = {}): Promise<T> {
@@ -141,15 +192,23 @@ export async function apiFetch<T>(path: string, options: ApiRequestOptions = {})
     cache: requestInit.cache ?? 'no-store',
     headers: requestHeaders,
     body: requestBody,
-  }).catch(() => {
+  }).catch((error) => {
+    if (error?.name === 'AbortError') {
+      throw new ApiError('Requisição cancelada. Tente novamente.', 0)
+    }
     throw new ApiError('Não foi possível conectar ao servidor. Tente novamente em instantes.', 0)
   })
 
   const data = await parseResponseBody(response)
 
   if (!response.ok) {
+    if (response.status === 401 && authToken && typeof window !== 'undefined') {
+      clearAuthToken()
+      window.location.assign('/admin?expirado=1')
+    }
+
     throw new ApiError(
-      getErrorMessage(data, `Não foi possível concluir a requisição (${response.status}).`),
+      getErrorMessage(data, response.status, `Não foi possível concluir a requisição (${response.status}).`),
       response.status,
       data,
     )
