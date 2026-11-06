@@ -17,6 +17,7 @@ const eslintConfig = defineConfig([
       },
     },
     rules: {
+      'no-var': 'error', // Impede o uso de var, exigindo let ou const
       'tailwindcss/no-contradicting-classname': 'warn', // Detecta classes Tailwind que entram em conflito
       'tailwindcss/no-unnecessary-arbitrary-value': 'warn', // Detecta valores arbitrários desnecessários
       'tailwindcss/enforces-shorthand': 'warn', // Sugere o uso de shorthand quando possível
@@ -31,6 +32,18 @@ const eslintConfig = defineConfig([
     files: ['src/lib/utils.ts'], // cn() gera um falso positivo em 'no-custom-classname'
     rules: {
       'tailwindcss/no-custom-classname': 'off',
+    },
+  },
+
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-deprecated': 'error', // Impede o uso de APIs, métodos e propriedades marcados como deprecated
     },
   },
 
